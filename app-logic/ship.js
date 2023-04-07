@@ -1,9 +1,9 @@
 export default class Ship {
-    constructor(lengthInt) {
+    constructor(lengthInt, coordArr) {
         this.length = lengthInt;
         this._hits = 0;
-        this._sunk = this.isSunk();
-        this._coords = this.setCoords;
+        this._sunk = 0; //this.isSunk();
+        this._coords = coordArr;
     }
     hit() {
         this._hits++;

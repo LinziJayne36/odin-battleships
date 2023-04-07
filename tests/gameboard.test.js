@@ -41,8 +41,8 @@ describe("#Gameboard", () => {
     test("the setter method for board should allow us to record an appropriate symbol at given coords, while the getter method returns those recorded values", () => {
         const anotherGameboard = new Gameboard();
         anotherGameboard.board = [
-            [[2], [3], "/"],
-            [[2], [4], "/"],
+            [2, 3, "/"],
+            [2, 4, "/"],
         ];
         expect(anotherGameboard.board[2][3]).toBe("/");
         expect(anotherGameboard.board[2][4]).toBe("/");
@@ -75,5 +75,203 @@ describe("#Gameboard", () => {
         gameboard.issunk(); //setting sunk property
         gameboard.shipsLeftover();
         expect(gameboard.shipsLeft).toEqual(3);
+    });
+    test("the placeShips method will create 10 ship objects, using the passed in array of objects containing ship placement coordinates and lengths, and to store them in the ships property of the gameboard object..", () => {
+        //For now, we will call placeShips directly from here, passing in a preconstructed array of dummy data
+        //Eventually, placeShips will be called from inside the sendPositions method of the player object, and the data will be the selectedPositions
+        //property data of Player... e.g: player.sendPositions(this.selectedPositions)
+        const gameboard = new Gameboard();
+        //array of 10 0bjects, each one containing coords and length of a single ship
+        const dummySelectedPositions = [
+            {
+                coords: [
+                    [7, 3],
+                    [8, 3],
+                    [9, 3],
+                    [10, 3],
+                ],
+                length: 4, //Battleship info
+            },
+            {
+                coords: [
+                    [2, 2],
+                    [3, 2],
+                    [4, 2],
+                ],
+                length: 3, //Cruiser info
+            },
+            {
+                coords: [
+                    [7, 5],
+                    [7, 6],
+                    [7, 7],
+                ],
+                length: 3, //Cruiser info
+            },
+            {
+                coords: [
+                    [2, 5],
+                    [2, 6],
+                ],
+                length: 2, //Sub info
+            },
+            {
+                coords: [
+                    [1, 9],
+                    [2, 9],
+                ],
+                length: 2, //Sub info},
+            },
+            {
+                coords: [
+                    [7, 9],
+                    [7, 10],
+                ],
+                length: 2, //Sub info},
+            },
+            { coords: [[4, 8]], length: 1 }, //Destroyer info
+            { coords: [[5, 5]], length: 1 }, //Destroyer info
+            { coords: [[5, 10]], length: 1 }, //Destroyer info
+            { coords: [[10, 7]], length: 1 }, //Destroyer info
+        ];
+        gameboard.placeShips(dummySelectedPositions); //calling placeShips method with our dummy data
+        expect(gameboard.ships).toEqual([
+            {
+                length: 4,
+                _hits: 0,
+                _sunk: 0,
+                _coords: [
+                    [7, 3],
+                    [8, 3],
+                    [9, 3],
+                    [10, 3],
+                ],
+            },
+            {
+                length: 3,
+                _hits: 0,
+                _sunk: 0,
+                _coords: [
+                    [2, 2],
+                    [3, 2],
+                    [4, 2],
+                ],
+            },
+            {
+                length: 3,
+                _hits: 0,
+                _sunk: 0,
+                _coords: [
+                    [7, 5],
+                    [7, 6],
+                    [7, 7],
+                ],
+            },
+            {
+                length: 2,
+                _hits: 0,
+                _sunk: 0,
+                _coords: [
+                    [2, 5],
+                    [2, 6],
+                ],
+            },
+            {
+                length: 2,
+                _hits: 0,
+                _sunk: 0,
+                _coords: [
+                    [1, 9],
+                    [2, 9],
+                ],
+            },
+            {
+                length: 2,
+                _hits: 0,
+                _sunk: 0,
+                _coords: [
+                    [7, 9],
+                    [7, 10],
+                ],
+            },
+            { length: 1, _hits: 0, _sunk: 0, _coords: [[4, 8]] },
+            { length: 1, _hits: 0, _sunk: 0, _coords: [[5, 5]] },
+            { length: 1, _hits: 0, _sunk: 0, _coords: [[5, 10]] },
+            { length: 1, _hits: 0, _sunk: 0, _coords: [[10, 7]] },
+        ]);
+    });
+
+    test("the placeShips method will record each ship's position in the board property with 'S'.", () => {
+        const gameboard = new Gameboard();
+        const dummySelectedPositions = [
+            {
+                coords: [
+                    [7, 3],
+                    [8, 3],
+                    [9, 3],
+                    [10, 3],
+                ],
+                length: 4, //Battleship info
+            },
+            {
+                coords: [
+                    [2, 2],
+                    [3, 2],
+                    [4, 2],
+                ],
+                length: 3, //Cruiser info
+            },
+            {
+                coords: [
+                    [7, 5],
+                    [7, 6],
+                    [7, 7],
+                ],
+                length: 3, //Cruiser info
+            },
+            {
+                coords: [
+                    [2, 5],
+                    [2, 6],
+                ],
+                length: 2, //Sub info
+            },
+            {
+                coords: [
+                    [1, 9],
+                    [2, 9],
+                ],
+                length: 2, //Sub info},
+            },
+            {
+                coords: [
+                    [7, 9],
+                    [7, 10],
+                ],
+                length: 2, //Sub info},
+            },
+            { coords: [[4, 8]], length: 1 }, //Destroyer info
+            { coords: [[5, 5]], length: 1 }, //Destroyer info
+            { coords: [[5, 10]], length: 1 }, //Destroyer info
+            { coords: [[10, 7]], length: 1 }, //Destroyer info
+        ];
+        gameboard.placeShips(dummySelectedPositions); //calling placeShips method with our dummy data
+        //let infoArr = [];
+        //need to construct an array in the suitable format to be passed to the board(info)setter
+        //needs to be like: [[2,3,'S],[2,4,'S]]
+
+        expect(gameboard.board).toEqual([
+            ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+            ["1", "-", "-", "-", "-", "-", "-", "-", "-", "S", "-"],
+            ["2", "-", "S", "-", "-", "S", "S", "-", "-", "S", "-"],
+            ["3", "-", "S", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["4", "-", "S", "-", "-", "-", "-", "-", "S", "-", "-"],
+            ["5", "-", "-", "-", "-", "S", "-", "-", "-", "-", "S"],
+            ["6", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+            ["7", "-", "-", "S", "-", "S", "S", "S", "-", "S", "S"],
+            ["8", "-", "-", "S", "-", "-", "-", "-", "-", "-", "-"],
+            ["9", "-", "-", "S", "-", "-", "-", "-", "-", "-", "-"],
+            ["10", "-", "-", "S", "-", "-", "-", "S", "-", "-", "-"],
+        ]);
     });
 });
