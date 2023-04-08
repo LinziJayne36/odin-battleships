@@ -38,12 +38,13 @@ describe("#Gameboard", () => {
             [8, 8],
         ]);
     });
-    test("the setter method for board should allow us to record an appropriate symbol at given coords, while the getter method returns those recorded values", () => {
+    test("the method for updating board (updateBoard) should allow us to record an appropriate symbol at given coords, while the getter method of board returns those recorded values", () => {
         const anotherGameboard = new Gameboard();
-        anotherGameboard.board = [
+        anotherGameboard.updateBoard([
             [2, 3, "/"],
             [2, 4, "/"],
-        ];
+        ]);
+
         expect(anotherGameboard.board[2][3]).toBe("/");
         expect(anotherGameboard.board[2][4]).toBe("/");
     });
@@ -273,5 +274,12 @@ describe("#Gameboard", () => {
             ["9", "-", "-", "S", "-", "-", "-", "-", "-", "-", "-"],
             ["10", "-", "-", "S", "-", "-", "-", "S", "-", "-", "-"],
         ]);
+        //expect(gameboard.board[2][3]).toBe("/");
+        //expect(gameboard.board[2][4]).toBe("/");
+        /*expect(
+            gameboard.ships.forEach((shipObj) => {
+                shipObj.coords;
+            })
+        ).toBeDefined();*/
     });
 });

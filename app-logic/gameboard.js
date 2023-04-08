@@ -21,7 +21,7 @@ export default class Gameboard {
         this._shipsLeft = this.shipsLeftover();
     }
 
-    set board(info) {
+    updateBoard(info) {
         //info to be an ARRAY of data of what to put in which cell eg for a ship of
         //length 2 the args could be:[[[2],[3], "Sh"], [[2],[4], "Sh"]]
 
@@ -84,19 +84,24 @@ export default class Gameboard {
     }
 
     placeShips(positionsData) {
-        let infoArr = [];
         positionsData.forEach((shipObj) => {
             //creates the ships using the passed data and adds them to the ships property of gameboard
             const ship = new Ship(shipObj.length, shipObj.coords);
             this.ships = ship; //calls setter method
         });
-        // iterate over the ships to populate the info array for the board setter
-        this.ships.forEach((ship) => {
-            ship.coords.forEach((coord) => {
-                infoArr.push([coord[0], coord[1], "S"]); // add the ship character to each coordinate
+        const infoArr = [];
+        positionsData.forEach((shipPosition) => {
+            shipPosition.coords.forEach((item) => {
+                infoArr.push([item[0], item[1], "S"]);
             });
         });
-        // call the board setter with the completed info array
-        this.board = infoArr;
+
+        /*let infoArr = [
+            [2, 3, "/"],
+            [2, 4, "/"],
+        ];*/
+        console.log(infoArr);
+        console.log("my log!!!");
+        this.updateBoard(infoArr);
     }
 }
