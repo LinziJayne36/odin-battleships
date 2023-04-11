@@ -121,4 +121,14 @@ export default class Gameboard {
             return true;
         }
     }
+
+    hitMiss(validCoords) {
+        //if the cell at validCoords has 'S' it returns 'hit'
+        //else if it has '-' it returns 'miss'
+        if (this.board[validCoords[0]][validCoords[1]] === "S") {
+            return "hit";
+        } else if (this.board[validCoords[0]][validCoords[1]] === "-") {
+            return "miss";
+        }
+    }
 }

@@ -282,6 +282,12 @@ describe("#Gameboard", () => {
         const isValid = gameboard.checkMove(dummyMove);
         expect(isValid).toStrictEqual(true);
     });
+    test("the hitMiss method will take the set of valid move coords and check if it's a hit (if 'S' at coords) or if it's a miss ('-' at coords). It returns 'hit' or 'miss", () => {
+        const gameboard = new Gameboard();
+        const validMove = [2, 2];
+        const hitOrMiss = gameboard.hitMiss(validMove);
+        expect(hitOrMiss).toBe("miss");
+    });
 
     //test("the receiveAttack method will take a set of passed coords and store them. It should call checkGame() for validity check, call hitMiss(), and conditionally update board, ships, hits,and sunk before calling checkGame()")
 });
