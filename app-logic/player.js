@@ -1,14 +1,15 @@
+import Gameboard from "./gameboard";
 export default class Player {
     constructor() {
         this._attackSq = null;
         this._selectedPositions = null;
     }
 
-    set setAttackSq(coords) {
+    set attackSq(coords) {
         this._attackSq = coords;
     }
 
-    get setAttackSq() {
+    get attackSq() {
         return this._attackSq;
     }
 
@@ -18,5 +19,9 @@ export default class Player {
 
     get selectedPositions() {
         return this._selectedPositions;
+    }
+
+    sendPositions(positions) {
+        Gameboard.placeShips(positions);
     }
 }

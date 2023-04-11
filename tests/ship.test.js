@@ -16,7 +16,7 @@ describe("#Ship", () => {
     });
     test("the coords setter method should pass in coordinates to the coords property of ship object with the coords getter method returning them", () => {
         const ship3 = new Ship(1);
-        ship3.setCoords = [3, 9];
-        expect(ship3.getCoords).toEqual([3, 9]);
+        ship3.coords = [3, 9];
+        expect(ship3.coords).toEqual([3, 9]);
     });
 });

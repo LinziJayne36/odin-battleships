@@ -24,11 +24,11 @@ export default class Ship {
         return this._sunk;
     }
 
-    set setCoords(position) {
+    set coords(position) {
         this._coords = position;
     }
 
-    get getCoords() {
+    get coords() {
         return this._coords;
     }
 }
