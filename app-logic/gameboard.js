@@ -104,4 +104,21 @@ export default class Gameboard {
         console.log("my log!!!");
         this.updateBoard(infoArr);
     }
+
+    checkMove(coords) {
+        //if the cell at coords has '/' or 'X' returns false
+        //else it returns true
+        //need to search in board property to find the coords cell and return its contents
+        //can then use that to do the check
+        if (
+            this.board[coords[0]][coords[1]] === "/" ||
+            this.board[coords[0]][coords[1]] === "X"
+        ) {
+            console.log(this.board[coords[0]][coords[1]]);
+            return false;
+        } else {
+            console.log(this.board[coords[0]][coords[1]]);
+            return true;
+        }
+    }
 }

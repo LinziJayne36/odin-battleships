@@ -274,12 +274,14 @@ describe("#Gameboard", () => {
             ["9", "-", "-", "S", "-", "-", "-", "-", "-", "-", "-"],
             ["10", "-", "-", "S", "-", "-", "-", "S", "-", "-", "-"],
         ]);
-        //expect(gameboard.board[2][3]).toBe("/");
-        //expect(gameboard.board[2][4]).toBe("/");
-        /*expect(
-            gameboard.ships.forEach((shipObj) => {
-                shipObj.coords;
-            })
-        ).toBeDefined();*/
     });
+
+    test("the checkMove method will take a set of coords and check to see if the move is valid, returning true or false", () => {
+        const gameboard = new Gameboard();
+        const dummyMove = [2, 2];
+        const isValid = gameboard.checkMove(dummyMove);
+        expect(isValid).toStrictEqual(true);
+    });
+
+    //test("the receiveAttack method will take a set of passed coords and store them. It should call checkGame() for validity check, call hitMiss(), and conditionally update board, ships, hits,and sunk before calling checkGame()")
 });
