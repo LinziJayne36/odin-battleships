@@ -13,19 +13,72 @@ describe("#Player", () => {
         const player = new Player();
         player.selectedPositions = [
             [
-                [2, 2],
-                [2, 3],
-                [2, 4],
-                [2, 5],
+                [0, 6],
+                [0, 7],
+                [0, 8],
+                [0, 9],
             ],
-        ]; //dummy data to position one 4 length ship
+            [
+                [5, 3],
+                [5, 4],
+                [5, 5],
+            ],
+            [
+                [1, 2],
+                [1, 3],
+                [1, 4],
+            ],
+            [
+                [5, 9],
+                [5, 10],
+            ],
+            [
+                [1, 3],
+                [2, 3],
+            ],
+            [
+                [7, 7],
+                [7, 8],
+            ],
+            [[3, 4]],
+            [[5, 9]],
+            [[7, 5]],
+            [[1, 4]],
+        ]; //dummy data to position one 4 length ship, two 3 length ships, three 2 length ships, and four 1 length ships
+        //console.log(player.selectedPositions);
         expect(player.selectedPositions).toEqual([
             [
-                [2, 2],
-                [2, 3],
-                [2, 4],
-                [2, 5],
+                [0, 6],
+                [0, 7],
+                [0, 8],
+                [0, 9],
             ],
+            [
+                [5, 3],
+                [5, 4],
+                [5, 5],
+            ],
+            [
+                [1, 2],
+                [1, 3],
+                [1, 4],
+            ],
+            [
+                [5, 9],
+                [5, 10],
+            ],
+            [
+                [1, 3],
+                [2, 3],
+            ],
+            [
+                [7, 7],
+                [7, 8],
+            ],
+            [[3, 4]],
+            [[5, 9]],
+            [[7, 5]],
+            [[1, 4]],
         ]);
     });
 });

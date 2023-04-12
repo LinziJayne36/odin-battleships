@@ -90,6 +90,7 @@ export default class Gameboard {
             this.ships = ship; //calls setter method
         });
         const infoArr = [];
+        //console.log(positionsData);
         positionsData.forEach((shipPosition) => {
             shipPosition.coords.forEach((item) => {
                 infoArr.push([item[0], item[1], "S"]);
@@ -100,8 +101,8 @@ export default class Gameboard {
             [2, 3, "/"],
             [2, 4, "/"],
         ];*/
-        console.log(infoArr);
-        console.log("my log!!!");
+        // console.log(infoArr);
+        //console.log("my log!!!");
         this.updateBoard(infoArr);
     }
 
@@ -114,10 +115,10 @@ export default class Gameboard {
             this.board[coords[0]][coords[1]] === "/" ||
             this.board[coords[0]][coords[1]] === "X"
         ) {
-            console.log(this.board[coords[0]][coords[1]]);
+            //console.log(this.board[coords[0]][coords[1]]);
             return false;
         } else {
-            console.log(this.board[coords[0]][coords[1]]);
+            //console.log(this.board[coords[0]][coords[1]]);
             return true;
         }
     }
