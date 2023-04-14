@@ -28,20 +28,29 @@ export default class Player {
 
         const addShip = (length) => {
             const coords = [];
-            const firstCoord = [
-                Math.floor(Math.random() * (10 - length + 1)),
-                Math.floor(Math.random() * 10),
-            ];
-            coords.push(firstCoord);
+            let isValid = false;
 
-            if (Math.random() < 0.5) {
-                for (let i = 1; i < length; i++) {
-                    coords.push([firstCoord[0] + i, firstCoord[1]]);
+            while (!isValid) {
+                const firstCoord = [
+                    Math.floor(Math.random() * 10) + 1,
+                    Math.floor(Math.random() * (11 - length)) + 1,
+                ];
+                coords.push(firstCoord);
+
+                if (Math.random() < 0.5) {
+                    for (let i = 1; i < length; i++) {
+                        coords.push([firstCoord[0], firstCoord[1] + i]);
+                    }
+                } else {
+                    for (let i = 1; i < length; i++) {
+                        coords.push([firstCoord[0] + i, firstCoord[1]]);
+                    }
                 }
-            } else {
-                for (let i = 1; i < length; i++) {
-                    coords.push([firstCoord[0], firstCoord[1] + i]);
-                }
+
+                // Check if any coordinate is out of bounds
+                isValid = coords.every(
+                    (coord) => coord[0] <= 10 && coord[1] <= 10
+                );
             }
 
             selectedPositions.push({
@@ -62,5 +71,31 @@ export default class Player {
         }
 
         this._selectedPositions = selectedPositions;
+    }
+
+    calcAttackSq() {
+        //TEMPORARY: TO BE REPLACED WITH DOM INPUT
+        let allCells = [];
+        for (let y = 1; y <= 10; y++) {
+            for (let x = 1; x <= 10; x++) {
+                allCells.push([y, x]);
+            }
+        }
+
+        const availableCells = allCells.filter((cell) => {
+            for (let attackedCell of this.alreadyAttacked) {
+                if (
+                    cell[0] === attackedCell[0] &&
+                    cell[1] === attackedCell[1]
+                ) {
+                    return false;
+                }
+            }
+            return true;
+        });
+        const randIndex = Math.floor(Math.random() * availableCells.length);
+        const randCell = availableCells[randIndex];
+        this._attackSq = randCell;
+        this.alreadyAttacked.push(randCell);
     }
 }

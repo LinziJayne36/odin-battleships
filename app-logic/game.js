@@ -11,6 +11,4 @@ export default class Game {
     get whoWon() {
         return this._whoWon;
     }
-
-    checkGame() {}
 }

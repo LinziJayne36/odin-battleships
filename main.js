@@ -8,27 +8,210 @@ import Ship from "./app-logic/ship";
 
 const gameLoop = () => {
     //setup the game
+    console.log("gameLoop was called");
     let computerTurn = false;
-    const player = new Player();
-    const playerGameboard = new Gameboard();
+    let validMove = false;
+    const game = new Game();
+
+    //checkGame function
+    function checkGame() {
+        //check in player and computer gameboards to see if the sunk property on either one === 10
+        //if it does it sets game.isWon = true, and game.isWon = the winning player
+        if (playerGameboard.shipsLeft === 10) {
+            game.isWon = true;
+            game.whoWon = "player";
+            console.log("The game has been won");
+        } else if (computerGameboard.shipsLeft === 10) {
+            game.isWon = true;
+            game.whoWon = "computerPlayer";
+        } //else do nothing
+    }
 
     //AT THIS POINT WE'D NEED TO GET THE PLAYER'S SELECTION OF COORDS FOR HIDING THEIR SHIPS
     //SO, START WORK ON DOM INTERACTION MODULE NOW...
     //FOR NOW WE CAN CALL THE GENERATERANDOMPOSITIONS METHOD INSTEAD
+
+    const player = new Player();
+    const playerGameboard = new Gameboard();
+    console.log("Next is the player's selected ship placement data");
     player.generateRandomPositions();
+    console.log("Next is the player's gameboard with the ships placed on it");
+    playerGameboard.placeShips(player.selectedPositions);
+    console.log(playerGameboard.board);
 
     const computerPlayer = new ComputerPlayer();
     const computerGameboard = new Gameboard();
+    console.log("Next is the computerPlayer's selected ship placement data");
     computerPlayer.calcSelectedPositions();
-    console.log(computerPlayer.selectedPositions);
+    console.log(
+        "next is the computerPlayer's gameboard with the ships placed on it"
+    );
     computerGameboard.placeShips(computerPlayer.selectedPositions);
     console.log(computerGameboard.board);
-    playerGameboard.placeShips(player.selectedPositions);
-    console.log("next is the players gameboard with the ships placed on it...");
-    console.log(playerGameboard.board);
-
-    const game = new Game();
 
     //enter the actual loop
+    while (!game.isWon === false) {
+        if (computerTurn === false) {
+            //Take the PLAYER'S TURN -----------------------------------------------------------------------
+
+            while (validMove === false) {
+                //repeat until valid coords are provided
+                //get player coords for attack on computerGameboard
+                player.calcAttackSq();
+                console.log("New attack square calculated by player object");
+                //player.calcAttackSq() //will populate player.attackSq with move coords
+                validMove = computerGameboard.checkMove(player.attackSq); // will set validMove to true if move is valid
+                console.log(
+                    "next comes the true|false result of whether coordinates selected by player object are valid"
+                );
+                console.log(validMove);
+                if (!validMove) {
+                    /*alert of invalid move*/ console.log(
+                        "Invalid player move - choose again!!!"
+                    );
+                }
+            }
+            //once validMove is true, the follwing code will run...
+
+            if (computerGameboard.hitMiss(player.attackSq) === "hit") {
+                //if player's valid move against the computerGameboard is a hit...
+                console.log(
+                    "next is the Player's attack square that has been deemed a hit - immediately before an X is placed in the board"
+                );
+                console.log(player.attackSq);
+                computerGameboard.updateBoard([
+                    [player.attackSq[0], player.attackSq[1], "X"],
+                ]);
+                //update hit property of relevant ship object (find obj in computerGameboard.ships arr with coord same as player move)
+                const shipToHit = computerGameboard.ships.find((ship) => {
+                    return ship.coords.some((coord) => {
+                        return (
+                            coord[0] === player.attackSq[0] &&
+                            coord[1] === player.attackSq[1]
+                        );
+                    });
+                });
+                if (shipToHit) {
+                    shipToHit.hit();
+                }
+
+                //update hits on computerGameboard by adding the successful hit coords to the hits array
+                computerGameboard._hits.push(player.attackSq);
+
+                //update sunk on computerGameboard
+                const sunkNum = computerGameboard.ships.filter(
+                    (ship) => ship.sunk === true
+                ).length;
+                computerGameboard.sunk = sunkNum;
+
+                checkGame();
+                if (game.isWon) {
+                    console.log("game is won");
+                    //if game is won, end game and declare winner
+                    //end of game - announce the winner
+                }
+
+                //because move was a hit, computerTurn is left as false and player takes another turn...
+            } else if (computerGameboard.hitMiss(player.attackSq) === "miss") {
+                console.log(
+                    "next is the player's attack square that has been deemed a miss on enemy board- immediately before an / is placed in the board"
+                );
+                console.log(player.attackSq);
+                //update computerGameboard.misses with coord of missed shot
+                computerGameboard.misses.push(player.attackSq);
+
+                //update computerGameboard.board with a '/'
+                computerGameboard.updateBoard([
+                    [player.attackSq[0], player.attackSq[1], "/"],
+                ]);
+
+                //set computerTurn to true as the player's turn is now over because they did not get a hit
+                computerTurn = true;
+            }
+        } else if (computerTurn === true) {
+            //Take the COMPUTER'S TURN turn --------------------------------------------------------------------
+            computerPlayer.calcAttackSq();
+            console.log(
+                "next is a log of the result from running computerPlayer.calcAttackSq() to get the computer's move..."
+            );
+            console.log(computerPlayer.attackSq);
+            if (playerGameboard.hitMiss(computerPlayer.attackSq) === "hit") {
+                //If computerPlayer's move against the players board is a hit...
+                console.log(
+                    "Next is the computerPlayer's attack square that hit the player's board - immediately before an X is placed on the players board"
+                );
+                console.log(computerPlayer.attackSq);
+                playerGameboard.updateBoard([
+                    [
+                        computerPlayer.attackSq[0],
+                        computerPlayer.attackSq[1],
+                        "X",
+                    ],
+                ]);
+
+                //update hit property of relevant ship object (find obj in ships arr with coord same as player move)
+                const shipToHit = playerGameboard.ships.find((ship) => {
+                    return ship.coords.some((coord) => {
+                        return (
+                            coord[0] === computerPlayer.attackSq[0] &&
+                            coord[1] === computerPlayer.attackSq[1]
+                        );
+                    });
+                });
+                if (shipToHit) {
+                    shipToHit.hit();
+                }
+
+                //update hits on playerGameboard by adding the successful hit coords to the hits array
+                playerGameboard._hits.push(computerPlayer.attackSq);
+
+                //update sunk on playerGameboard if applicable
+                const sunkNum = playerGameboard.ships.filter(
+                    (ship) => ship.sunk === true
+                ).length;
+                playerGameboard.sunk = sunkNum;
+
+                checkGame();
+                if (game.isWon) {
+                    //if game is won, end game and declare winner
+                    console.log("Game is won");
+                }
+                //because move was a hit, computerTurn is left as true and computerPlayer takes another turn...
+            } else if (
+                playerGameboard.hitMiss(computerPlayer.attackSq) === "miss"
+            ) {
+                console.log(
+                    "next is the computerPlayer's attack square that has been deemed a miss on enemy board - immediately before / is marked on their board"
+                );
+                console.log(computerPlayer.attackSq);
+
+                //update board property of playerGameboard.board with a '/'
+                playerGameboard.updateBoard([
+                    [
+                        computerPlayer.attackSq[0],
+                        computerPlayer.attackSq[1],
+                        "/",
+                    ],
+                ]);
+
+                //update playerGameboard.misses with coord of missed shot
+                playerGameboard.misses.push(computerPlayer.attackSq);
+
+                //set computerTurn to false as the computerPlayer's turn is now over because they did not get a hit
+                computerTurn = false;
+            }
+        }
+    }
 };
+
+/*
+import gameLoop from "../main";
+import { describe, expect, test } from "vitest";
+describe("#gameLoop", () => {
+    test("the gameLoop function will be defined", () => {
+        expect(gameLoop()).toBeDefined;
+        //expect(playerGameboard.attackSq).toBe(null);
+    });
+});
+*/
 export default gameLoop;

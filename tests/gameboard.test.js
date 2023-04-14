@@ -22,21 +22,13 @@ describe("#Gameboard", () => {
     test("the misses setter method and misses getter methods set and retireve the value of _misses", () => {
         const gameboard = new Gameboard();
         gameboard.misses = [2, 2];
-        expect(gameboard.misses).toEqual([2, 2]);
+        expect(gameboard.misses).toEqual([[2, 2]]);
     });
     test("the hits method and hits getter method set and retrieve the value of _hits", () => {
         const playerGameboard = new Gameboard();
-        playerGameboard.hits = [
-            [2, 4],
-            [3, 7],
-            [8, 8],
-        ];
+        playerGameboard.hits = [2, 4];
 
-        expect(playerGameboard.hits).toEqual([
-            [2, 4],
-            [3, 7],
-            [8, 8],
-        ]);
+        expect(playerGameboard.hits).toEqual([[2, 4]]);
     });
     test("the method for updating board (updateBoard) should allow us to record an appropriate symbol at given coords, while the getter method of board returns those recorded values", () => {
         const anotherGameboard = new Gameboard();
@@ -136,11 +128,12 @@ describe("#Gameboard", () => {
             { coords: [[10, 7]], length: 1 }, //Destroyer info
         ];
         gameboard.placeShips(dummySelectedPositions); //calling placeShips method with our dummy data
+        console.log(gameboard.ships);
         expect(gameboard.ships).toEqual([
             {
                 length: 4,
                 _hits: 0,
-                _sunk: 0,
+                _sunk: false,
                 _coords: [
                     [7, 3],
                     [8, 3],
@@ -151,7 +144,7 @@ describe("#Gameboard", () => {
             {
                 length: 3,
                 _hits: 0,
-                _sunk: 0,
+                _sunk: false,
                 _coords: [
                     [2, 2],
                     [3, 2],
@@ -161,7 +154,7 @@ describe("#Gameboard", () => {
             {
                 length: 3,
                 _hits: 0,
-                _sunk: 0,
+                _sunk: false,
                 _coords: [
                     [7, 5],
                     [7, 6],
@@ -171,7 +164,7 @@ describe("#Gameboard", () => {
             {
                 length: 2,
                 _hits: 0,
-                _sunk: 0,
+                _sunk: false,
                 _coords: [
                     [2, 5],
                     [2, 6],
@@ -180,7 +173,7 @@ describe("#Gameboard", () => {
             {
                 length: 2,
                 _hits: 0,
-                _sunk: 0,
+                _sunk: false,
                 _coords: [
                     [1, 9],
                     [2, 9],
@@ -189,16 +182,16 @@ describe("#Gameboard", () => {
             {
                 length: 2,
                 _hits: 0,
-                _sunk: 0,
+                _sunk: false,
                 _coords: [
                     [7, 9],
                     [7, 10],
                 ],
             },
-            { length: 1, _hits: 0, _sunk: 0, _coords: [[4, 8]] },
-            { length: 1, _hits: 0, _sunk: 0, _coords: [[5, 5]] },
-            { length: 1, _hits: 0, _sunk: 0, _coords: [[5, 10]] },
-            { length: 1, _hits: 0, _sunk: 0, _coords: [[10, 7]] },
+            { length: 1, _hits: 0, _sunk: false, _coords: [[4, 8]] },
+            { length: 1, _hits: 0, _sunk: false, _coords: [[5, 5]] },
+            { length: 1, _hits: 0, _sunk: false, _coords: [[5, 10]] },
+            { length: 1, _hits: 0, _sunk: false, _coords: [[10, 7]] },
         ]);
     });
 

@@ -17,20 +17,29 @@ export default class ComputerPlayer {
 
         const addShip = (length) => {
             const coords = [];
-            const firstCoord = [
-                Math.floor(Math.random() * (10 - length + 1)),
-                Math.floor(Math.random() * 10),
-            ];
-            coords.push(firstCoord);
+            let isValid = false;
 
-            if (Math.random() < 0.5) {
-                for (let i = 1; i < length; i++) {
-                    coords.push([firstCoord[0] + i, firstCoord[1]]);
+            while (!isValid) {
+                const firstCoord = [
+                    Math.floor(Math.random() * 10) + 1,
+                    Math.floor(Math.random() * (11 - length)) + 1,
+                ];
+                coords.push(firstCoord);
+
+                if (Math.random() < 0.5) {
+                    for (let i = 1; i < length; i++) {
+                        coords.push([firstCoord[0], firstCoord[1] + i]);
+                    }
+                } else {
+                    for (let i = 1; i < length; i++) {
+                        coords.push([firstCoord[0] + i, firstCoord[1]]);
+                    }
                 }
-            } else {
-                for (let i = 1; i < length; i++) {
-                    coords.push([firstCoord[0], firstCoord[1] + i]);
-                }
+
+                // Check if any coordinate is out of bounds
+                isValid = coords.every(
+                    (coord) => coord[0] <= 10 && coord[1] <= 10
+                );
             }
 
             selectedPositions.push({

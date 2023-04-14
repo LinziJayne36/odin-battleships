@@ -15,18 +15,23 @@ export default class Gameboard {
             ["10", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
         ];
         this._ships = [];
-        this._misses = this.misses;
-        this._hits = this.hits;
+        //this._misses = this.misses;
+        this._misses = [];
+        this._hits = []; //this.hits;
         this._sunk = 0;
         this._shipsLeft = this.shipsLeftover();
     }
 
     updateBoard(info) {
+        console.log("next comes the value of info arg passed into updateBoard");
+        console.log(info);
         //info to be an ARRAY of data of what to put in which cell eg for a ship of
-        //length 2 the args could be:[[[2],[3], "Sh"], [[2],[4], "Sh"]]
+        //length 2 the args could be:[[[2],[3], "S"], [[2],[4], "S"]]
 
         info.forEach((item) => {
-            this._board[item[0]][item[1]] = item[2]; //for every coordinate in the passed in array, the desired character / or X
+            console.log(item[2]);
+            this._board[item[0]][item[1]] = item[2];
+            console.log(this._board[item[0]][item[1]]); //for every coordinate in the passed in array, the desired character / or X
             //is recorded at that coordinate in board (from the 3rd index position 2 of the passed array)
         });
     }
@@ -44,7 +49,7 @@ export default class Gameboard {
     }
 
     set misses(position) {
-        this._misses = position;
+        this._misses.push(position);
     }
 
     get misses() {
@@ -52,9 +57,10 @@ export default class Gameboard {
     }
 
     set hits(coords) {
-        coords.forEach((coord) => {
-            this._hits = coords;
-        });
+        /* coords.forEach((coord) => {
+            this._hits.push(coords);
+        });*/
+        this._hits.push(coords);
     }
 
     get hits() {
@@ -84,6 +90,8 @@ export default class Gameboard {
     }
 
     placeShips(positionsData) {
+        console.log("Next is the positionsData being used to place ships");
+        console.log(positionsData);
         positionsData.forEach((shipObj) => {
             //creates the ships using the passed data and adds them to the ships property of gameboard
             const ship = new Ship(shipObj.length, shipObj.coords);
@@ -107,6 +115,7 @@ export default class Gameboard {
     }
 
     checkMove(coords) {
+        console.log(coords);
         //if the cell at coords has '/' or 'X' returns false
         //else it returns true
         //need to search in board property to find the coords cell and return its contents
@@ -116,6 +125,7 @@ export default class Gameboard {
             this.board[coords[0]][coords[1]] === "X"
         ) {
             //console.log(this.board[coords[0]][coords[1]]);
+            console.log("There is no / or X at this coordinate");
             return false;
         } else {
             //console.log(this.board[coords[0]][coords[1]]);

@@ -7,7 +7,16 @@
         <title>Odin Battleships</title>
     </head>
     <body>
-        <div id="app"></div>
-        <script type="module" src="/main.js"></script>
+        <div id="app">
+            <button id="startButton">START</button>
+            <span><button>Choose Player Ship Positions</button></span>
+            <span><button>Choose Player Attack Square</button></span>
+        </div>
+        <script type="module">
+            import gameLoop from "./main.js";
+            // code to start the game loop
+            const startButton = document.querySelector("#startButton");
+            startButton.addEventListener("click", gameLoop);
+        </script>
     </body>
 </html>

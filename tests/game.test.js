@@ -6,7 +6,7 @@ describe("#Game", () => {
         const game = new Game();
         expect(game.isWon).toBe(false);
     });
-    test("the checkGame method should check the gameboard of both players to see if either player has won", () => {
+    /* test("the checkGame method should check the gameboard of both players to see if either player has won", () => {
         const playerGameboard = new Gameboard();
         const computerGameboard = new Gameboard();
         const game = new Game();
@@ -14,5 +14,5 @@ describe("#Game", () => {
         computerGameboard._shipsLeft = 1;
         game.checkGame();
         expect(game.isWon).toBe(false); //to test this when ready, expect true and set one players shipsLeft to 0 above...
-    });
+    });*/
 });

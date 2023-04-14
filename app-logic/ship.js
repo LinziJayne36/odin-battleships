@@ -2,7 +2,7 @@ export default class Ship {
     constructor(lengthInt, coordArr) {
         this.length = lengthInt;
         this._hits = 0;
-        this._sunk = 0; //this.isSunk();
+        this._sunk = false; //this.isSunk();
         this._coords = coordArr;
     }
     hit() {
