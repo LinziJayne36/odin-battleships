@@ -57,7 +57,7 @@ describe("#Gameboard", () => {
         gameboard.issunk();
         expect(gameboard.sunk).toEqual(1);
     });
-    test("the set shipsLeft setter should calculate the number of unsunk ships remaining in the array in the ships: preoperty, the getter should return that number", () => {
+    /* test("the set shipsLeft setter should calculate the number of unsunk ships remaining in the array in the ships: preoperty, the getter should return that number", () => {
         const gameboard = new Gameboard();
         gameboard.ships = new Ship(2); //creating some ships to populate ships array
         gameboard.ships = new Ship(4); // ...
@@ -68,7 +68,7 @@ describe("#Gameboard", () => {
         gameboard.issunk(); //setting sunk property
         gameboard.shipsLeftover();
         expect(gameboard.shipsLeft).toEqual(3);
-    });
+    });*/
     test("the placeShips method will create 10 ship objects, using the passed in array of objects containing ship placement coordinates and lengths, and to store them in the ships property of the gameboard object..", () => {
         //For now, we will call placeShips directly from here, passing in a preconstructed array of dummy data
         //Eventually, placeShips will be called from inside the sendPositions method of the player object, and the data will be the selectedPositions

@@ -15,16 +15,31 @@ const gameLoop = () => {
 
     //checkGame function
     function checkGame() {
+        console.log(
+            "checkGame() was just called ---------------------------------------------------------"
+        );
         //check in player and computer gameboards to see if the sunk property on either one === 10
-        //if it does it sets game.isWon = true, and game.isWon = the winning player
-        if (playerGameboard.shipsLeft === 10) {
+        //if it does it sets game.isWon = true, and game.whoWon = the winning player
+        console.log(playerGameboard.sunk); // logged 23!!!!!!!!!!!!!!!!!!!!!!!
+        if (playerGameboard.sunk === 10) {
+            console.log(
+                `when checkGame runs, the number of ships left on playerGameboard is ${playerGameboard.sunk}`
+            );
             game.isWon = true;
-            game.whoWon = "player";
+            // game.whoWon = "player";
             console.log("The game has been won");
-        } else if (computerGameboard.shipsLeft === 10) {
-            game.isWon = true;
-            game.whoWon = "computerPlayer";
-        } //else do nothing
+        } else if (computerGameboard.shipsLeft < 10) {
+            console.log(
+                `when checkGame runs, the number of ships left on playerGameboard is ${playerGameboard.sunk}`
+            );
+            game.isWon = false;
+            //game.whoWon = "computerPlayer";
+        } else if (playerGameboard.sunk > 10) {
+            //else do nothing
+            throw console.error(
+                "Whoa!!! The number of sunk ships should NEVER be more than 10!!!!"
+            );
+        }
     }
 
     //AT THIS POINT WE'D NEED TO GET THE PLAYER'S SELECTION OF COORDS FOR HIDING THEIR SHIPS
@@ -33,6 +48,7 @@ const gameLoop = () => {
 
     const player = new Player();
     const playerGameboard = new Gameboard();
+    console.log(playerGameboard.board);
     console.log("Next is the player's selected ship placement data");
     player.generateRandomPositions();
     console.log("Next is the player's gameboard with the ships placed on it");
@@ -41,6 +57,7 @@ const gameLoop = () => {
 
     const computerPlayer = new ComputerPlayer();
     const computerGameboard = new Gameboard();
+    console.log(computerGameboard.board);
     console.log("Next is the computerPlayer's selected ship placement data");
     computerPlayer.calcSelectedPositions();
     console.log(
@@ -50,7 +67,8 @@ const gameLoop = () => {
     console.log(computerGameboard.board);
 
     //enter the actual loop
-    while (!game.isWon === false) {
+    while (game.isWon === false) {
+        console.log("This is the start of a loop iteration");
         if (computerTurn === false) {
             //Take the PLAYER'S TURN -----------------------------------------------------------------------
 
@@ -84,6 +102,7 @@ const gameLoop = () => {
                 ]);
                 //update hit property of relevant ship object (find obj in computerGameboard.ships arr with coord same as player move)
                 const shipToHit = computerGameboard.ships.find((ship) => {
+                    console.log(ship);
                     return ship.coords.some((coord) => {
                         return (
                             coord[0] === player.attackSq[0] &&
@@ -91,6 +110,7 @@ const gameLoop = () => {
                         );
                     });
                 });
+                console.log(shipToHit);
                 if (shipToHit) {
                     shipToHit.hit();
                 }
@@ -99,10 +119,19 @@ const gameLoop = () => {
                 computerGameboard._hits.push(player.attackSq);
 
                 //update sunk on computerGameboard
-                const sunkNum = computerGameboard.ships.filter(
+                /*const sunkNum = computerGameboard.ships.filter(
                     (ship) => ship.sunk === true
                 ).length;
-                computerGameboard.sunk = sunkNum;
+                computerGameboard.sunk = sunkNum;*/ //not sure that this is right - should we not instead be updating the number of sunk ships on gameboard by calling isSunk on it?
+
+                const sunkShip = computerGameboard.ships.filter(
+                    (ship) => ship.sunk === true
+                );
+
+                if (sunkShip != []) {
+                    console.log(sunkShip);
+                    computerGameboard.issunk(sunkShip);
+                }
 
                 checkGame();
                 if (game.isWon) {
@@ -141,6 +170,7 @@ const gameLoop = () => {
                     "Next is the computerPlayer's attack square that hit the player's board - immediately before an X is placed on the players board"
                 );
                 console.log(computerPlayer.attackSq);
+                //update the player's gameboard board porperty with the coordinated of the computerPlayer's successful hit
                 playerGameboard.updateBoard([
                     [
                         computerPlayer.attackSq[0],
@@ -165,11 +195,20 @@ const gameLoop = () => {
                 //update hits on playerGameboard by adding the successful hit coords to the hits array
                 playerGameboard._hits.push(computerPlayer.attackSq);
 
-                //update sunk on playerGameboard if applicable
-                const sunkNum = playerGameboard.ships.filter(
+                //update sunk on computerGameboard
+                /*const sunkNum = computerGameboard.ships.filter(
                     (ship) => ship.sunk === true
                 ).length;
-                playerGameboard.sunk = sunkNum;
+                computerGameboard.sunk = sunkNum;*/ //not sure that this is right - should we not instead be updating the number of sunk ships on gameboard by calling isSunk on it?
+
+                const sunkShip = playerGameboard.ships.filter(
+                    (ship) => ship._sunk === true
+                );
+
+                if (sunkShip != []) {
+                    console.log(sunkShip);
+                    playerGameboard.issunk(sunkShip);
+                }
 
                 checkGame();
                 if (game.isWon) {
@@ -196,12 +235,23 @@ const gameLoop = () => {
 
                 //update playerGameboard.misses with coord of missed shot
                 playerGameboard.misses.push(computerPlayer.attackSq);
-
+                console.log(
+                    "playerGameboard.misses array has just been updated with coord of missed shot"
+                );
                 //set computerTurn to false as the computerPlayer's turn is now over because they did not get a hit
                 computerTurn = false;
+                console.log(
+                    `this is the value of computerTurn, which should be false as the computer's turn should have ended: ${computerTurn}`
+                );
+                console.log(
+                    `and this is the current value of isWon, which should always be false if the game is still looping: ${game.isWon}`
+                );
             }
         }
     }
+    console.log(
+        `We just broke out of the main game while loop... isWon is testing ${game.isWon}`
+    );
 };
 
 /*

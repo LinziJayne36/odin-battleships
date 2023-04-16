@@ -14,32 +14,76 @@ export default class ComputerPlayer {
 
     calcSelectedPositions() {
         const selectedPositions = [];
+        const usedCoords = [];
 
         const addShip = (length) => {
             const coords = [];
             let isValid = false;
+            let iterations = 0;
 
-            while (!isValid) {
+            while (!isValid && iterations < 100) {
+                iterations++;
+
                 const firstCoord = [
                     Math.floor(Math.random() * 10) + 1,
-                    Math.floor(Math.random() * (11 - length)) + 1,
+                    Math.floor(Math.random() * 10) + 1,
                 ];
-                coords.push(firstCoord);
-
-                if (Math.random() < 0.5) {
-                    for (let i = 1; i < length; i++) {
-                        coords.push([firstCoord[0], firstCoord[1] + i]);
-                    }
-                } else {
-                    for (let i = 1; i < length; i++) {
-                        coords.push([firstCoord[0] + i, firstCoord[1]]);
-                    }
-                }
 
                 // Check if any coordinate is out of bounds
-                isValid = coords.every(
-                    (coord) => coord[0] <= 10 && coord[1] <= 10
-                );
+                if (firstCoord[0] > 10 || firstCoord[1] > 10) {
+                    continue;
+                }
+
+                // Check if any coordinate is already used
+                let isOverlap = false;
+                for (let i = 0; i < length; i++) {
+                    const coordToCheck = [firstCoord[0] + i, firstCoord[1]];
+                    if (usedCoords.includes(coordToCheck.toString())) {
+                        isOverlap = true;
+                        break;
+                    }
+                    const coordToCheck2 = [firstCoord[0], firstCoord[1] + i];
+                    if (usedCoords.includes(coordToCheck2.toString())) {
+                        isOverlap = true;
+                        break;
+                    }
+                }
+                if (isOverlap) {
+                    continue;
+                }
+
+                // Check if all coordinates are valid
+                for (let i = 0; i < length; i++) {
+                    const coordToCheck = [firstCoord[0] + i, firstCoord[1]];
+                    if (
+                        coordToCheck[0] > 10 ||
+                        coordToCheck[1] > 10 ||
+                        coordToCheck[0] < 1 ||
+                        coordToCheck[1] < 1
+                    ) {
+                        isValid = false;
+                        break;
+                    }
+                    const coordToCheck2 = [firstCoord[0], firstCoord[1] + i];
+                    if (
+                        coordToCheck2[0] > 10 ||
+                        coordToCheck2[1] > 10 ||
+                        coordToCheck2[0] < 1 ||
+                        coordToCheck2[1] < 1
+                    ) {
+                        isValid = false;
+                        break;
+                    }
+                    isValid = true;
+                }
+                if (isValid) {
+                    for (let i = 0; i < length; i++) {
+                        const coordToAdd = [firstCoord[0] + i, firstCoord[1]];
+                        coords.push(coordToAdd);
+                        usedCoords.push(coordToAdd.toString());
+                    }
+                    break;
+                }
             }
 
             selectedPositions.push({

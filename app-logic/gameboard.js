@@ -19,11 +19,13 @@ export default class Gameboard {
         this._misses = [];
         this._hits = []; //this.hits;
         this._sunk = 0;
-        this._shipsLeft = this.shipsLeftover();
+        this._shipsLeft = 10; //this.shipsLeftover();
     }
 
     updateBoard(info) {
-        console.log("next comes the value of info arg passed into updateBoard");
+        console.log(
+            'next comes the value of info arg passed into updateBoard - example the args could be:[[[2],[3], "S"], [[2],[4], "S"]]'
+        );
         console.log(info);
         //info to be an ARRAY of data of what to put in which cell eg for a ship of
         //length 2 the args could be:[[[2],[3], "S"], [[2],[4], "S"]]
@@ -69,9 +71,11 @@ export default class Gameboard {
 
     issunk() {
         this._ships.forEach((ship) => {
-            if (ship.sunk) {
+            /*if (ship._sunk) {
                 this._sunk++;
-            }
+                // this.shipsLeftover();
+            }*/
+            this._sunk++;
         });
     }
 
@@ -79,11 +83,11 @@ export default class Gameboard {
         return this._sunk;
     }
 
-    shipsLeftover() {
+    /* shipsLeftover() {
         let sunkNum = this._sunk;
         let lengthNum = this._ships.length;
         this._shipsLeft = lengthNum - sunkNum;
-    }
+    }*/
 
     get shipsLeft() {
         return this._shipsLeft;
@@ -137,6 +141,7 @@ export default class Gameboard {
         //if the cell at validCoords has 'S' it returns 'hit'
         //else if it has '-' it returns 'miss'
         if (this.board[validCoords[0]][validCoords[1]] === "S") {
+            this.issunk();
             return "hit";
         } else if (this.board[validCoords[0]][validCoords[1]] === "-") {
             return "miss";

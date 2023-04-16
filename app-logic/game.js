@@ -11,4 +11,12 @@ export default class Game {
     get whoWon() {
         return this._whoWon;
     }
+
+    set isWon(boolVal) {
+        this._isWon = boolVal;
+    }
+
+    set whoWon(winner) {
+        this.whoWon = winner;
+    }
 }
