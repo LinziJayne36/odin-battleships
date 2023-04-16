@@ -45,7 +45,7 @@ describe("#Gameboard", () => {
         gameboard.ships = new Ship(2);
         expect(gameboard.ships[0]).toBeInstanceOf(Ship);
     });
-    test("the sunk method should add sunk ships to sunk", () => {
+    /*test("the sunk method should add sunk ships to sunk", () => {
         const gameboard = new Gameboard();
         gameboard.ships = new Ship(2); //creating some ships to populate ships: array
         gameboard.ships = new Ship(4); // ...
@@ -56,7 +56,7 @@ describe("#Gameboard", () => {
         expect(gameboard.ships[0].sunk).toEqual(true); //ensure setting up the sunk ship in ships array worked
         gameboard.issunk();
         expect(gameboard.sunk).toEqual(1);
-    });
+    });*/
     /* test("the set shipsLeft setter should calculate the number of unsunk ships remaining in the array in the ships: preoperty, the getter should return that number", () => {
         const gameboard = new Gameboard();
         gameboard.ships = new Ship(2); //creating some ships to populate ships array

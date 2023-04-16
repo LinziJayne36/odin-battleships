@@ -19,7 +19,7 @@ export default class Gameboard {
         this._misses = [];
         this._hits = []; //this.hits;
         this._sunk = 0;
-        this._shipsLeft = 10; //this.shipsLeftover();
+        //this._shipsLeft = 10; //this.shipsLeftover();
     }
 
     updateBoard(info) {
@@ -69,15 +69,11 @@ export default class Gameboard {
         return this._hits;
     }
 
-    issunk() {
-        this._ships.forEach((ship) => {
-            /*if (ship._sunk) {
-                this._sunk++;
-                // this.shipsLeftover();
-            }*/
-            this._sunk++;
-        });
-    }
+    /*issunk() { //WRONG! sunk here is an array of sunken ship coords, not a number!
+        
+      
+        this._sunk++;
+    }*/
 
     get sunk() {
         return this._sunk;
@@ -141,7 +137,7 @@ export default class Gameboard {
         //if the cell at validCoords has 'S' it returns 'hit'
         //else if it has '-' it returns 'miss'
         if (this.board[validCoords[0]][validCoords[1]] === "S") {
-            this.issunk();
+            //this.issunk();
             return "hit";
         } else if (this.board[validCoords[0]][validCoords[1]] === "-") {
             return "miss";
