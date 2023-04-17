@@ -137,6 +137,11 @@ export default class Player {
             }
             return true;
         });
+        if (availableCells.length === 0) {
+            // no available cells left, return null or throw an error
+            //throw error.console("all the squares are taken");
+            return null;
+        }
         const randIndex = Math.floor(Math.random() * availableCells.length);
         const randCell = availableCells[randIndex];
         this._attackSq = randCell;

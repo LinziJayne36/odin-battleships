@@ -125,6 +125,10 @@ export default class ComputerPlayer {
             }
             return true;
         });
+        if (availableCells.length === 0) {
+            // no available cells left, return null or throw an error
+            return "full";
+        }
         const randIndex = Math.floor(Math.random() * availableCells.length);
         const randCell = availableCells[randIndex];
         this._attackSq = randCell;
