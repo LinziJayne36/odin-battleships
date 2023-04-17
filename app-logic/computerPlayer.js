@@ -127,7 +127,7 @@ export default class ComputerPlayer {
         });
         if (availableCells.length === 0) {
             // no available cells left, return null or throw an error
-            return "full";
+            return "full"; //this should never happen once the computer chooses smartly and player chooses themselves
         }
         const randIndex = Math.floor(Math.random() * availableCells.length);
         const randCell = availableCells[randIndex];

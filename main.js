@@ -8,11 +8,8 @@ import Ship from "./app-logic/ship";
 let computerTurn = {
     val: false,
 };
-function gameLoop() {
-    beginGame();
-    return;
-}
-const beginGame = () => {
+
+const gameLoop = () => {
     //setup the game
     console.log("gameLoop was called");
     //let computerTurn = false;
@@ -30,11 +27,17 @@ const beginGame = () => {
         console.log(playerGameboard.sunk);
         if (playerGameboard.sunk === 10 || computerGameboard.sunk === 10) {
             console.log(
-                `when checkGame runs, the number of sunk player ships is ${playerGameboard.sunk}`
+                `when checkGame runs, the number of sunk player's ships is ${playerGameboard.sunk} and sthe number of sunk computer ships is ${computerGameboard.sunk} `
             );
             game.isWon = true;
-            // game.whoWon = "player";
-            console.log("The game has been won");
+            if (playerGameboard.sunk === 10) {
+                game.whoWon = "COMPUTER";
+            } else if (computerGameboard.sunk === 10) {
+                game.whoWon = "PLAYER";
+            }
+
+            console.log("GAME OVER");
+            console.log(`${game.whoWon} WINS!`);
         } else if (
             playerGameboard.shipsLeft < 10 ||
             computerGameboard.shipsLeft < 10

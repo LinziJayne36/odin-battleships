@@ -16,7 +16,7 @@ export default class Game {
         this._isWon = boolVal;
     }
 
-    set whoWon(winner) {
-        this.whoWon = winner;
+    set whoWon(winnerString) {
+        this._whoWon = winnerString;
     }
 }
