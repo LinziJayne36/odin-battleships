@@ -5,19 +5,25 @@ import ComputerPlayer from "./app-logic/computerPlayer";
 import Gameboard from "./app-logic/gameboard";
 import Game from "./app-logic/game";
 import Grid from "./ui/grid";
+import { getPlayerAttackInput } from "./dom-interactions/domInteraction";
+//import { handlingGridClicks } from "./dom-interactions/domInteraction";
 import Ship from "./app-logic/ship";
 let computerTurn = {
     val: false,
 };
-const computersGrid = new Grid();
 
-const gameLoop = () => {
+async function gameLoop() {
     //setup the game
     console.log("gameLoop was called");
     //let computerTurn = false;
 
     let validMove = false;
     const game = new Game();
+    /*const computerGrid = new Grid((row, col) => {
+        console.log(`grid got clicked at ${row},${col}`);
+    });
+    computerGrid.drawGrid();*/
+
     const computerGrid = new Grid();
     computerGrid.drawGrid();
 
@@ -31,7 +37,7 @@ const gameLoop = () => {
         console.log(playerGameboard.sunk);
         if (playerGameboard.sunk === 10 || computerGameboard.sunk === 10) {
             console.log(
-                `when checkGame runs, the number of sunk player's ships is ${playerGameboard.sunk} and sthe number of sunk computer ships is ${computerGameboard.sunk} `
+                `when checkGame runs, the number of sunk player's ships is ${playerGameboard.sunk} and the number of sunk computer ships is ${computerGameboard.sunk} `
             );
             game.isWon = true;
             if (playerGameboard.sunk === 10) {
@@ -100,10 +106,17 @@ const gameLoop = () => {
                 player._attackSq = null;
                 //repeat until valid coords are provided
                 //get player coords for attack on computerGameboard
-                player.calcAttackSq();
+
+                // Wait for the user to select a square
+                console.log("player to click a square...");
+                const selectedSquare = await getPlayerAttackInput();
+                console.log(selectedSquare);
+                //now, must set the attackSq property of player
+                player.attackSq = selectedSquare;
+                //player.calcAttackSq();
 
                 console.log("New attack square calculated by player object");
-                //player.calcAttackSq() //will populate player.attackSq with move coords
+                //player.calcAttackSq() //will populate player.attackSq with move coords - redundant once user input can be gotten via ui
                 if (player._attackSq === null) {
                     checkGame();
                     console.log(game.isWon);
@@ -319,7 +332,7 @@ const gameLoop = () => {
     console.log(computerGameboard.hits);
     console.log(computerGameboard.misses);
     console.log(computerGameboard.sunk);
-};
+}
 
 /*
 import gameLoop from "../main";

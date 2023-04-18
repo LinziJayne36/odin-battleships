@@ -11,6 +11,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #adc7d9;
     border-top: solid #808080;
     border-left: solid #808080;
+    cursor: pointer;
+}
+
+.squares:hover {
+    background-color: #e7f4fa;
 }
