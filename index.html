@@ -9,8 +9,12 @@
     <body>
         <div id="app">
             <button id="startButton">START</button>
-            <span><button>Choose Player Ship Positions</button></span>
-            <span><button>Choose Player Attack Square</button></span>
+            <div class="computerGrid">
+                <!--JS will inject the grid here-->
+            </div>
+            <div class="playerGrid">
+                <!--JS will inject the grid here-->
+            </div>
         </div>
         <script type="module">
             import gameLoop from "./main.js";

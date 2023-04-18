@@ -4,10 +4,12 @@ import Player from "./app-logic/player";
 import ComputerPlayer from "./app-logic/computerPlayer";
 import Gameboard from "./app-logic/gameboard";
 import Game from "./app-logic/game";
+import Grid from "./ui/grid";
 import Ship from "./app-logic/ship";
 let computerTurn = {
     val: false,
 };
+const computersGrid = new Grid();
 
 const gameLoop = () => {
     //setup the game
@@ -16,6 +18,8 @@ const gameLoop = () => {
 
     let validMove = false;
     const game = new Game();
+    const computerGrid = new Grid();
+    computerGrid.drawGrid();
 
     //checkGame function
     function checkGame() {

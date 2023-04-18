@@ -1,0 +1,16 @@
+.computerGrid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    margin: auto;
+    height: 500px;
+    width: 500px;
+}
+
+.squares {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: solid #808080;
+    border-left: solid #808080;
+}
