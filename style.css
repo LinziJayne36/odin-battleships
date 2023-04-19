@@ -1,4 +1,5 @@
-.computerGrid {
+.computerGrid,
+.playerGrid {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(10, 1fr);
@@ -7,7 +8,8 @@
     width: 500px;
 }
 
-.squares {
+.playerSquares,
+.computerSquares {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -17,6 +19,7 @@
     cursor: pointer;
 }
 
-.squares:hover {
+.playerSquares:hover,
+.computerSquares:hover {
     background-color: #e7f4fa;
 }

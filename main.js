@@ -24,8 +24,11 @@ async function gameLoop() {
     });
     computerGrid.drawGrid();*/
 
-    const computerGrid = new Grid();
+    const computerGrid = new Grid("computerGrid");
     computerGrid.drawGrid();
+
+    const playerGrid = new Grid("playerGrid");
+    playerGrid.drawGrid();
 
     //checkGame function
     function checkGame() {
@@ -103,15 +106,17 @@ async function gameLoop() {
             validMove = false;
             let playerMove;
             while (validMove === false) {
-                player._attackSq = null;
+                player.attackSq = null;
                 //repeat until valid coords are provided
                 //get player coords for attack on computerGameboard
 
                 // Wait for the user to select a square
                 console.log("player to click a square...");
-                const selectedSquare = await getPlayerAttackInput();
+                const selectedSquare = await getPlayerAttackInput(
+                    "computerSquares"
+                ); //waiting for player to make their move on cells with class of 'computerSquares'... ... ...
                 console.log(selectedSquare);
-                //now, must set the attackSq property of player
+                //now, must set the attackSq property of player on player obj
                 player.attackSq = selectedSquare;
                 //player.calcAttackSq();
 
