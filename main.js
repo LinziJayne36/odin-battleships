@@ -149,6 +149,7 @@ async function gameLoop() {
                     computerGameboard.updateBoard([
                         [player.attackSq[0], player.attackSq[1], "X"],
                     ]);
+                    computerGrid.drawShot(player.attackSq, "X");
                     //update hit property of relevant ship object (find obj in computerGameboard.ships arr with coord same as player move)
                     const shipToHit = computerGameboard.ships.find((ship) => {
                         console.log(ship);
