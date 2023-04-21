@@ -81,23 +81,8 @@ export default class Grid {
                 console.log(
                     "YAY!The two are equal!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
                 );
-                cell.innerText = "X";
+                cell.innerText = shotOutcome;
             }
-
-            /* if (
-                cell.dataset.row === enemyShot[0] &&
-                cell.dataset.col === enemyShot[1]
-            ) {
-                cell.innerText = `${shotOutcome}`;
-            }*/
         });
-        //...and then save in variable targetCell and do targetCell.innerText = shotOutcome
     }
-
-    /* handleCellClick(event) {
-        const row = parseInt(event.target.dataset.row);
-        const col = parseInt(event.target.dataset.col);
-        this.handleClick(row, col);
-        //console.log(this.handleClick);
-    }*/
 }

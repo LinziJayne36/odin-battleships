@@ -6,16 +6,22 @@ import Gameboard from "./app-logic/gameboard";
 import Game from "./app-logic/game";
 import Grid from "./ui/grid";
 import { getPlayerAttackInput } from "./dom-interactions/domInteraction";
+import { startBtnDisplay } from "./ui/start";
+import { gameTitleDisplay } from "./ui/gameTitle";
 //import { handlingGridClicks } from "./dom-interactions/domInteraction";
 import Ship from "./app-logic/ship";
 let computerTurn = {
     val: false,
 };
+gameTitleDisplay("add");
+startBtnDisplay("add");
 
 async function gameLoop() {
     //setup the game
     console.log("gameLoop was called");
     //let computerTurn = false;
+    startBtnDisplay("remove");
+    gameTitleDisplay("remove");
 
     let validMove = false;
     const game = new Game();
@@ -51,6 +57,7 @@ async function gameLoop() {
 
             console.log("GAME OVER");
             console.log(`${game.whoWon} WINS!`);
+            alert(`${game.whoWon} WINS!`);
         } else if (
             playerGameboard.shipsLeft < 10 ||
             computerGameboard.shipsLeft < 10
@@ -103,6 +110,7 @@ async function gameLoop() {
         }*/
         if (computerTurn.val === false) {
             //Take the PLAYER'S TURN -----------------------------------------------------------------------
+
             validMove = false;
             let playerMove;
             while (validMove === false) {
@@ -174,14 +182,6 @@ async function gameLoop() {
                     ).length;
                     computerGameboard._sunk = sunkNum; //setting the number of sunk ships on a gameboard to be the number of ship objects with a sunk property that equals true...
                     console.log(sunkNum);
-                    /* const sunkShip = computerGameboard.ships.filter(
-                    (ship) => ship.sunk === true
-                );
-
-                if (sunkShip != []) {
-                    console.log(sunkShip);
-                    computerGameboard.issunk(sunkShip);
-                }*/
 
                     checkGame();
                     if (game.isWon) {
@@ -205,6 +205,7 @@ async function gameLoop() {
                     computerGameboard.updateBoard([
                         [player.attackSq[0], player.attackSq[1], "/"],
                     ]);
+                    computerGrid.drawShot(player.attackSq, "/");
                     console.log(computerGameboard.board);
                     //set computerTurn to true as the player's turn is now over because they did not get a hit
                     computerTurn.val = true;
@@ -216,6 +217,8 @@ async function gameLoop() {
                 throw console.error("Whoa!!! checkMove evaluated to false");
             }
         } else if (computerTurn.val === true) {
+            // Wait for 3 seconds before calculating computer's move... ... ...
+            await new Promise((resolve) => setTimeout(resolve, 3000));
             //Take the COMPUTER'S TURN turn --------------------------------------------------------------------
             computerPlayer.calcAttackSq();
             console.log(
@@ -246,6 +249,7 @@ async function gameLoop() {
                         );
                     });
                 });
+                playerGrid.drawShot(computerPlayer.attackSq, "X");
                 console.log(shipToHit);
                 if (shipToHit) {
                     shipToHit.hit();
@@ -297,6 +301,7 @@ async function gameLoop() {
                         "/",
                     ],
                 ]);
+                playerGrid.drawShot(computerPlayer.attackSq, "/");
 
                 //set computerTurn to false as the computerPlayer's turn is now over because they did not get a hit
                 computerTurn.val = false;
