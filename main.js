@@ -17,25 +17,6 @@ gameTitleDisplay("add");
 startBtnDisplay("add");
 
 async function gameLoop() {
-    //setup the game
-    console.log("gameLoop was called");
-    //let computerTurn = false;
-    startBtnDisplay("remove");
-    gameTitleDisplay("remove");
-
-    let validMove = false;
-    const game = new Game();
-    /*const computerGrid = new Grid((row, col) => {
-        console.log(`grid got clicked at ${row},${col}`);
-    });
-    computerGrid.drawGrid();*/
-
-    const computerGrid = new Grid("computerGrid");
-    computerGrid.drawGrid();
-
-    const playerGrid = new Grid("playerGrid");
-    playerGrid.drawGrid();
-
     //checkGame function
     function checkGame() {
         console.log(
@@ -74,6 +55,13 @@ async function gameLoop() {
             );
         }
     }
+    //setup the game
+    console.log("gameLoop was called");
+    startBtnDisplay("remove");
+    gameTitleDisplay("remove");
+
+    let validMove = false;
+    const game = new Game();
 
     //AT THIS POINT WE'D NEED TO GET THE PLAYER'S SELECTION OF COORDS FOR HIDING THEIR SHIPS
     //SO, START WORK ON DOM INTERACTION MODULE NOW...
@@ -83,7 +71,20 @@ async function gameLoop() {
     const playerGameboard = new Gameboard();
     console.log(playerGameboard.board);
     console.log("Next is the player's selected ship placement data");
-    player.generateRandomPositions();
+    //player ship placement options to be created and choices integrated...
+    //generate placement grid
+    const playerPlacementGrid = new Grid("playerPlacementGrid");
+    playerPlacementGrid.drawGrid();
+    //TODO now we need to wait for the player to select their ship placements... ... ...
+
+    //player and computer grids are created...
+    const computerGrid = new Grid("computerGrid");
+    //computerGrid.drawGrid();
+
+    const playerGrid = new Grid("playerGrid");
+    //playerGrid.drawGrid();
+
+    player.generateRandomPositions(); //will only need to run if player presses random button...
     console.log("Next is the player's gameboard with the ships placed on it");
     playerGameboard.placeShips(player.selectedPositions);
     console.log(playerGameboard.board);

@@ -2,6 +2,8 @@ export default class Grid {
     //constructor(handleClick) {
     constructor(owner) {
         //where owner is the player whose board this will be and must match the html class of the containing element ie: playerGrid | computerGrid
+        //OR in the case of the player's selection grid: where owner is the player+purpose and must match the class of the containing element:
+        //... playerPlacementGrid
         this.size = 100;
         this.whoseGrid = owner;
         this.sqClass = this.whichClass();
@@ -9,7 +11,10 @@ export default class Grid {
     }
 
     whichClass() {
-        if (this.whoseGrid === "playerGrid") {
+        if (
+            this.whoseGrid === "playerGrid" ||
+            this.whoseGrid === "playerPlacementGrid"
+        ) {
             return "playerSquares";
         } else if (this.whoseGrid === "computerGrid") {
             return "computerSquares";
@@ -27,7 +32,10 @@ export default class Grid {
         );
         gridContainer.setAttribute("class", `${this.whoseGrid}`);
         appContainer.appendChild(gridContainer);
-        if (this.whoseGrid === "playerGrid") {
+        if (
+            this.whoseGrid === "playerGrid" ||
+            this.whoseGrid === "playerPlacementGrid"
+        ) {
             sqClass = "playerSquares";
         } else if (this.whoseGrid === "computerGrid") {
             sqClass = "computerSquares";

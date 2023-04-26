@@ -21,3 +21,8 @@ export const getPlayerAttackInput = (cellClass) => {
         });
     });
 };
+
+export const getPlayerShipPlacements = () => {
+    const selectedPositions = [];
+    const usedCoords = [];
+};
