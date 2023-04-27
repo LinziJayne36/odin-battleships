@@ -8,6 +8,7 @@ import Grid from "./ui/grid";
 import { getPlayerAttackInput } from "./dom-interactions/domInteraction";
 import { startBtnDisplay } from "./ui/start";
 import { gameTitleDisplay } from "./ui/gameTitle";
+import PlayerFleet from "./ui/fleet";
 //import { handlingGridClicks } from "./dom-interactions/domInteraction";
 import Ship from "./app-logic/ship";
 let computerTurn = {
@@ -75,6 +76,10 @@ async function gameLoop() {
     //generate placement grid
     const playerPlacementGrid = new Grid("playerPlacementGrid");
     playerPlacementGrid.drawGrid();
+    //TODO create the ui for player fleet placement
+    const playerFleetUI = new PlayerFleet();
+    playerFleetUI.drawPlayerFleet();
+
     //TODO now we need to wait for the player to select their ship placements... ... ...
 
     //player and computer grids are created...

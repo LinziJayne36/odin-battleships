@@ -24,3 +24,58 @@
 .computerSquares:hover {
     background-color: #e7f4fa;
 }
+
+.typeWrapper {
+    display: flex;
+}
+
+.battleshipCountDiv,
+.cruiserCountDiv,
+.subCountDiv,
+.destroyerCountDiv {
+    display: flex;
+    align-items: center;
+    padding-left: 2rem;
+}
+
+.battleship {
+    width: 178px;
+    height: 48px;
+    background-color: rgb(22, 11, 83);
+    position: relative;
+}
+.battleship::before,
+.cruiser::before,
+.sub::before,
+.destroyer::after {
+    content: "";
+    position: absolute;
+    right: -19px;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-top: 24px solid transparent;
+    border-bottom: 24px solid transparent;
+    border-left: 20px solid rgb(22, 11, 83);
+}
+
+.cruiser {
+    width: 135px;
+    height: 48px;
+    background-color: rgb(22, 11, 83);
+    position: relative;
+}
+
+.sub {
+    width: 84px;
+    height: 48px;
+    background-color: rgb(22, 11, 83);
+    position: relative;
+}
+
+.destroyer {
+    width: 22px;
+    height: 48px;
+    background-color: rgb(22, 11, 83);
+    position: relative;
+}
