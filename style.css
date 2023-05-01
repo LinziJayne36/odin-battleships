@@ -38,44 +38,41 @@
     padding-left: 2rem;
 }
 
-.battleship {
-    width: 178px;
+.battleship,
+.cruiser,
+.sub,
+.destroyer {
     height: 48px;
-    background-color: rgb(22, 11, 83);
+    background-color: rgba(16, 11, 83, 0.9);
     position: relative;
+    cursor: move;
 }
-.battleship::before,
-.cruiser::before,
-.sub::before,
-.destroyer::after {
-    content: "";
-    position: absolute;
-    right: -19px;
-    top: 0;
-    width: 0;
-    height: 0;
-    border-top: 24px solid transparent;
-    border-bottom: 24px solid transparent;
-    border-left: 20px solid rgb(22, 11, 83);
+
+.battleship {
+    width: 200px;
 }
 
 .cruiser {
-    width: 135px;
-    height: 48px;
-    background-color: rgb(22, 11, 83);
-    position: relative;
+    width: 149px;
+    display: flex;
+}
+
+.cruiserCell {
+    width: 33.3%;
 }
 
 .sub {
-    width: 84px;
-    height: 48px;
-    background-color: rgb(22, 11, 83);
-    position: relative;
+    width: 96px;
 }
 
 .destroyer {
-    width: 22px;
-    height: 48px;
-    background-color: rgb(22, 11, 83);
-    position: relative;
+    width: 48px;
+}
+
+.handle {
+    position: absolute;
+    right: -2px;
+    width: 20px;
+    height: 100%;
+    pointer-events: auto;
 }

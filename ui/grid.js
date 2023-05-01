@@ -1,3 +1,5 @@
+import { drop, drag, allowDrop } from "./dNd";
+
 export default class Grid {
     //constructor(handleClick) {
     constructor(owner) {
@@ -24,14 +26,19 @@ export default class Grid {
     drawGrid() {
         let cellDiv;
         let sqClass;
+
         const appContainer = document.getElementById("app");
-        //const gridContainer = document.querySelector(`.${this.whoseGrid}`);
         const gridContainer = document.createElement(
             "div",
             `.${this.whoseGrid}`
         );
         gridContainer.setAttribute("class", `${this.whoseGrid}`);
         appContainer.appendChild(gridContainer);
+
+        //gridContainer.addEventListener("dragstart", drag);
+        gridContainer.addEventListener("dragover", allowDrop);
+        gridContainer.addEventListener("drop", drop);
+
         if (
             this.whoseGrid === "playerGrid" ||
             this.whoseGrid === "playerPlacementGrid"
@@ -46,11 +53,13 @@ export default class Grid {
                 cellDiv = document.createElement("div");
                 cellDiv.dataset.row = i;
                 cellDiv.dataset.col = j;
-                /*cellDiv.addEventListener(
-                    "click",
-                    this.handleCellClick.bind(this)
-                );*/
                 cellDiv.setAttribute("class", `${sqClass}`);
+                cellDiv.setAttribute(
+                    "id",
+                    `${cellDiv.dataset.row},${cellDiv.dataset.col}`
+                );
+                /* cellDiv.setAttribute("ondrop", drop);
+                cellDiv.setAttribute("ondragover", allowDrop); */
                 gridContainer.setAttribute(
                     "style",
                     "border-right: solid; border-bottom: solid;border-width: 0.5px;"
