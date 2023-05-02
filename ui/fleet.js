@@ -1,4 +1,4 @@
-import { drag, drop, allowDrop } from "./dNd";
+import { drag, drop, allowDrop, dragEnd } from "./dNd";
 
 export default class PlayerFleet {
     constructor() {
@@ -39,13 +39,19 @@ export default class PlayerFleet {
         const battleshipCountVal = createElem("div", "battleshipCountVal");
         const battleship = createElem("div", "battleship", "battleship1"); //use class .battleship to style the ship
         battleship.setAttribute("draggable", "true");
-        battleship.addEventListener("mousedown", (e) => {
-            const cellsq = e.target.id;
+        //battleship.addEventListener("mousedown", mousedownGridClick);
+        //battleship.addEventListener("dragstart", drag);
+        battleship.setAttribute("draggable", "true");
+        battleship.addEventListener("mousedown", (ev) => {
+            let cellsq = ev.target.id;
             console.log(cellsq);
-            cruiser.dataset.clicked = cellsq;
+            battleship.dataset.clicked = cellsq;
             // e.target.id.dataset.cellsquare = e.target.id;
         });
+
         battleship.addEventListener("dragstart", drag);
+        battleship.addEventListener("dragend", dragEnd);
+
         //Adds the battleship wrapper to the main fleet wrapper
         fleetWrapper.appendChild(battleshipWrapper);
         //Adds the battleshipIconsDiv to the battleshipWrapper
@@ -58,6 +64,25 @@ export default class PlayerFleet {
         battleshipCountDiv.appendChild(battleshipCountVal);
         //Writes the variable value of battleshipCount to the battleshipCountVal p elem
         battleshipCountVal.innerText = this.battleshipCount;
+        const battleshipCell1 = createElem(
+            "div",
+            "shipCell battleshipCell",
+            "battleshipCell1"
+        );
+        const battleshipCell2 = createElem(
+            "div",
+            "shipCell battleshipCell",
+            "battleshipCell2"
+        );
+        const battleshipCell3 = createElem(
+            "div",
+            "shipCell battleshipCell",
+            "battleshipCell3"
+        );
+
+        battleship.appendChild(battleshipCell1);
+        battleship.appendChild(battleshipCell2);
+        battleship.appendChild(battleshipCell3);
 
         //SETTING UP CRUISERS SECTION .. x1 ship icon added and then a count of how many left to place
         const cruiserWrapper = createElem(
@@ -70,30 +95,6 @@ export default class PlayerFleet {
         const cruiserCountVal = createElem("p", "cruiserCountVal");
         const cruiser = createElem("div", "cruiser", "cruiser1"); //use class .cruiser to style the ship
         cruiser.setAttribute("draggable", "true");
-        cruiser.addEventListener("mousedown", (e) => {
-            const cellsq = e.target.id;
-            console.log(cellsq);
-            cruiser.dataset.clicked = cellsq;
-            // e.target.id.dataset.cellsquare = e.target.id;
-        });
-        cruiser.addEventListener("dragstart", drag);
-
-        /*const cruiserHandleElem = createElem(
-            "div",
-            "handle",
-            "cruiserHandleElem"
-        );*/
-
-        //Create handle div element to put in rhs of ships to allow drag only in specific area
-        //cruiserHandleElem.setAttribute("draggable", "true");
-        //cruiser.appendChild(cruiserHandleElem);
-
-        /*window.onload = function () {
-            const cruiserHandle = document.getElementById("cruiserHandleElem");
-            console.log(cruiserHandle);
-            //cruiserHandleElem.addEventListener("dragstart", drag);
-            console.log(document.querySelectorAll(".cruiser .handle"));
-        };*/
 
         //Adds the created elements
         fleetWrapper.appendChild(cruiserWrapper);
@@ -122,6 +123,15 @@ export default class PlayerFleet {
 
         cruiserCountDiv.appendChild(cruiserCountVal);
         cruiserCountVal.innerText = this.cruiserCount;
+        cruiser.addEventListener("mousedown", (e) => {
+            console.log(e.currentTarget);
+            let cellsq = e.target.id;
+            console.log(cellsq);
+            cruiser.dataset.clicked = cellsq;
+            // e.target.id.dataset.cellsquare = e.target.id;
+        });
+        cruiser.addEventListener("dragstart", drag);
+        cruiser.addEventListener("dragend", dragEnd);
 
         //SETTING UP SUBS SECTION .. x1 ship icon added and then a count of how many left to place
         const subWrapper = createElem("div", "typeWrapper", "subWrapper");
@@ -131,12 +141,14 @@ export default class PlayerFleet {
         const sub = createElem("div", "sub", "sub1"); //use class .sub to style the ship
         sub.setAttribute("draggable", "true");
         sub.addEventListener("dragstart", drag);
+        sub.addEventListener("dragend", dragEnd);
         sub.addEventListener("mousedown", (e) => {
-            const cellsq = e.target.id;
+            let cellsq = e.target.id;
             console.log(cellsq);
-            cruiser.dataset.clicked = cellsq;
+            sub.dataset.clicked = cellsq;
             // e.target.id.dataset.cellsquare = e.target.id;
         });
+
         //Adds the created elements
         fleetWrapper.appendChild(subWrapper);
         subWrapper.appendChild(subIconsDiv);
@@ -144,6 +156,12 @@ export default class PlayerFleet {
         subIconsDiv.appendChild(sub);
         subCountDiv.appendChild(subCountVal);
         subCountVal.innerText = this.subCount;
+
+        const subCell1 = createElem("div", "shipCell subCell", "subCell1");
+        const subCell2 = createElem("div", "shipCell subCell", "subCell2");
+
+        sub.appendChild(subCell1);
+        sub.appendChild(subCell2);
 
         //SETTING UP DESTROYERS SECTION .. x1 ship icon added and then a count of how many left to place
         const destroyerWrapper = createElem(
@@ -156,19 +174,30 @@ export default class PlayerFleet {
         const destroyerCountVal = createElem("p", "destroyerCountVal");
         const destroyer = createElem("div", "destroyer", "destroyer1"); //use class .destroyer to style the ship
         destroyer.setAttribute("draggable", "true");
-        destroyer.addEventListener("dragstart", drag);
-        destroyer.addEventListener("mousedown", (e) => {
-            const cellsq = e.target.id;
-            console.log(cellsq);
-            cruiser.dataset.clicked = cellsq;
-            // e.target.id.dataset.cellsquare = e.target.id;
-        });
+
         //Adds the created elements
         fleetWrapper.appendChild(destroyerWrapper);
         destroyerWrapper.appendChild(destroyerIconsDiv);
         destroyerWrapper.appendChild(destroyerCountDiv);
         destroyerIconsDiv.appendChild(destroyer);
+        const destroyerCell1 = createElem(
+            "div",
+            "shipCell destroyerCell",
+            "destroyerCell1"
+        );
+
+        destroyer.appendChild(destroyerCell1);
         destroyerCountDiv.appendChild(destroyerCountVal);
         destroyerCountVal.innerText = this.destroyerCount;
+        destroyer.addEventListener("mousedown", (e) => {
+            console.log(e.target);
+            let cellsq = e.target.id;
+            console.log(cellsq);
+            destroyer.dataset.clicked = cellsq;
+            // e.target.id.dataset.cellsquare = e.target.id;
+        });
+
+        destroyer.addEventListener("dragstart", drag);
+        destroyer.addEventListener("dragend", dragEnd);
     }
 }
