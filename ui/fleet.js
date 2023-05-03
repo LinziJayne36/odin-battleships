@@ -79,10 +79,16 @@ export default class PlayerFleet {
             "shipCell battleshipCell",
             "battleshipCell3"
         );
+        const battleshipCell4 = createElem(
+            "div",
+            "shipCell battleshipCell",
+            "battleshipCell4"
+        );
 
         battleship.appendChild(battleshipCell1);
         battleship.appendChild(battleshipCell2);
         battleship.appendChild(battleshipCell3);
+        battleship.appendChild(battleshipCell4);
 
         //SETTING UP CRUISERS SECTION .. x1 ship icon added and then a count of how many left to place
         const cruiserWrapper = createElem(

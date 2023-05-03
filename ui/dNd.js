@@ -27,8 +27,9 @@ export function allowDrop(event) {
     console.log("allowDrop event has fired");
     event.preventDefault();
 }
-
+export const droppedShips = [];
 export function drop(event) {
+    //let droppedShips = []; //this is an array that will hold an array for each ship that itself holds an array for each of the ship's coords
     //works for a single-cell ship
     console.log("drop event has fired");
     event.preventDefault();
@@ -243,13 +244,19 @@ export function drop(event) {
     } else if (draggableElement.id.includes("cruiser")) {
         len = 3;
         draggableElement.style.width = "47px";
+        let cruiserArr = [[x, y]];
+
+        let cruiserCoord2 = [];
+        let cruiserCoord3 = [];
         //Starting to integrate ship placing logic for rest of grid cells....
         if (startCell.includes("1")) {
             //then there are 2 more ship placements to the RHS
             y2 = y + 1;
+            cruiserCoord2.push(x, y2);
             secondCoord = `${x.toString()},${y2.toString()}`;
             console.log(`secondCoord says: ${secondCoord}`);
             y3 = y + 2;
+            cruiserCoord3.push(x, y3);
             thirdCoord = `${x.toString()},${y3.toString()}`;
             console.log(`thirdCoord says: ${thirdCoord}`);
             secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
@@ -278,8 +285,10 @@ export function drop(event) {
         } else if (startCell.includes("2")) {
             //then there are 1 ship placement to the LHS and 1 to the RHS
             y2 = y - 1;
+            cruiserCoord2.push(x, y2);
             secondCoord = `${x.toString()},${y2.toString()}`;
             y3 = y + 1;
+            cruiserCoord3.push(x, y3);
             thirdCoord = `${x.toString()},${y3.toString()}`;
             secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
             thirdCell = document.getElementById(`${thirdCoord}`); //finding el where its id === thirdCoord
@@ -305,8 +314,10 @@ export function drop(event) {
         } else if (startCell.includes("3")) {
             //then there are 2 ship placements on LHS
             y2 = y - 1;
+            cruiserCoord2.push(x, y2);
             secondCoord = `${x.toString()},${y2.toString()}`;
             y3 = y - 2;
+            cruiserCoord3.push(x, y3);
             thirdCoord = `${x.toString()},${y3.toString()}`;
             secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
             thirdCell = document.getElementById(`${thirdCoord}`); //finding el where its id === thirdCoord
@@ -330,6 +341,10 @@ export function drop(event) {
             thirdCell.removeEventListener("dragover", allowDrop);
             thirdCell.removeEventListener("drop", drop);
         }
+        cruiserArr.push(cruiserCoord2);
+        cruiserArr.push(cruiserCoord3);
+        droppedShips.push(cruiserArr);
+        console.log(droppedShips);
     } else if (draggableElement.id.includes("sub")) {
         len = 2;
         draggableElement.style.width = "47px";
@@ -378,15 +393,20 @@ export function drop(event) {
         }
     } else if (draggableElement.id.includes("destroyer")) {
         len = 1;
+        let destroyerArr = [[x, y]];
+
         //we leave the width as it is at 149px...
         let draggableElementCloneDest = draggableElement.cloneNode(true);
         dropzone.appendChild(draggableElementCloneDest);
+        droppedShips.push(destroyerArr); //building the droppedShips array to supply selected_positions
+        console.log(destroyerArr);
         draggableElementCloneDest.classList.add("cloned");
         //draggableElementClone.removeAttribute("id");
     }
     // Remove the event listeners to disable dragging
 
     //dropzone.appendChild(draggableElement);
+    console.log(droppedShips);
 }
 
 export function dragEnd(event) {
