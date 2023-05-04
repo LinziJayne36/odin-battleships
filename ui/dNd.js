@@ -60,6 +60,9 @@ export function drop(event) {
     console.log(dropzone.classList);
     if (dropzone.classList.contains("shipCell")) {
         event.preventDefault(); // Prevent the default behavior of the drop event
+        console.log(draggableElement);
+        //PROBLEM is in line 467 onwards - need to somehow conditionally check if the ship is a failed drop before making undraggable!
+        draggableElement.classList.add("failedDrop");
         return;
     }
     let len;
@@ -440,16 +443,13 @@ export function drop(event) {
         let destroyerArr = [[x, y]];
 
         //we leave the width as it is at 149px...
-        let draggableElementCloneDest = draggableElement.cloneNode(true);
-        dropzone.appendChild(draggableElementCloneDest);
+        let draggableElementClone = draggableElement.cloneNode(true);
+        dropzone.appendChild(draggableElementClone);
         droppedShips.push(destroyerArr); //building the droppedShips array to supply selected_positions
         console.log(destroyerArr);
-        draggableElementCloneDest.classList.add("cloned");
-        //draggableElementClone.removeAttribute("id");
+        draggableElementClone.classList.add("cloned");
+        draggableElementClone.removeAttribute("id");
     }
-    // Remove the event listeners to disable dragging
-
-    //dropzone.appendChild(draggableElement);
 
     console.log(droppedShips);
 }
@@ -457,9 +457,16 @@ export function drop(event) {
 export function dragEnd(event) {
     // Code to handle drag end
     console.log("dragEnd function fires...");
+    const failedDrop = event.target.classList.contains("failedDrop");
+    console.log(failedDrop);
+    if (failedDrop) {
+        event.preventDefault();
+        event.target.classList.remove("failedDrop");
+        return;
+    }
     const undraggableElement = document.getElementById(event.target.id);
-    console.log(undraggableElement);
-    console.log(undraggableElement.hasAttribute("draggable"));
+    //console.log(undraggableElement);
+    //console.log(undraggableElement.hasAttribute("draggable"));
 
     let clonedElements = document.querySelectorAll(".cloned");
     for (let i = 0; i < clonedElements.length; i++) {
