@@ -83,6 +83,16 @@ export function drop(event) {
     console.log(`x says: ${x}`);
 
     console.log(`y says: ${y}`);
+    if (x > 10 || y > 10) {
+        event.preventDefault();
+        console.log("Attempted drop coord is off the grid");
+        return;
+    }
+    if (dropzone.hasChildNodes()) {
+        console.log("The initial coord already has a ship");
+        event.preventDefault();
+        return;
+    }
     let y2;
     let y3;
     let y4;
@@ -93,7 +103,8 @@ export function drop(event) {
         len = 4;
         draggableElement.style.width = "47px";
         //should start off empty and have x,y pushed if ALL coords are free
-        let battleshipArr = [[x, y]];
+        //let battleshipArr = [[x, y]];
+        let battleshipArr = [];
 
         let battleshipCoord2 = [];
         let battleshipCoord3 = [];
@@ -118,20 +129,45 @@ export function drop(event) {
             console.log(thirdCell);
             fourthCell = document.getElementById(`${fourthCoord}`);
             //only do the appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            //TODO: WRITE CODE TO CHECK IF ALL COORDS ARE FREE AND WITHIN THE COSTRAINTS OF THE GRID
+            //this checks if within the grid
+            if (y2 > 10 || y3 > 10 || y4 > 10) {
+                console.log("the second coord is off the grid");
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
+            console.log(
+                "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
+            );
+            if (
+                secondCell.hasChildNodes() ||
+                thirdCell.hasChildNodes() ||
+                fourthCell.hasChildNodes()
+            ) {
+                console.log("At least one of those coords already has a ship");
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
+            draggableElementClone.classList.add("dropped");
             draggableElementClone.classList.add("cloned");
             draggableElementClone.removeAttribute("id");
             let clone1 = draggableElement.cloneNode(true);
             secondCell.appendChild(clone1);
+            clone1.classList.add("dropped");
             clone1.classList.add("cloned");
             clone1.removeAttribute("id");
             let clone2 = draggableElement.cloneNode(true);
             thirdCell.appendChild(clone2);
+            clone2.classList.add("dropped");
             clone2.classList.add("cloned");
             clone2.removeAttribute("id");
             let clone3 = draggableElement.cloneNode(true);
             fourthCell.appendChild(clone3);
+            clone3.classList.add("dropped");
             clone3.classList.add("cloned");
             clone3.removeAttribute("id");
             //make the occupied coords off-limits...
@@ -163,20 +199,41 @@ export function drop(event) {
             console.log(thirdCell);
             fourthCell = document.getElementById(`${fourthCoord}`);
             //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (y2 > 10 || y3 > 10 || y4 > 10) {
+                console.log("the second coord is off the grid");
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
+            if (
+                secondCell.hasChildNodes() ||
+                thirdCell.hasChildNodes() ||
+                fourthCell.hasChildNodes()
+            ) {
+                console.log("At least one of those coords already has a ship");
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
+
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
+            draggableElementClone.classList.add("dropped");
             draggableElementClone.classList.add("cloned");
             draggableElementClone.removeAttribute("id");
             let clone1 = draggableElement.cloneNode(true);
             secondCell.appendChild(clone1);
+            clone1.classList.add("dropped");
             clone1.classList.add("cloned");
             clone1.removeAttribute("id");
             let clone2 = draggableElement.cloneNode(true);
             thirdCell.appendChild(clone2);
+            clone2.classList.add("dropped");
             clone2.classList.add("cloned");
             clone2.removeAttribute("id");
             let clone3 = draggableElement.cloneNode(true);
             fourthCell.appendChild(clone3);
+            clone3.classList.add("dropped");
             clone3.classList.add("cloned");
             clone3.removeAttribute("id");
             //make the occupied coords off-limits...
@@ -208,20 +265,41 @@ export function drop(event) {
             console.log(thirdCell);
             fourthCell = document.getElementById(`${fourthCoord}`);
             //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (y2 > 10 || y3 > 10 || y4 > 10) {
+                console.log("the second coord is off the grid");
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
+            if (
+                secondCell.hasChildNodes() ||
+                thirdCell.hasChildNodes() ||
+                fourthCell.hasChildNodes()
+            ) {
+                console.log("At least one of those coords already has a ship");
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
+
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
+            draggableElementClone.classList.add("dropped");
             draggableElementClone.classList.add("cloned");
             draggableElementClone.removeAttribute("id");
             let clone1 = draggableElement.cloneNode(true);
             secondCell.appendChild(clone1);
+            clone1.classList.add("dropped");
             clone1.classList.add("cloned");
             clone1.removeAttribute("id");
             let clone2 = draggableElement.cloneNode(true);
             thirdCell.appendChild(clone2);
+            clone2.classList.add("dropped");
             clone2.classList.add("cloned");
             clone2.removeAttribute("id");
             let clone3 = draggableElement.cloneNode(true);
             fourthCell.appendChild(clone3);
+            clone3.classList.add("dropped");
             clone3.classList.add("cloned");
             clone3.removeAttribute("id");
             //make the occupied coords off-limits...
@@ -253,20 +331,41 @@ export function drop(event) {
             console.log(thirdCell);
             fourthCell = document.getElementById(`${fourthCoord}`);
             //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (y2 > 10 || y3 > 10 || y4 > 10) {
+                console.log("the second coord is off the grid");
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
+            if (
+                secondCell.hasChildNodes() ||
+                thirdCell.hasChildNodes() ||
+                fourthCell.hasChildNodes()
+            ) {
+                console.log("At least one of those coords already has a ship");
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
+
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
+            draggableElementClone.classList.add("dropped");
             draggableElementClone.classList.add("cloned");
             draggableElementClone.removeAttribute("id");
             let clone1 = draggableElement.cloneNode(true);
             secondCell.appendChild(clone1);
+            clone1.classList.add("dropped");
             clone1.classList.add("cloned");
             clone1.removeAttribute("id");
             let clone2 = draggableElement.cloneNode(true);
             thirdCell.appendChild(clone2);
+            clone2.classList.add("dropped");
             clone2.classList.add("cloned");
             clone2.removeAttribute("id");
             let clone3 = draggableElement.cloneNode(true);
             fourthCell.appendChild(clone3);
+            clone3.classList.add("dropped");
             clone3.classList.add("cloned");
             clone3.removeAttribute("id");
             //make the occupied coords off-limits...
@@ -311,6 +410,21 @@ export function drop(event) {
             thirdCell = document.getElementById(`${thirdCoord}`); //finding el where its id === thirdCoord
             console.log(thirdCell);
             //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (y2 > 10 || y3 > 10) {
+                console.log("the second coord is off the grid");
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
+            console.log(
+                "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
+            );
+            if (secondCell.hasChildNodes() || thirdCell.hasChildNodes()) {
+                console.log("At least one of those coords already has a ship");
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("cloned");
@@ -341,6 +455,21 @@ export function drop(event) {
             secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
             thirdCell = document.getElementById(`${thirdCoord}`); //finding el where its id === thirdCoord
             //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (y2 > 10 || y3 > 10) {
+                console.log("the second coord is off the grid");
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
+            console.log(
+                "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
+            );
+            if (secondCell.hasChildNodes() || thirdCell.hasChildNodes()) {
+                console.log("At least one of those coords already has a ship");
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("cloned");
@@ -371,6 +500,21 @@ export function drop(event) {
             secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
             thirdCell = document.getElementById(`${thirdCoord}`); //finding el where its id === thirdCoord
             //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (y2 > 10 || y3 > 10) {
+                console.log("the second coord is off the grid");
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
+            console.log(
+                "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
+            );
+            if (secondCell.hasChildNodes() || thirdCell.hasChildNodes()) {
+                console.log("At least one of those coords already has a ship");
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("cloned");
@@ -416,6 +560,21 @@ export function drop(event) {
             secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
             console.log(secondCell);
             //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (y2 > 10) {
+                console.log("the second coord is off the grid");
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
+            console.log(
+                "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
+            );
+            if (secondCell.hasChildNodes()) {
+                console.log("At least one of those coords already has a ship");
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("cloned");
@@ -436,6 +595,22 @@ export function drop(event) {
             subCoord2.push(x, y2); //do at end of this block if all are free !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             secondCoord = `${x.toString()},${y2.toString()}`;
             secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
+            //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (y2 > 10) {
+                console.log("the second coord is off the grid");
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
+            console.log(
+                "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
+            );
+            if (secondCell.hasChildNodes()) {
+                console.log("At least one of those coords already has a ship");
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("cloned");
@@ -460,7 +635,8 @@ export function drop(event) {
         //should start off empty and have x,y pushed if ALL coords are free
         let destroyerArr = [[x, y]];
 
-        //we leave the width as it is at 149px...
+        //we leave the width as it is at 149px..
+
         let draggableElementClone = draggableElement.cloneNode(true);
         dropzone.appendChild(draggableElementClone);
         //and do destroyerArr.push([x, y]) here because at the beginning the array should be empty as we dont know at that point if all coords will be free
@@ -501,10 +677,11 @@ export function dragEnd(event) {
     }*/
 
     //do we need a check here to ensure this only happens if the ship actually got dropped successfully?
-
-    undraggableElement.removeAttribute("draggable");
-    undraggableElement.removeEventListener("dragstart", drag);
-    undraggableElement.removeEventListener("dragend", dragEnd);
+    if (undraggableElement.classList.contains("dropped")) {
+        undraggableElement.removeAttribute("draggable");
+        undraggableElement.removeEventListener("dragstart", drag);
+        undraggableElement.removeEventListener("dragend", dragEnd);
+    }
 }
 
 /*export function mousedownGridClick(e) {
