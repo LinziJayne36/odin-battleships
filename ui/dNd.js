@@ -92,6 +92,7 @@ export function drop(event) {
     if (draggableElement.id.includes("battleship")) {
         len = 4;
         draggableElement.style.width = "47px";
+        //should start off empty and have x,y pushed if ALL coords are free
         let battleshipArr = [[x, y]];
 
         let battleshipCoord2 = [];
@@ -100,22 +101,23 @@ export function drop(event) {
         if (startCell.includes("1")) {
             //then there are 3 more ship placements to the RHS
             y2 = y + 1;
-            battleshipCoord2.push(x, y2);
+            battleshipCoord2.push(x, y2); //do at end of this block if all are free
             secondCoord = `${x.toString()},${y2.toString()}`;
             console.log(`secondCoord says: ${secondCoord}`);
             y3 = y + 2;
-            battleshipCoord3.push(x, y3);
+            battleshipCoord3.push(x, y3); //do at end of this block if all are free
             thirdCoord = `${x.toString()},${y3.toString()}`;
             console.log(`thirdCoord says: ${thirdCoord}`);
             y4 = y + 3;
             fourthCoord = `${x.toString()},${y4.toString()}`;
-            battleshipCoord4.push(x, y4);
+            battleshipCoord4.push(x, y4); //do at end of this block if all are free
             console.log(`fourthCoord says: ${fourthCoord}`);
             secondCell = document.getElementById(`${secondCoord}`);
             console.log(secondCell);
             thirdCell = document.getElementById(`${thirdCoord}`);
             console.log(thirdCell);
             fourthCell = document.getElementById(`${fourthCoord}`);
+            //only do the appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("cloned");
@@ -144,15 +146,15 @@ export function drop(event) {
         } else if (startCell.includes("2")) {
             //then there is 1 ship placement to LHS and 2 to RHS
             y2 = y - 1;
-            battleshipCoord2.push(x, y2);
+            battleshipCoord2.push(x, y2); //do at end of this block if all are free
             secondCoord = `${x.toString()},${y2.toString()}`;
             console.log(`secondCoord says: ${secondCoord}`);
             y3 = y + 1;
-            battleshipCoord3.push(x, y3);
+            battleshipCoord3.push(x, y3); //do at end of this block if all are free
             thirdCoord = `${x.toString()},${y3.toString()}`;
             console.log(`thirdCoord says: ${thirdCoord}`);
             y4 = y + 2;
-            battleshipCoord4.push(x, y4);
+            battleshipCoord4.push(x, y4); //do at end of this block if all are free
             fourthCoord = `${x.toString()},${y4.toString()}`;
             console.log(`fourthCoord says: ${fourthCoord}`);
             secondCell = document.getElementById(`${secondCoord}`);
@@ -160,6 +162,7 @@ export function drop(event) {
             thirdCell = document.getElementById(`${thirdCoord}`);
             console.log(thirdCell);
             fourthCell = document.getElementById(`${fourthCoord}`);
+            //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("cloned");
@@ -188,15 +191,15 @@ export function drop(event) {
         } else if (startCell.includes("3")) {
             //then there is 2 ship placements to LHS and 1 to RHS
             y2 = y - 1;
-            battleshipCoord2.push(x, y2);
+            battleshipCoord2.push(x, y2); //do at end of this block if all are free
             secondCoord = `${x.toString()},${y2.toString()}`;
             console.log(`secondCoord says: ${secondCoord}`);
             y3 = y - 2;
-            battleshipCoord3.push(x, y3);
+            battleshipCoord3.push(x, y3); //do at end of this block if all are free
             thirdCoord = `${x.toString()},${y3.toString()}`;
             console.log(`thirdCoord says: ${thirdCoord}`);
             y4 = y + 1;
-            battleshipCoord4.push(x, y4);
+            battleshipCoord4.push(x, y4); //do at end of this block if all are free
             fourthCoord = `${x.toString()},${y4.toString()}`;
             console.log(`fourthCoord says: ${fourthCoord}`);
             secondCell = document.getElementById(`${secondCoord}`);
@@ -204,6 +207,7 @@ export function drop(event) {
             thirdCell = document.getElementById(`${thirdCoord}`);
             console.log(thirdCell);
             fourthCell = document.getElementById(`${fourthCoord}`);
+            //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("cloned");
@@ -232,15 +236,15 @@ export function drop(event) {
         } else if (startCell.includes("4")) {
             //then there is 3 ship placements to LHS and 0 to RHS
             y2 = y - 1;
-            battleshipCoord2.push(x, y2);
+            battleshipCoord2.push(x, y2); //do at end of this block if all are free
             secondCoord = `${x.toString()},${y2.toString()}`;
             console.log(`secondCoord says: ${secondCoord}`);
             y3 = y - 2;
-            battleshipCoord3.push(x, y3);
+            battleshipCoord3.push(x, y3); //do at end of this block if all are free
             thirdCoord = `${x.toString()},${y3.toString()}`;
             console.log(`thirdCoord says: ${thirdCoord}`);
             y4 = y - 3;
-            battleshipCoord4.push(x, y4);
+            battleshipCoord4.push(x, y4); //do at end of this block if all are free
             fourthCoord = `${x.toString()},${y4.toString()}`;
             console.log(`fourthCoord says: ${fourthCoord}`);
             secondCell = document.getElementById(`${secondCoord}`);
@@ -248,6 +252,7 @@ export function drop(event) {
             thirdCell = document.getElementById(`${thirdCoord}`);
             console.log(thirdCell);
             fourthCell = document.getElementById(`${fourthCoord}`);
+            //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("cloned");
@@ -274,6 +279,8 @@ export function drop(event) {
             fourthCell.removeEventListener("dragover", allowDrop);
             fourthCell.removeEventListener("drop", drop);
         }
+        //do this if droppedShips array is not empty !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //and do battleshipArr.push([x, y]) here because at the beginning the array should be empty as we dont know at that point if all coords will be free
         battleshipArr.push(battleshipCoord2);
         battleshipArr.push(battleshipCoord3);
         battleshipArr.push(battleshipCoord4);
@@ -283,6 +290,7 @@ export function drop(event) {
     } else if (draggableElement.id.includes("cruiser")) {
         len = 3;
         draggableElement.style.width = "47px";
+        //should start off empty and have x,y pushed if ALL coords are free
         let cruiserArr = [[x, y]];
 
         let cruiserCoord2 = [];
@@ -291,17 +299,18 @@ export function drop(event) {
         if (startCell.includes("1")) {
             //then there are 2 more ship placements to the RHS
             y2 = y + 1;
-            cruiserCoord2.push(x, y2);
+            cruiserCoord2.push(x, y2); //do at end of this block if all are free
             secondCoord = `${x.toString()},${y2.toString()}`;
             console.log(`secondCoord says: ${secondCoord}`);
             y3 = y + 2;
-            cruiserCoord3.push(x, y3);
+            cruiserCoord3.push(x, y3); //do at end of this block if all are free
             thirdCoord = `${x.toString()},${y3.toString()}`;
             console.log(`thirdCoord says: ${thirdCoord}`);
             secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
             console.log(secondCell);
             thirdCell = document.getElementById(`${thirdCoord}`); //finding el where its id === thirdCoord
             console.log(thirdCell);
+            //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("cloned");
@@ -324,13 +333,14 @@ export function drop(event) {
         } else if (startCell.includes("2")) {
             //then there are 1 ship placement to the LHS and 1 to the RHS
             y2 = y - 1;
-            cruiserCoord2.push(x, y2);
+            cruiserCoord2.push(x, y2); //do at end of this block if all are free
             secondCoord = `${x.toString()},${y2.toString()}`;
             y3 = y + 1;
-            cruiserCoord3.push(x, y3);
+            cruiserCoord3.push(x, y3); //do at end of this block if all are free
             thirdCoord = `${x.toString()},${y3.toString()}`;
             secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
             thirdCell = document.getElementById(`${thirdCoord}`); //finding el where its id === thirdCoord
+            //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("cloned");
@@ -353,13 +363,14 @@ export function drop(event) {
         } else if (startCell.includes("3")) {
             //then there are 2 ship placements on LHS
             y2 = y - 1;
-            cruiserCoord2.push(x, y2);
+            cruiserCoord2.push(x, y2); //do at end of this block if all are free
             secondCoord = `${x.toString()},${y2.toString()}`;
             y3 = y - 2;
-            cruiserCoord3.push(x, y3);
+            cruiserCoord3.push(x, y3); //do at end of this block if all are free
             thirdCoord = `${x.toString()},${y3.toString()}`;
             secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
             thirdCell = document.getElementById(`${thirdCoord}`); //finding el where its id === thirdCoord
+            //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("cloned");
@@ -380,6 +391,8 @@ export function drop(event) {
             thirdCell.removeEventListener("dragover", allowDrop);
             thirdCell.removeEventListener("drop", drop);
         }
+        //do this if droppedShips array is not empty !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //and do cruiserArr.push([x, y]) here because at the beginning the array should be empty as we dont know at that point if all coords will be free
         cruiserArr.push(cruiserCoord2);
         cruiserArr.push(cruiserCoord3);
         droppedShips.push(cruiserArr);
@@ -388,6 +401,7 @@ export function drop(event) {
     } else if (draggableElement.id.includes("sub")) {
         len = 2;
         draggableElement.style.width = "47px";
+        //should start off empty and have x,y pushed if ALL coords are free
         let subArr = [[x, y]];
 
         let subCoord2 = [];
@@ -396,11 +410,12 @@ export function drop(event) {
             console.log(`startCell says: ${startCell}`);
             //then there are 1 more ship placements to the RHS
             y2 = y + 1;
-            subCoord2.push(x, y2);
+            subCoord2.push(x, y2); //do at end of this block if all are free !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             secondCoord = `${x.toString()},${y2.toString()}`;
             console.log(`secondCoord says: ${secondCoord}`);
             secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
             console.log(secondCell);
+            //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("cloned");
@@ -418,6 +433,7 @@ export function drop(event) {
             //then there are 1 ship placement to the LHS
             console.log(`startCell says: ${startCell}`);
             y2 = y - 1;
+            subCoord2.push(x, y2); //do at end of this block if all are free !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             secondCoord = `${x.toString()},${y2.toString()}`;
             secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
             let draggableElementClone = draggableElement.cloneNode(true);
@@ -428,23 +444,26 @@ export function drop(event) {
             secondCell.appendChild(clone1);
             clone1.classList.add("cloned");
             clone1.removeAttribute("id");
-
             //make the occupied coords off-limits...
             dropzone.removeEventListener("dragover", allowDrop);
             dropzone.removeEventListener("drop", drop);
             secondCell.removeEventListener("dragover", allowDrop);
             secondCell.removeEventListener("drop", drop);
         }
+        //do this if droppedShips array is not empty !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //and do subArr.push([x, y]) here because at the beginning the array should be empty as we dont know at that point if all coords will be free
         subArr.push(subCoord2);
         droppedShips.push(subArr);
         //--------------------------------------------------------END OF SUBS SECTION--------------------------
     } else if (draggableElement.id.includes("destroyer")) {
         len = 1;
+        //should start off empty and have x,y pushed if ALL coords are free
         let destroyerArr = [[x, y]];
 
         //we leave the width as it is at 149px...
         let draggableElementClone = draggableElement.cloneNode(true);
         dropzone.appendChild(draggableElementClone);
+        //and do destroyerArr.push([x, y]) here because at the beginning the array should be empty as we dont know at that point if all coords will be free
         droppedShips.push(destroyerArr); //building the droppedShips array to supply selected_positions
         console.log(destroyerArr);
         draggableElementClone.classList.add("cloned");
@@ -452,6 +471,7 @@ export function drop(event) {
     }
 
     console.log(droppedShips);
+    //should we give .cancelled to the ship if not dropped? Perhaps, but then we'd need to have given a class of .dropped whenever it was dropped so we can check
 }
 
 export function dragEnd(event) {
@@ -465,8 +485,8 @@ export function dragEnd(event) {
         return;
     }
     const undraggableElement = document.getElementById(event.target.id);
-    //console.log(undraggableElement);
-    //console.log(undraggableElement.hasAttribute("draggable"));
+    console.log(undraggableElement);
+    //console.log(undraggableElement.hasAttribute("data-clicked"));
 
     let clonedElements = document.querySelectorAll(".cloned");
     for (let i = 0; i < clonedElements.length; i++) {
@@ -479,6 +499,8 @@ export function dragEnd(event) {
     for (let i = 0; i < clonedChildren.length; i++) {
         clonedChildren[i].removeEventListener("mousedown", mousedownGridClick);
     }*/
+
+    //do we need a check here to ensure this only happens if the ship actually got dropped successfully?
 
     undraggableElement.removeAttribute("draggable");
     undraggableElement.removeEventListener("dragstart", drag);
