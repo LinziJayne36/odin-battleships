@@ -622,16 +622,6 @@ export function drop(event) {
             clone1.classList.add("cloned");
             clone1.removeAttribute("id");
 
-            //CAUTION - THE CODE BELOW IS HERE ONLY TO REMIND ME OF WHAT NOT TO DO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            /*const allShips = document.querySelectorAll(".sub");
-            allShips.forEach((ship) => {
-                console.log(ship);
-                if (!ship.classList.contains(".dropped")) {
-                    console.log("dropped class is not present");
-                    ship.style.width = "50%";
-                }
-            });*/
-
             //make the occupied coords off-limits...
             dropzone.removeEventListener("dragover", allowDrop);
             dropzone.removeEventListener("drop", drop);
@@ -676,6 +666,16 @@ export function dragEnd(event) {
         event.target.classList.remove("failedDrop");
         return;
     }
+    const allShips = document.querySelectorAll(".battleship");
+    allShips.forEach((ship) => {
+        console.log(ship);
+        if (!ship.classList.contains("dropped")) {
+            console.log(
+                "dropped class is NOT present, battleship should have width 200px"
+            );
+            ship.style.width = "200px";
+        }
+    });
     const undraggableElement = document.getElementById(event.target.id);
     console.log(undraggableElement);
     //console.log(undraggableElement.hasAttribute("data-clicked"));
