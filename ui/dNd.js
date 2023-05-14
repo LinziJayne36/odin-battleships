@@ -424,14 +424,17 @@ export function drop(event) {
             draggableElement.style.width = "47px";
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
+            draggableElementClone.classList.add("dropped");
             draggableElementClone.classList.add("cloned");
             draggableElementClone.removeAttribute("id");
             let clone1 = draggableElement.cloneNode(true);
             secondCell.appendChild(clone1);
+            clone1.classList.add("dropped");
             clone1.classList.add("cloned");
             clone1.removeAttribute("id");
             let clone2 = draggableElement.cloneNode(true);
             thirdCell.appendChild(clone2);
+            clone2.classList.add("dropped");
             clone2.classList.add("cloned");
             clone2.removeAttribute("id");
             //make the occupied coords off-limits...
@@ -470,14 +473,17 @@ export function drop(event) {
             draggableElement.style.width = "47px";
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
+            draggableElementClone.classList.add("dropped");
             draggableElementClone.classList.add("cloned");
             draggableElementClone.removeAttribute("id");
             let clone1 = draggableElement.cloneNode(true);
             secondCell.appendChild(clone1);
+            clone1.classList.add("dropped");
             clone1.classList.add("cloned");
             clone1.removeAttribute("id");
             let clone2 = draggableElement.cloneNode(true);
             thirdCell.appendChild(clone2);
+            clone2.classList.add("dropped");
             clone2.classList.add("cloned");
             clone2.removeAttribute("id");
             //make the occupied coords off-limits...
@@ -516,14 +522,17 @@ export function drop(event) {
             draggableElement.style.width = "47px";
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
+            draggableElementClone.classList.add("dropped");
             draggableElementClone.classList.add("cloned");
             draggableElementClone.removeAttribute("id");
             let clone1 = draggableElement.cloneNode(true);
             secondCell.appendChild(clone1);
+            clone1.classList.add("dropped");
             clone1.classList.add("cloned");
             clone1.removeAttribute("id");
             let clone2 = draggableElement.cloneNode(true);
             thirdCell.appendChild(clone2);
+            clone2.classList.add("dropped");
             clone2.classList.add("cloned");
             clone2.removeAttribute("id");
             //make the occupied coords off-limits...
@@ -578,10 +587,12 @@ export function drop(event) {
             draggableElement.style.width = "47px";
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
+            draggableElementClone.classList.add("dropped");
             draggableElementClone.classList.add("cloned");
             draggableElementClone.removeAttribute("id");
             let clone1 = draggableElement.cloneNode(true);
             secondCell.appendChild(clone1);
+            clone1.classList.add("dropped");
             clone1.classList.add("cloned");
             clone1.removeAttribute("id");
             //make the occupied coords off-limits...
@@ -615,10 +626,12 @@ export function drop(event) {
             draggableElement.style.width = "47px";
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
+            draggableElementClone.classList.add("dropped");
             draggableElementClone.classList.add("cloned");
             draggableElementClone.removeAttribute("id");
             let clone1 = draggableElement.cloneNode(true);
             secondCell.appendChild(clone1);
+            clone1.classList.add("dropped");
             clone1.classList.add("cloned");
             clone1.removeAttribute("id");
 
@@ -648,6 +661,7 @@ export function drop(event) {
         //and do destroyerArr.push([x, y]) here because at the beginning the array should be empty as we dont know at that point if all coords will be free
         droppedShips.push(destroyerArr); //building the droppedShips array to supply selected_positions
         console.log(destroyerArr);
+        draggableElementClone.classList.add("dropped");
         draggableElementClone.classList.add("cloned");
         draggableElementClone.removeAttribute("id");
     }
@@ -666,16 +680,55 @@ export function dragEnd(event) {
         event.target.classList.remove("failedDrop");
         return;
     }
-    const allShips = document.querySelectorAll(".battleship");
-    allShips.forEach((ship) => {
-        console.log(ship);
-        if (!ship.classList.contains("dropped")) {
+    const allBattleships = document.querySelectorAll(".battleship");
+
+    allBattleships.forEach((battleship) => {
+        console.log(battleship);
+        if (!battleship.classList.contains("dropped")) {
             console.log(
                 "dropped class is NOT present, battleship should have width 200px"
             );
-            ship.style.width = "200px";
+            battleship.style.width = "200px";
         }
     });
+
+    const allCruisers = document.querySelectorAll(".cruiser");
+
+    allCruisers.forEach((cruiser) => {
+        console.log(cruiser);
+        if (!cruiser.classList.contains("dropped")) {
+            console.log(
+                "dropped class is NOT present, cruiser should have width 149px"
+            );
+            cruiser.style.width = "149px";
+        }
+    });
+
+    const allSubs = document.querySelectorAll(".sub");
+
+    allSubs.forEach((sub) => {
+        console.log(sub);
+        if (!sub.classList.contains("dropped")) {
+            console.log(
+                "dropped class is NOT present, sub should have width 96px"
+            );
+            sub.style.width = "96px";
+        }
+    });
+
+    /* const allDestroyers = document.querySelectorAll(".destroyer"); //don't think we need this here as the size is 1 block wide anyways ;)
+
+     allDestroyers.forEach((destroyer) => {
+         console.log(destroyer);
+         if (!destroyer.classList.contains("dropped")) {
+             console.log(
+                 "dropped class is NOT present, destroyer should have width 96px"
+             );
+             sub.style.width = "96px";
+         }
+     });
+     */
+
     const undraggableElement = document.getElementById(event.target.id);
     console.log(undraggableElement);
     //console.log(undraggableElement.hasAttribute("data-clicked"));
@@ -699,12 +752,3 @@ export function dragEnd(event) {
         undraggableElement.removeEventListener("dragend", dragEnd);
     }
 }
-
-/*export function mousedownGridClick(e) {
-    //should be setting data-clicked attr on parent ship of internal sq that is clicked....
-    const cellsq = e.target.id;
-    console.log(cellsq);
-    e.target.dataset.clicked = cellsq;
-    console.log(`cellSq in mousedownGridClick says: ${cellSq}`);
-    // e.target.id.dataset.cellsquare = e.target.id;
-} */
