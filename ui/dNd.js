@@ -13,6 +13,8 @@ export function drag(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
 }
 */
+//import { gameLoop } from "../main";
+import { playerFleetUI } from "../main";
 
 export function drag(event) {
     console.log("drag event fired");
@@ -176,6 +178,15 @@ export function drop(event) {
             thirdCell.removeEventListener("drop", drop);
             fourthCell.removeEventListener("dragover", allowDrop);
             fourthCell.removeEventListener("drop", drop);
+            //decrement battleshipCount by 1
+            console.log(
+                "THIS IS WHERE WE TRY ACCESSING PLAYERFLEETUI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+            );
+            playerFleetUI.battleshipCount -= 1;
+            console.log(playerFleetUI.battleshipCount);
+            /* if (playerFleetUI.battleshipCount === 0) {
+                playerFleetUI.removeLastBattleship();
+            } */
         } else if (startCell.includes("2")) {
             //then there is 1 ship placement to LHS and 2 to RHS
             y2 = y - 1;
@@ -241,6 +252,8 @@ export function drop(event) {
             thirdCell.removeEventListener("drop", drop);
             fourthCell.removeEventListener("dragover", allowDrop);
             fourthCell.removeEventListener("drop", drop);
+            playerFleetUI.battleshipCount -= 1;
+            console.log(playerFleetUI.battleshipCount);
         } else if (startCell.includes("3")) {
             //then there is 2 ship placements to LHS and 1 to RHS
             y2 = y - 1;
@@ -306,6 +319,8 @@ export function drop(event) {
             thirdCell.removeEventListener("drop", drop);
             fourthCell.removeEventListener("dragover", allowDrop);
             fourthCell.removeEventListener("drop", drop);
+            playerFleetUI.battleshipCount -= 1;
+            console.log(playerFleetUI.battleshipCount);
         } else if (startCell.includes("4")) {
             //then there is 3 ship placements to LHS and 0 to RHS
             y2 = y - 1;
@@ -372,6 +387,8 @@ export function drop(event) {
             thirdCell.removeEventListener("drop", drop);
             fourthCell.removeEventListener("dragover", allowDrop);
             fourthCell.removeEventListener("drop", drop);
+            playerFleetUI.battleshipCount -= 1;
+            console.log(playerFleetUI.battleshipCount);
         }
         //do this if droppedShips array is not empty !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         //and do battleshipArr.push([x, y]) here because at the beginning the array should be empty as we dont know at that point if all coords will be free
@@ -444,6 +461,8 @@ export function drop(event) {
             secondCell.removeEventListener("drop", drop);
             thirdCell.removeEventListener("dragover", allowDrop);
             thirdCell.removeEventListener("drop", drop);
+            playerFleetUI.cruiserCount -= 1;
+            console.log(playerFleetUI.cruiserCount);
         } else if (startCell.includes("2")) {
             //then there are 1 ship placement to the LHS and 1 to the RHS
             y2 = y - 1;
@@ -493,6 +512,8 @@ export function drop(event) {
             secondCell.removeEventListener("drop", drop);
             thirdCell.removeEventListener("dragover", allowDrop);
             thirdCell.removeEventListener("drop", drop);
+            playerFleetUI.cruiserCount -= 1;
+            console.log(playerFleetUI.cruiserCount);
         } else if (startCell.includes("3")) {
             //then there are 2 ship placements on LHS
             y2 = y - 1;
@@ -542,6 +563,8 @@ export function drop(event) {
             secondCell.removeEventListener("drop", drop);
             thirdCell.removeEventListener("dragover", allowDrop);
             thirdCell.removeEventListener("drop", drop);
+            playerFleetUI.cruiserCount -= 1;
+            console.log(playerFleetUI.cruiserCount);
         }
         //do this if droppedShips array is not empty !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         //and do cruiserArr.push([x, y]) here because at the beginning the array should be empty as we dont know at that point if all coords will be free
@@ -600,6 +623,8 @@ export function drop(event) {
             dropzone.removeEventListener("drop", drop);
             secondCell.removeEventListener("dragover", allowDrop);
             secondCell.removeEventListener("drop", drop);
+            playerFleetUI.subCount -= 1;
+            console.log(playerFleetUI.subCount);
         } else if (startCell.includes("2")) {
             //then there are 1 ship placement to the LHS
             console.log(`startCell says: ${startCell}`);
@@ -640,6 +665,8 @@ export function drop(event) {
             dropzone.removeEventListener("drop", drop);
             secondCell.removeEventListener("dragover", allowDrop);
             secondCell.removeEventListener("drop", drop);
+            playerFleetUI.subCount -= 1;
+            console.log(playerFleetUI.subCount);
         }
 
         //do this if droppedShips array is not empty !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -664,6 +691,10 @@ export function drop(event) {
         draggableElementClone.classList.add("dropped");
         draggableElementClone.classList.add("cloned");
         draggableElementClone.removeAttribute("id");
+        dropzone.removeEventListener("dragover", allowDrop);
+        dropzone.removeEventListener("drop", drop);
+        playerFleetUI.destroyerCount -= 1;
+        console.log(playerFleetUI.destroyerCount);
     }
 
     console.log(droppedShips);

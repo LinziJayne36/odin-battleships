@@ -16,7 +16,7 @@ let computerTurn = {
 };
 gameTitleDisplay("add");
 startBtnDisplay("add");
-
+const playerFleetUI = new PlayerFleet();
 async function gameLoop() {
     //checkGame function
     function checkGame() {
@@ -77,7 +77,10 @@ async function gameLoop() {
     const playerPlacementGrid = new Grid("playerPlacementGrid");
     playerPlacementGrid.drawGrid();
     //TODO create the ui for player fleet placement
-    const playerFleetUI = new PlayerFleet();
+    console.log(
+        "THIS IS WHERE WE CREATE PLAYERFLEETUI !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1"
+    );
+    //const playerFleetUI = new PlayerFleet();
     playerFleetUI.drawPlayerFleet();
 
     //TODO now we need to wait for the player to select their ship placements... ... ...
@@ -361,4 +364,4 @@ describe("#gameLoop", () => {
     });
 });
 */
-export default gameLoop;
+export { gameLoop, playerFleetUI };

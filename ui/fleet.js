@@ -206,4 +206,30 @@ export default class PlayerFleet {
         destroyer.addEventListener("dragstart", drag);
         destroyer.addEventListener("dragend", dragEnd);
     }
+    /*
+    removeLastBattleship() {
+        const battleship = document.querySelector(".battleship");
+        battleship.removeChild(battleshipCell1);
+        battleship.removeChild(battleshipCell2);
+        battleship.removeChild(battleshipCell3);
+        battleship.removeChild(battleshipCell4);
+    }
+
+    removeLastCruiser() {
+        const cruiser = document.querySelector(".cruiser");
+        cruiser.removeChild(cruiserCell1);
+        cruiser.removeChild(cruiserCell2);
+        cruiser.removeChild(cruiserCell3);
+    }
+
+    removeLastSub() {
+        const sub = docoment.querySelector(".sub");
+        sub.removeChild(subCell1);
+        sub.removeChild(subCell2);
+    }
+
+    removeLastDestroyer() {
+        const destroyer = document.querySelector(".destroyer");
+        destroyer.removeChild(destroyerCell1);
+    }*/
 }
