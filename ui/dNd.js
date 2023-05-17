@@ -179,14 +179,20 @@ export function drop(event) {
             fourthCell.removeEventListener("dragover", allowDrop);
             fourthCell.removeEventListener("drop", drop);
             //decrement battleshipCount by 1
-            console.log(
-                "THIS IS WHERE WE TRY ACCESSING PLAYERFLEETUI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+            const battleshipUIcount = document.querySelector(
+                ".battleshipCountVal"
             );
             playerFleetUI.battleshipCount -= 1;
+            battleshipUIcount.innerText = playerFleetUI.battleshipCount;
             console.log(playerFleetUI.battleshipCount);
-            /* if (playerFleetUI.battleshipCount === 0) {
-                playerFleetUI.removeLastBattleship();
-            } */
+            if (playerFleetUI.battleshipCount === 0) {
+                const battleshipFleet = document.querySelector(
+                    ".battleshipIconsDiv"
+                );
+                console.log(battleshipFleet);
+                battleshipFleet.innerHTML = "";
+                battleshipUIcount.innerHTML = "";
+            }
         } else if (startCell.includes("2")) {
             //then there is 1 ship placement to LHS and 2 to RHS
             y2 = y - 1;
@@ -252,8 +258,20 @@ export function drop(event) {
             thirdCell.removeEventListener("drop", drop);
             fourthCell.removeEventListener("dragover", allowDrop);
             fourthCell.removeEventListener("drop", drop);
+            const battleshipUIcount = document.querySelector(
+                ".battleshipCountVal"
+            );
             playerFleetUI.battleshipCount -= 1;
+            battleshipUIcount.innerText = playerFleetUI.battleshipCount;
             console.log(playerFleetUI.battleshipCount);
+            if (playerFleetUI.battleshipCount === 0) {
+                const battleshipFleet = document.querySelector(
+                    ".battleshipIconsDiv"
+                );
+                console.log(battleshipFleet);
+                battleshipFleet.innerHTML = "";
+                battleshipUIcount.innerHTML = "";
+            }
         } else if (startCell.includes("3")) {
             //then there is 2 ship placements to LHS and 1 to RHS
             y2 = y - 1;
@@ -319,8 +337,20 @@ export function drop(event) {
             thirdCell.removeEventListener("drop", drop);
             fourthCell.removeEventListener("dragover", allowDrop);
             fourthCell.removeEventListener("drop", drop);
+            const battleshipUIcount = document.querySelector(
+                ".battleshipCountVal"
+            );
             playerFleetUI.battleshipCount -= 1;
+            battleshipUIcount.innerText = playerFleetUI.battleshipCount;
             console.log(playerFleetUI.battleshipCount);
+            if (playerFleetUI.battleshipCount === 0) {
+                const battleshipFleet = document.querySelector(
+                    ".battleshipIconsDiv"
+                );
+                console.log(battleshipFleet);
+                battleshipFleet.innerHTML = "";
+                battleshipUIcount.innerHTML = "";
+            }
         } else if (startCell.includes("4")) {
             //then there is 3 ship placements to LHS and 0 to RHS
             y2 = y - 1;
@@ -387,8 +417,20 @@ export function drop(event) {
             thirdCell.removeEventListener("drop", drop);
             fourthCell.removeEventListener("dragover", allowDrop);
             fourthCell.removeEventListener("drop", drop);
+            const battleshipUIcount = document.querySelector(
+                ".battleshipCountVal"
+            );
             playerFleetUI.battleshipCount -= 1;
+            battleshipUIcount.innerText = playerFleetUI.battleshipCount;
             console.log(playerFleetUI.battleshipCount);
+            if (playerFleetUI.battleshipCount === 0) {
+                const battleshipFleet = document.querySelector(
+                    ".battleshipIconsDiv"
+                );
+                console.log(battleshipFleet);
+                battleshipFleet.innerHTML = "";
+                battleshipUIcount.innerHTML = "";
+            }
         }
         //do this if droppedShips array is not empty !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         //and do battleshipArr.push([x, y]) here because at the beginning the array should be empty as we dont know at that point if all coords will be free
@@ -461,8 +503,16 @@ export function drop(event) {
             secondCell.removeEventListener("drop", drop);
             thirdCell.removeEventListener("dragover", allowDrop);
             thirdCell.removeEventListener("drop", drop);
+            const cruiserUIcount = document.querySelector(".cruiserCountVal");
             playerFleetUI.cruiserCount -= 1;
+            cruiserUIcount.innerText = playerFleetUI.cruiserCount;
             console.log(playerFleetUI.cruiserCount);
+            if (playerFleetUI.cruiserCount === 0) {
+                const cruiserFleet = document.querySelector(".cruiserIconsDiv");
+                console.log(cruiserFleet);
+                cruiserFleet.innerHTML = "";
+                cruiserUIcount.innerHTML = "";
+            }
         } else if (startCell.includes("2")) {
             //then there are 1 ship placement to the LHS and 1 to the RHS
             y2 = y - 1;
@@ -512,8 +562,16 @@ export function drop(event) {
             secondCell.removeEventListener("drop", drop);
             thirdCell.removeEventListener("dragover", allowDrop);
             thirdCell.removeEventListener("drop", drop);
+            const cruiserUIcount = document.querySelector(".cruiserCountVal");
             playerFleetUI.cruiserCount -= 1;
+            cruiserUIcount.innerText = playerFleetUI.cruiserCount;
             console.log(playerFleetUI.cruiserCount);
+            if (playerFleetUI.cruiserCount === 0) {
+                const cruiserFleet = document.querySelector(".cruiserIconsDiv");
+                console.log(cruiserFleet);
+                cruiserFleet.innerHTML = "";
+                cruiserUIcount.innerHTML = "";
+            }
         } else if (startCell.includes("3")) {
             //then there are 2 ship placements on LHS
             y2 = y - 1;
@@ -563,8 +621,16 @@ export function drop(event) {
             secondCell.removeEventListener("drop", drop);
             thirdCell.removeEventListener("dragover", allowDrop);
             thirdCell.removeEventListener("drop", drop);
+            const cruiserUIcount = document.querySelector(".cruiserCountVal");
             playerFleetUI.cruiserCount -= 1;
+            cruiserUIcount.innerText = playerFleetUI.cruiserCount;
             console.log(playerFleetUI.cruiserCount);
+            if (playerFleetUI.cruiserCount === 0) {
+                const cruiserFleet = document.querySelector(".cruiserIconsDiv");
+                console.log(cruiserFleet);
+                cruiserFleet.innerHTML = "";
+                cruiserUIcount.innerHTML = "";
+            }
         }
         //do this if droppedShips array is not empty !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         //and do cruiserArr.push([x, y]) here because at the beginning the array should be empty as we dont know at that point if all coords will be free
@@ -623,8 +689,16 @@ export function drop(event) {
             dropzone.removeEventListener("drop", drop);
             secondCell.removeEventListener("dragover", allowDrop);
             secondCell.removeEventListener("drop", drop);
+            const subUIcount = document.querySelector(".subCountVal");
             playerFleetUI.subCount -= 1;
+            subUIcount.innerText = playerFleetUI.subCount;
             console.log(playerFleetUI.subCount);
+            if (playerFleetUI.subCount === 0) {
+                const subFleet = document.querySelector(".subIconsDiv");
+                console.log(subFleet);
+                subFleet.innerHTML = "";
+                subUIcount.innerHTML = "";
+            }
         } else if (startCell.includes("2")) {
             //then there are 1 ship placement to the LHS
             console.log(`startCell says: ${startCell}`);
@@ -665,8 +739,16 @@ export function drop(event) {
             dropzone.removeEventListener("drop", drop);
             secondCell.removeEventListener("dragover", allowDrop);
             secondCell.removeEventListener("drop", drop);
+            const subUIcount = document.querySelector(".subCountVal");
             playerFleetUI.subCount -= 1;
+            subUIcount.innerText = playerFleetUI.subCount;
             console.log(playerFleetUI.subCount);
+            if (playerFleetUI.subCount === 0) {
+                const subFleet = document.querySelector(".subIconsDiv");
+                console.log(subFleet);
+                subFleet.innerHTML = "";
+                subUIcount.innerHTML = "";
+            }
         }
 
         //do this if droppedShips array is not empty !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -693,8 +775,17 @@ export function drop(event) {
         draggableElementClone.removeAttribute("id");
         dropzone.removeEventListener("dragover", allowDrop);
         dropzone.removeEventListener("drop", drop);
+        const destroyerUIcount = document.querySelector(".destroyerCountVal");
         playerFleetUI.destroyerCount -= 1;
+        destroyerUIcount.innerText = playerFleetUI.destroyerCount;
         console.log(playerFleetUI.destroyerCount);
+
+        if (playerFleetUI.destroyerCount === 0) {
+            const destroyerFleet = document.querySelector(".destroyerIconsDiv");
+            console.log(destroyerFleet);
+            destroyerFleet.innerHTML = "";
+            destroyerUIcount.innerHTML = "";
+        }
     }
 
     console.log(droppedShips);
@@ -777,9 +868,11 @@ export function dragEnd(event) {
     }*/
 
     //do we need a check here to ensure this only happens if the ship actually got dropped successfully?
-    if (undraggableElement.classList.contains("dropped")) {
-        undraggableElement.removeAttribute("draggable");
-        undraggableElement.removeEventListener("dragstart", drag);
-        undraggableElement.removeEventListener("dragend", dragEnd);
+    if (undraggableElement !== null) {
+        if (undraggableElement.classList.contains("dropped")) {
+            undraggableElement.removeAttribute("draggable");
+            undraggableElement.removeEventListener("dragstart", drag);
+            undraggableElement.removeEventListener("dragend", dragEnd);
+        }
     }
 }
