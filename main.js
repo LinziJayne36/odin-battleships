@@ -83,7 +83,7 @@ async function gameLoop() {
     const playerPlacementGrid = new Grid("playerPlacementGrid");
     playerPlacementGrid.drawGrid();
     randomBtnDisplay("add");
-    let randomPlacementSelected = false;
+    /*let randomPlacementSelected = false;
     const getUserInputPlacements = () => {
         return new Promise((resolve) => {
             const randomBtn = document.getElementById("randomBtn");
@@ -109,6 +109,48 @@ async function gameLoop() {
 
                 resolve(randomPlacementSelected);
             });
+        });
+    };*/
+
+    let randomPlacementSelected = false;
+
+    const getUserInputPlacements = () => {
+        return new Promise((resolve) => {
+            const randomBtn = document.querySelector("#randomBtn");
+            const gameboardElement = document.querySelector(
+                ".playerPlacementGrid"
+            );
+
+            const handleDragDrop = () => {
+                randomPlacementSelected = false;
+                resolve(randomPlacementSelected);
+            };
+
+            randomBtn.addEventListener("click", async (ev) => {
+                const playerPositions = await player.generateRandomPositions();
+                console.log(
+                    "Next is the player's gameboard with the ships placed on it"
+                );
+                playerGameboard.placeShips(playerPositions);
+                console.log(playerGameboard.board);
+                randomPlacementSelected = true;
+                console.log(randomPlacementSelected);
+                randomBtnDisplay("remove");
+                const appWrapper = document.getElementById("app");
+                const placementGrid = document.querySelector(
+                    ".playerPlacementGrid"
+                );
+                const fleetWrapper = document.querySelector(".fleetWrapper");
+                appWrapper.removeChild(fleetWrapper);
+                appWrapper.removeChild(placementGrid);
+                alert("all ships placed - game begins");
+
+                resolve(randomPlacementSelected);
+            });
+
+            // Listen for drag/drop events on the gameboard
+            gameboardElement.addEventListener("drag", handleDragDrop);
+            gameboardElement.addEventListener("drop", handleDragDrop);
         });
     };
 
