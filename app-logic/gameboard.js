@@ -98,7 +98,7 @@ export default class Gameboard {
             this.ships = ship; //calls setter method
         });
         const infoArr = [];
-        //console.log(positionsData);
+        console.log(positionsData);
         positionsData.forEach((shipPosition) => {
             shipPosition.coords.forEach((item) => {
                 infoArr.push([item[0], item[1], "S"]);

@@ -30,16 +30,40 @@ export function allowDrop(event) {
     event.preventDefault();
 }
 export const droppedShips = [];
+/*export const trackDroppedShipsArr = () => {
+    console.log("trackDroppedShipsArr is now running");
+    return new Promise((resolve) => {
+        if (droppedShips.length === 10) {
+            console.log(
+                "the promise inside trackDroppedShipsArr function just resolved"
+            );
+            resolve(droppedShips);
+        } else {
+            //how to make it keep checking droppedShips.length until it does reach 10 and then resolve?
+        }
+    });
+};*/
+
+export const trackDroppedShipsArr = () => {
+    console.log("trackDroppedShipsArr is now running");
+
+    const checkLength = (resolve) => {
+        if (droppedShips.length === 10) {
+            console.log(
+                "the promise inside trackDroppedShipsArr function just resolved"
+            );
+            resolve(droppedShips);
+        } else {
+            setTimeout(() => checkLength(resolve), 1000); // Check again after 1 second (adjust as needed)
+        }
+    };
+
+    return new Promise((resolve) => {
+        checkLength(resolve);
+    });
+};
+
 export function drop(event) {
-    /* let clonedChildren = document.querySelectorAll(".cloned *");
-    for (let i = 0; i < clonedChildren.length; i++) {
-        clonedChildren[i].removeEventListener("drop", drop);
-        clonedChildren[i].removeAttribute("id");
-    }
-    let clonedShips = document.querySelectorAll(".cloned");
-    for (let i = 0; i < clonedShips.length; i++) {
-        clonedShips[i].innerText = "";
-    }*/
     //let droppedShips = []; //this is an array that will hold an array for each ship that itself holds an array for each of the ship's coords
     //works for a single-cell ship
     console.log("drop event has fired");
@@ -434,11 +458,17 @@ export function drop(event) {
         }
         //do this if droppedShips array is not empty !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         //and do battleshipArr.push([x, y]) here because at the beginning the array should be empty as we dont know at that point if all coords will be free
-        battleshipArr.push([x, y]);
-        battleshipArr.push(battleshipCoord2);
-        battleshipArr.push(battleshipCoord3);
-        battleshipArr.push(battleshipCoord4);
-        droppedShips.push(battleshipArr);
+        let battleshipArrCoords = [];
+        battleshipArrCoords.push([x, y]);
+        battleshipArrCoords.push(battleshipCoord2);
+        battleshipArrCoords.push(battleshipCoord3);
+        battleshipArrCoords.push(battleshipCoord4);
+        droppedShips.push({
+            coords: battleshipArrCoords,
+            length: 4,
+        });
+        console.log(droppedShips);
+        //droppedShips.push(battleshipArr);
 
         //--------------------------------------------------------END OF BATTLESHIP SECTION--------------------------
     } else if (draggableElement.id.includes("cruiser")) {
@@ -634,11 +664,23 @@ export function drop(event) {
         }
         //do this if droppedShips array is not empty !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         //and do cruiserArr.push([x, y]) here because at the beginning the array should be empty as we dont know at that point if all coords will be free
-        cruiserArr.push([x, y]);
+        /* cruiserArr.push([x, y]);
         cruiserArr.push(cruiserCoord2);
         cruiserArr.push(cruiserCoord3);
         droppedShips.push(cruiserArr);
+        console.log(droppedShips);*/
+
+        let cruiserArrCoords = [];
+        cruiserArrCoords.push([x, y]);
+        cruiserArrCoords.push(cruiserCoord2);
+        cruiserArrCoords.push(cruiserCoord3);
+
+        droppedShips.push({
+            coords: cruiserArrCoords,
+            length: 3,
+        });
         console.log(droppedShips);
+
         //--------------------------------------------------------END OF CRUISERS SECTION--------------------------
     } else if (draggableElement.id.includes("sub")) {
         len = 2;
@@ -754,9 +796,20 @@ export function drop(event) {
         //do this if droppedShips array is not empty !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         //and do subArr.push([x, y]) here because at the beginning the array should be empty as we dont know at that point if all coords will be free
 
-        subArr.push([x, y]);
+        /* subArr.push([x, y]);
         subArr.push(subCoord2);
-        droppedShips.push(subArr);
+        droppedShips.push(subArr);*/
+
+        let subArrCoords = [];
+        subArrCoords.push([x, y]);
+        subArrCoords.push(subCoord2);
+
+        droppedShips.push({
+            coords: subArrCoords,
+            length: 2,
+        });
+        console.log(droppedShips);
+
         //--------------------------------------------------------END OF SUBS SECTION--------------------------
     } else if (draggableElement.id.includes("destroyer")) {
         len = 1;
@@ -768,8 +821,19 @@ export function drop(event) {
         let draggableElementClone = draggableElement.cloneNode(true);
         dropzone.appendChild(draggableElementClone);
         //and do destroyerArr.push([x, y]) here because at the beginning the array should be empty as we dont know at that point if all coords will be free
+        /*destroyerArr.push([x, y]);
         droppedShips.push(destroyerArr); //building the droppedShips array to supply selected_positions
-        console.log(destroyerArr);
+        console.log(destroyerArr);*/
+
+        let destroyerArrCoords = [];
+        destroyerArrCoords.push([x, y]);
+
+        droppedShips.push({
+            coords: destroyerArrCoords,
+            length: 1,
+        });
+        console.log(droppedShips);
+
         draggableElementClone.classList.add("dropped");
         draggableElementClone.classList.add("cloned");
         draggableElementClone.removeAttribute("id");
@@ -838,19 +902,6 @@ export function dragEnd(event) {
         }
     });
 
-    /* const allDestroyers = document.querySelectorAll(".destroyer"); //don't think we need this here as the size is 1 block wide anyways ;)
-
-     allDestroyers.forEach((destroyer) => {
-         console.log(destroyer);
-         if (!destroyer.classList.contains("dropped")) {
-             console.log(
-                 "dropped class is NOT present, destroyer should have width 96px"
-             );
-             sub.style.width = "96px";
-         }
-     });
-     */
-
     const undraggableElement = document.getElementById(event.target.id);
     console.log(undraggableElement);
     //console.log(undraggableElement.hasAttribute("data-clicked"));
@@ -861,11 +912,6 @@ export function dragEnd(event) {
         clonedElements[i].removeEventListener("dragstart", drag);
         clonedElements[i].removeEventListener("dragend", dragEnd);
     }
-
-    /* let clonedChildren = document.querySelectorAll(".cloned *");
-    for (let i = 0; i < clonedChildren.length; i++) {
-        clonedChildren[i].removeEventListener("mousedown", mousedownGridClick);
-    }*/
 
     //do we need a check here to ensure this only happens if the ship actually got dropped successfully?
     if (undraggableElement !== null) {

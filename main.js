@@ -5,10 +5,16 @@ import ComputerPlayer from "./app-logic/computerPlayer";
 import Gameboard from "./app-logic/gameboard";
 import Game from "./app-logic/game";
 import Grid from "./ui/grid";
-import { getPlayerAttackInput } from "./dom-interactions/domInteraction";
+import {
+    getPlayerAttackInput,
+    getRandomShipPlacements,
+} from "./dom-interactions/domInteraction";
 import { startBtnDisplay } from "./ui/start";
 import { gameTitleDisplay } from "./ui/gameTitle";
 import PlayerFleet from "./ui/fleet";
+import { randomBtnDisplay } from "./ui/random";
+import { droppedShips } from "./ui/dNd";
+import { trackDroppedShipsArr } from "./ui/dNd";
 //import { handlingGridClicks } from "./dom-interactions/domInteraction";
 import Ship from "./app-logic/ship";
 let computerTurn = {
@@ -76,26 +82,88 @@ async function gameLoop() {
     //generate placement grid
     const playerPlacementGrid = new Grid("playerPlacementGrid");
     playerPlacementGrid.drawGrid();
-    //TODO create the ui for player fleet placement
+    randomBtnDisplay("add");
+    let randomPlacementSelected = false;
+    const getUserInputPlacements = () => {
+        return new Promise((resolve) => {
+            const randomBtn = document.getElementById("randomBtn");
+
+            randomBtn.addEventListener("click", async (ev) => {
+                const playerPositions = await player.generateRandomPositions();
+                console.log(
+                    "Next is the player's gameboard with the ships placed on it"
+                );
+                playerGameboard.placeShips(playerPositions);
+                console.log(playerGameboard.board);
+                randomPlacementSelected = true;
+                console.log(randomPlacementSelected);
+                randomBtnDisplay("remove");
+                const appWrapper = document.getElementById("app");
+                const placementGrid = document.querySelector(
+                    ".playerPlacementGrid"
+                );
+                const fleetWrapper = document.querySelector(".fleetWrapper");
+                appWrapper.removeChild(fleetWrapper);
+                appWrapper.removeChild(placementGrid);
+                alert("all ships placed - game begins");
+
+                resolve(randomPlacementSelected);
+            });
+        });
+    };
+
+    // create the ui for player fleet placement
     console.log(
         "THIS IS WHERE WE CREATE PLAYERFLEETUI !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1"
     );
-    //const playerFleetUI = new PlayerFleet();
+    const playerFleetUI = new PlayerFleet();
     playerFleetUI.drawPlayerFleet();
 
-    //TODO now we need to wait for the player to select their ship placements... ... ...
+    //TODO now we need to wait for the player to select their ship placements... ... ... !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    const randomPlacementInput = await getUserInputPlacements();
+    console.log("are we getting past our random function promise?");
+    //if randomPlacementSelected is true then clear the selection screen and populate gametime screen!
+    if (randomPlacementInput === true) {
+        //clear the selection screen and populate gametime screen!
+        console.log(`randomPlacementInput says: ${randomPlacementInput}`);
+    } else {
+        console.log(`randomPlacementInput says: ${randomPlacementInput}`);
+        //so then we must wait for player to select all their ships manually
+        //console.log(droppedShips);
+        //playerGameboard.placeShips(droppedShips);
+        //console.log(droppedShips);
+        const droppedShipsArr = await trackDroppedShipsArr(); //atm, this resolves each and every time the array receives a single
+
+        console.log(
+            "Are we getting past our trackDroppedShipsArr promise, because if it is not resolving then we really shouldn't be seeing this log"
+        );
+        console.log(droppedShipsArr);
+
+        //gameTitleDisplay("remove");
+
+        //clear the selection screen and populate gametime screen!
+        playerGameboard.placeShips(droppedShipsArr);
+        randomBtnDisplay("remove");
+        const appWrapper = document.getElementById("app");
+        const placementGrid = document.querySelector(".playerPlacementGrid");
+        appWrapper.removeChild(placementGrid);
+
+        /* const appWrapper = document.getElementById("app");
+        const placementGrid = document.querySelector(".playerPlacementGrid");
+        appWrapper.removeChild(placementGrid);*/
+    }
 
     //player and computer grids are created...
     const computerGrid = new Grid("computerGrid");
-    //computerGrid.drawGrid();
+    computerGrid.drawGrid();
 
     const playerGrid = new Grid("playerGrid");
-    //playerGrid.drawGrid();
+    playerGrid.drawGrid();
 
-    player.generateRandomPositions(); //will only need to run if player presses random button...
+    /*const playerPositions = await player.generateRandomPositions(); //will only need to run if player presses random button...
     console.log("Next is the player's gameboard with the ships placed on it");
-    playerGameboard.placeShips(player.selectedPositions);
-    console.log(playerGameboard.board);
+    playerGameboard.placeShips(playerPositions);
+    console.log(playerGameboard.board);*/
 
     const computerPlayer = new ComputerPlayer();
     const computerGameboard = new Gameboard();
@@ -354,14 +422,4 @@ async function gameLoop() {
     console.log(computerGameboard.sunk);
 }
 
-/*
-import gameLoop from "../main";
-import { describe, expect, test } from "vitest";
-describe("#gameLoop", () => {
-    test("the gameLoop function will be defined", () => {
-        expect(gameLoop()).toBeDefined;
-        //expect(playerGameboard.attackSq).toBe(null);
-    });
-});
-*/
 export { gameLoop, playerFleetUI };

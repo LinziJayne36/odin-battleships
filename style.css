@@ -42,7 +42,7 @@
 .cruiser,
 .sub,
 .destroyer {
-    height: 48px;
+    height: 47px;
     background-color: rgba(16, 11, 83, 0.9);
     position: relative;
     cursor: move;

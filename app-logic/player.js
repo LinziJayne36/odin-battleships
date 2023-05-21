@@ -23,92 +23,111 @@ export default class Player {
         return this._selectedPositions;
     }
 
+    /*return new Promise((resolve) => {
+        const squares = document.querySelectorAll(`.${cellClass}`);
+        let inputCoord;
+        squares.forEach((square) => {
+            square.addEventListener("click", (event) => {
+                const row = parseInt(event.target.dataset.row);
+                const col = parseInt(event.target.dataset.col);
+                inputCoord = [row, col];
+                squares.forEach((square) =>
+                    square.removeEventListener("click", () => {})
+                );
+                resolve(inputCoord);
+            });
+        });
+    });*/
+
     generateRandomPositions() {
-        const selectedPositions = [];
-        const usedCoords = [];
+        return new Promise((resolve) => {
+            const selectedPositions = [];
+            const usedCoords = [];
 
-        const addShip = (length, isVertical = true) => {
-            const coords = [];
-            let isValid = false;
-            let iterations = 0;
+            const addShip = (length, isVertical = true) => {
+                const coords = [];
+                let isValid = false;
+                let iterations = 0;
 
-            while (!isValid && iterations < 100) {
-                iterations++;
+                while (!isValid && iterations < 100) {
+                    iterations++;
 
-                const firstCoord = [
-                    Math.floor(Math.random() * 10) + 1,
-                    Math.floor(Math.random() * 10) + 1,
-                ];
-
-                if (!isVertical) {
-                    [firstCoord[0], firstCoord[1]] = [
-                        firstCoord[1],
-                        firstCoord[0],
+                    const firstCoord = [
+                        Math.floor(Math.random() * 10) + 1,
+                        Math.floor(Math.random() * 10) + 1,
                     ];
-                }
 
-                if (firstCoord[0] > 10 || firstCoord[1] > 10) {
-                    continue;
-                }
+                    if (!isVertical) {
+                        [firstCoord[0], firstCoord[1]] = [
+                            firstCoord[1],
+                            firstCoord[0],
+                        ];
+                    }
 
-                let isOverlap = false;
-                for (let i = 0; i < length; i++) {
-                    const coordToCheck = isVertical
-                        ? [firstCoord[0] + i, firstCoord[1]]
-                        : [firstCoord[0], firstCoord[1] + i];
-                    if (usedCoords.includes(coordToCheck.toString())) {
-                        isOverlap = true;
-                        break;
+                    if (firstCoord[0] > 10 || firstCoord[1] > 10) {
+                        continue;
                     }
-                }
-                if (isOverlap) {
-                    continue;
-                }
 
-                for (let i = 0; i < length; i++) {
-                    const coordToAdd = isVertical
-                        ? [firstCoord[0] + i, firstCoord[1]]
-                        : [firstCoord[0], firstCoord[1] + i];
-                    if (coordToAdd[0] > 10 || coordToAdd[1] > 10) {
-                        isValid = false;
-                        break;
+                    let isOverlap = false;
+                    for (let i = 0; i < length; i++) {
+                        const coordToCheck = isVertical
+                            ? [firstCoord[0] + i, firstCoord[1]]
+                            : [firstCoord[0], firstCoord[1] + i];
+                        if (usedCoords.includes(coordToCheck.toString())) {
+                            isOverlap = true;
+                            break;
+                        }
                     }
-                    if (usedCoords.includes(coordToAdd.toString())) {
-                        isValid = false;
-                        break;
+                    if (isOverlap) {
+                        continue;
                     }
-                    isValid = true;
-                }
-                if (isValid) {
+
                     for (let i = 0; i < length; i++) {
                         const coordToAdd = isVertical
                             ? [firstCoord[0] + i, firstCoord[1]]
                             : [firstCoord[0], firstCoord[1] + i];
-                        coords.push(coordToAdd);
-                        usedCoords.push(coordToAdd.toString());
+                        if (coordToAdd[0] > 10 || coordToAdd[1] > 10) {
+                            isValid = false;
+                            break;
+                        }
+                        if (usedCoords.includes(coordToAdd.toString())) {
+                            isValid = false;
+                            break;
+                        }
+                        isValid = true;
                     }
-                    break;
+                    if (isValid) {
+                        for (let i = 0; i < length; i++) {
+                            const coordToAdd = isVertical
+                                ? [firstCoord[0] + i, firstCoord[1]]
+                                : [firstCoord[0], firstCoord[1] + i];
+                            coords.push(coordToAdd);
+                            usedCoords.push(coordToAdd.toString());
+                        }
+                        break;
+                    }
                 }
+
+                selectedPositions.push({
+                    coords: coords,
+                    length: length,
+                });
+            };
+
+            addShip(4);
+            for (let i = 0; i < 2; i++) {
+                addShip(3);
+            }
+            for (let i = 0; i < 3; i++) {
+                addShip(2, Math.random() < 0.5);
+            }
+            for (let i = 0; i < 4; i++) {
+                addShip(1, Math.random() < 0.5);
             }
 
-            selectedPositions.push({
-                coords: coords,
-                length: length,
-            });
-        };
-
-        addShip(4);
-        for (let i = 0; i < 2; i++) {
-            addShip(3);
-        }
-        for (let i = 0; i < 3; i++) {
-            addShip(2, Math.random() < 0.5);
-        }
-        for (let i = 0; i < 4; i++) {
-            addShip(1, Math.random() < 0.5);
-        }
-
-        this._selectedPositions = selectedPositions;
+            this._selectedPositions = selectedPositions;
+            resolve(this._selectedPositions);
+        });
     }
 
     calcAttackSq() {
