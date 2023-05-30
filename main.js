@@ -11,6 +11,7 @@ import {
 } from "./dom-interactions/domInteraction";
 import { startBtnDisplay } from "./ui/start";
 import { gameTitleDisplay } from "./ui/gameTitle";
+import { orientationBtnDisplay } from "./ui/orientation";
 import PlayerFleet from "./ui/fleet";
 import { randomBtnDisplay } from "./ui/random";
 import { droppedShips } from "./ui/dNd";
@@ -83,6 +84,7 @@ async function gameLoop() {
     const playerPlacementGrid = new Grid("playerPlacementGrid");
     playerPlacementGrid.drawGrid();
     randomBtnDisplay("add");
+    orientationBtnDisplay("add");
     /*let randomPlacementSelected = false;
     const getUserInputPlacements = () => {
         return new Promise((resolve) => {
@@ -136,6 +138,7 @@ async function gameLoop() {
                 randomPlacementSelected = true;
                 console.log(randomPlacementSelected);
                 randomBtnDisplay("remove");
+                orientationBtnDisplay("remove");
                 const appWrapper = document.getElementById("app");
                 const placementGrid = document.querySelector(
                     ".playerPlacementGrid"
@@ -186,13 +189,10 @@ async function gameLoop() {
         //clear the selection screen and populate gametime screen!
         playerGameboard.placeShips(droppedShipsArr);
         randomBtnDisplay("remove");
+        orientationBtnDisplay("remove");
         const appWrapper = document.getElementById("app");
         const placementGrid = document.querySelector(".playerPlacementGrid");
         appWrapper.removeChild(placementGrid);
-
-        /* const appWrapper = document.getElementById("app");
-        const placementGrid = document.querySelector(".playerPlacementGrid");
-        appWrapper.removeChild(placementGrid);*/
     }
 
     //player and computer grids are created...

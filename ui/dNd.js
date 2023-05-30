@@ -87,7 +87,6 @@ export function drop(event) {
     if (dropzone.classList.contains("shipCell")) {
         event.preventDefault(); // Prevent the default behavior of the drop event
         console.log(draggableElement);
-        //PROBLEM is in line 467 onwards - need to somehow conditionally check if the ship is a failed drop before making undraggable!
         draggableElement.classList.add("failedDrop");
         return;
     }
