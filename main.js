@@ -21,6 +21,8 @@ import Ship from "./app-logic/ship";
 let computerTurn = {
     val: false,
 };
+
+let orientationBtnLabel = "vertical";
 gameTitleDisplay("add");
 startBtnDisplay("add");
 const playerFleetUI = new PlayerFleet();
@@ -122,11 +124,38 @@ async function gameLoop() {
             const gameboardElement = document.querySelector(
                 ".playerPlacementGrid"
             );
+            const orientationBtn = document.querySelector("#orientationBtn");
 
             const handleDragDrop = () => {
                 randomPlacementSelected = false;
                 resolve(randomPlacementSelected);
             };
+
+            orientationBtn.addEventListener("click", (ev) => {
+                console.log(orientationBtnLabel);
+                if (orientationBtnLabel === "horizontal") {
+                    //switch to vertical label on button - this means the actual ship orientation is currently horizontal!
+                    orientationBtnLabel = "vertical";
+                    orientationBtn.innerText = "VERTICAL";
+                    //remove the 'vertical' class from the ships in the fleet area
+                    if (orientationBtn.classList.contains("vertical")) {
+                        orientationBtn.classList.remove("vertical");
+                    }
+
+                    console.log(
+                        `orientationBtnLabel variable now says: ${orientationBtnLabel}`
+                    );
+                } else if (orientationBtnLabel === "vertical") {
+                    //switch to horizontal label on button - this means actual ship orientation is currently vertical!
+                    orientationBtnLabel = "horizontal";
+                    orientationBtn.innerText = "HORIZONTAL";
+                    //add the 'vertical' class to the ships in the fleet area
+                    orientationBtn.classList.add("vertical");
+                    console.log(
+                        `orientationBtnLabel variable now says: ${orientationBtnLabel} which is the value of the label on the button`
+                    );
+                }
+            });
 
             randomBtn.addEventListener("click", async (ev) => {
                 const playerPositions = await player.generateRandomPositions();
@@ -464,4 +493,4 @@ async function gameLoop() {
     console.log(computerGameboard.sunk);
 }
 
-export { gameLoop, playerFleetUI };
+export { gameLoop, playerFleetUI, orientationBtnLabel };
