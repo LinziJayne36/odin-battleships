@@ -15,6 +15,7 @@ export function drag(ev) {
 */
 //import { gameLoop } from "../main";
 import { playerFleetUI } from "../main";
+import { orientationBtnLabel } from "../main";
 
 export function drag(event) {
     console.log("drag event fired");
@@ -113,14 +114,14 @@ export function drop(event) {
         console.log("Attempted drop coord is off the grid");
         return;
     }
-    if (dropzone.hasChildNodes()) {
-        console.log("The initial coord already has a ship");
-        event.preventDefault();
-        return;
-    }
+
     let y2;
     let y3;
     let y4;
+    let x2;
+    let x3;
+    let x4;
+
     let secondCoord;
     let thirdCoord;
     let fourthCoord;
@@ -136,29 +137,72 @@ export function drop(event) {
         let battleshipCoord4 = [];
         if (startCell.includes("1")) {
             //then there are 3 more ship placements to the RHS
-            y2 = y + 1;
-            battleshipCoord2.push(x, y2); //do at end of this block if all are free
-            secondCoord = `${x.toString()},${y2.toString()}`;
-            console.log(`secondCoord says: ${secondCoord}`);
-            y3 = y + 2;
-            battleshipCoord3.push(x, y3); //do at end of this block if all are free
-            thirdCoord = `${x.toString()},${y3.toString()}`;
-            console.log(`thirdCoord says: ${thirdCoord}`);
-            y4 = y + 3;
-            fourthCoord = `${x.toString()},${y4.toString()}`;
-            battleshipCoord4.push(x, y4); //do at end of this block if all are free
-            console.log(`fourthCoord says: ${fourthCoord}`);
-            secondCell = document.getElementById(`${secondCoord}`);
-            console.log(secondCell);
-            thirdCell = document.getElementById(`${thirdCoord}`);
-            console.log(thirdCell);
-            fourthCell = document.getElementById(`${fourthCoord}`);
-            //only do the appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //TODO: WRITE CODE TO CHECK IF ALL COORDS ARE FREE AND WITHIN THE COSTRAINTS OF THE GRID
-            //this checks if within the grid
-            if (y2 < 1 || y2 > 10 || y3 < 1 || y3 > 10 || y4 < 1 || y4 > 10) {
-                event.preventDefault();
-                return;
+            if (orientationBtnLabel === "vertical") {
+                y2 = y + 1;
+                battleshipCoord2.push(x, y2); //do at end of this block if all are free
+                secondCoord = `${x.toString()},${y2.toString()}`;
+                console.log(`secondCoord says: ${secondCoord}`);
+                y3 = y + 2;
+                battleshipCoord3.push(x, y3); //do at end of this block if all are free
+                thirdCoord = `${x.toString()},${y3.toString()}`;
+                console.log(`thirdCoord says: ${thirdCoord}`);
+                y4 = y + 3;
+                fourthCoord = `${x.toString()},${y4.toString()}`;
+                battleshipCoord4.push(x, y4); //do at end of this block if all are free
+                console.log(`fourthCoord says: ${fourthCoord}`);
+                secondCell = document.getElementById(`${secondCoord}`);
+                console.log(secondCell);
+                thirdCell = document.getElementById(`${thirdCoord}`);
+                console.log(thirdCell);
+                fourthCell = document.getElementById(`${fourthCoord}`);
+                //only do the appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                //TODO: WRITE CODE TO CHECK IF ALL COORDS ARE FREE AND WITHIN THE COSTRAINTS OF THE GRID
+                //this checks if within the grid
+                if (
+                    y2 < 1 ||
+                    y2 > 10 ||
+                    y3 < 1 ||
+                    y3 > 10 ||
+                    y4 < 1 ||
+                    y4 > 10
+                ) {
+                    event.preventDefault();
+                    return;
+                }
+                draggableElement.style.width = "47px";
+            } else if (orientationBtnLabel === "horizontal") {
+                x2 = x + 1;
+                battleshipCoord2.push(x2, y); //do at end of this block if all are free
+                secondCoord = `${x2.toString()},${y.toString()}`;
+                console.log(`secondCoord says: ${secondCoord}`);
+                x3 = x + 2;
+                battleshipCoord3.push(y, x3); //do at end of this block if all are free
+                thirdCoord = `${x3.toString()},${y.toString()}`;
+                console.log(`thirdCoord says: ${thirdCoord}`);
+                x4 = x + 3;
+                fourthCoord = `${x4.toString()},${y.toString()}`;
+                battleshipCoord4.push(x4, y); //do at end of this block if all are free
+                console.log(`fourthCoord says: ${fourthCoord}`);
+                secondCell = document.getElementById(`${secondCoord}`);
+                console.log(secondCell);
+                thirdCell = document.getElementById(`${thirdCoord}`);
+                console.log(thirdCell);
+                fourthCell = document.getElementById(`${fourthCoord}`);
+                //only do the appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                //TODO: WRITE CODE TO CHECK IF ALL COORDS ARE FREE AND WITHIN THE COSTRAINTS OF THE GRID
+                //this checks if within the grid
+                if (
+                    x2 < 1 ||
+                    x2 > 10 ||
+                    x3 < 1 ||
+                    x3 > 10 ||
+                    x4 < 1 ||
+                    x4 > 10
+                ) {
+                    event.preventDefault();
+                    return;
+                }
+                draggableElement.style.height = "47px";
             }
 
             if (
@@ -171,7 +215,7 @@ export function drop(event) {
                 event.preventDefault();
                 return;
             }
-            draggableElement.style.width = "47px";
+
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("dropped");
@@ -217,41 +261,98 @@ export function drop(event) {
                 battleshipUIcount.innerHTML = "";
             }
         } else if (startCell.includes("2")) {
-            //then there is 1 ship placement to LHS and 2 to RHS
-            y2 = y - 1;
-            battleshipCoord2.push(x, y2); //do at end of this block if all are free
-            secondCoord = `${x.toString()},${y2.toString()}`;
-            console.log(`secondCoord says: ${secondCoord}`);
-            y3 = y + 1;
-            battleshipCoord3.push(x, y3); //do at end of this block if all are free
-            thirdCoord = `${x.toString()},${y3.toString()}`;
-            console.log(`thirdCoord says: ${thirdCoord}`);
-            y4 = y + 2;
-            battleshipCoord4.push(x, y4); //do at end of this block if all are free
-            fourthCoord = `${x.toString()},${y4.toString()}`;
-            console.log(`fourthCoord says: ${fourthCoord}`);
-            secondCell = document.getElementById(`${secondCoord}`);
-            console.log(secondCell);
-            thirdCell = document.getElementById(`${thirdCoord}`);
-            console.log(thirdCell);
-            fourthCell = document.getElementById(`${fourthCoord}`);
-            //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            if (y2 < 1 || y2 > 10 || y3 < 1 || y3 > 10 || y4 < 1 || y4 > 10) {
-                event.preventDefault();
-                return;
+            if (orientationBtnLabel === "vertical") {
+                //then there is 1 ship placement to LHS and 2 to RHS
+                y2 = y - 1;
+                battleshipCoord2.push(x, y2); //do at end of this block if all are free
+                secondCoord = `${x.toString()},${y2.toString()}`;
+                console.log(`secondCoord says: ${secondCoord}`);
+                y3 = y + 1;
+                battleshipCoord3.push(x, y3); //do at end of this block if all are free
+                thirdCoord = `${x.toString()},${y3.toString()}`;
+                console.log(`thirdCoord says: ${thirdCoord}`);
+                y4 = y + 2;
+                battleshipCoord4.push(x, y4); //do at end of this block if all are free
+                fourthCoord = `${x.toString()},${y4.toString()}`;
+                console.log(`fourthCoord says: ${fourthCoord}`);
+                secondCell = document.getElementById(`${secondCoord}`);
+                console.log(secondCell);
+                thirdCell = document.getElementById(`${thirdCoord}`);
+                console.log(thirdCell);
+                fourthCell = document.getElementById(`${fourthCoord}`);
+                //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (
+                    y2 < 1 ||
+                    y2 > 10 ||
+                    y3 < 1 ||
+                    y3 > 10 ||
+                    y4 < 1 ||
+                    y4 > 10
+                ) {
+                    event.preventDefault();
+                    return;
+                }
+
+                if (
+                    secondCell.hasChildNodes() ||
+                    thirdCell.hasChildNodes() ||
+                    fourthCell.hasChildNodes()
+                ) {
+                    console.log(
+                        "At least one of those coords already has a ship"
+                    );
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                draggableElement.style.width = "47px";
+            } else if (orientationBtnLabel === "horizontal") {
+                //then there is 1 ship placement above and 2 below
+                x2 = x - 1;
+                battleshipCoord2.push(x2, y); //do at end of this block if all are free
+                secondCoord = `${x2.toString()},${y.toString()}`;
+                console.log(`secondCoord says: ${secondCoord}`);
+                x3 = x + 1;
+                battleshipCoord3.push(x3, y); //do at end of this block if all are free
+                thirdCoord = `${x3.toString()},${y.toString()}`;
+                console.log(`thirdCoord says: ${thirdCoord}`);
+                x4 = x + 2;
+                battleshipCoord4.push(x4, y); //do at end of this block if all are free
+                fourthCoord = `${x4.toString()},${y.toString()}`;
+                console.log(`fourthCoord says: ${fourthCoord}`);
+                secondCell = document.getElementById(`${secondCoord}`);
+                console.log(secondCell);
+                thirdCell = document.getElementById(`${thirdCoord}`);
+                console.log(thirdCell);
+                fourthCell = document.getElementById(`${fourthCoord}`);
+                //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (
+                    x2 < 1 ||
+                    x2 > 10 ||
+                    x3 < 1 ||
+                    x3 > 10 ||
+                    x4 < 1 ||
+                    x4 > 10
+                ) {
+                    event.preventDefault();
+                    return;
+                }
+
+                if (
+                    secondCell.hasChildNodes() ||
+                    thirdCell.hasChildNodes() ||
+                    fourthCell.hasChildNodes()
+                ) {
+                    console.log(
+                        "At least one of those coords already has a ship"
+                    );
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                draggableElement.style.height = "47px";
             }
 
-            if (
-                secondCell.hasChildNodes() ||
-                thirdCell.hasChildNodes() ||
-                fourthCell.hasChildNodes()
-            ) {
-                console.log("At least one of those coords already has a ship");
-                draggableElement.classList.add("cancelled");
-                event.preventDefault();
-                return;
-            }
-            draggableElement.style.width = "47px";
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("dropped");
@@ -869,11 +970,19 @@ export function dragEnd(event) {
 
     allBattleships.forEach((battleship) => {
         console.log(battleship);
-        if (!battleship.classList.contains("dropped")) {
+        if (
+            !battleship.classList.contains("dropped") &&
+            !battleship.classList.contains("vertical")
+        ) {
             console.log(
                 "dropped class is NOT present, battleship should have width 200px"
             );
             battleship.style.width = "200px";
+        } else if (
+            !battleship.classList.contains("dropped") &&
+            battleship.classList.contains("vertical")
+        ) {
+            battleship.style.height = "200px";
         }
     });
 
@@ -881,11 +990,19 @@ export function dragEnd(event) {
 
     allCruisers.forEach((cruiser) => {
         console.log(cruiser);
-        if (!cruiser.classList.contains("dropped")) {
+        if (
+            !cruiser.classList.contains("dropped") &&
+            !cruiser.classList.contains("vertical")
+        ) {
             console.log(
                 "dropped class is NOT present, cruiser should have width 149px"
             );
             cruiser.style.width = "149px";
+        } else if (
+            !cruiser.classList.contains("dropped") &&
+            cruiser.classList.contains("vertical")
+        ) {
+            cruiser.style.height = "149px";
         }
     });
 
@@ -893,11 +1010,19 @@ export function dragEnd(event) {
 
     allSubs.forEach((sub) => {
         console.log(sub);
-        if (!sub.classList.contains("dropped")) {
+        if (
+            !sub.classList.contains("dropped") &&
+            !sub.classList.contains("vertical")
+        ) {
             console.log(
                 "dropped class is NOT present, sub should have width 96px"
             );
             sub.style.width = "96px";
+        } else if (
+            !sub.classList.contains("dropped") &&
+            sub.classList.contains("vertical")
+        ) {
+            sub.style.height = "96px";
         }
     });
 

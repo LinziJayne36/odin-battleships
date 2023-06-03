@@ -132,15 +132,20 @@ async function gameLoop() {
             };
 
             orientationBtn.addEventListener("click", (ev) => {
+                const draggableShips = document.querySelectorAll(
+                    'div[draggable="true"], .fleetWrapper, .typeWrapper, .shipCell, .cruiserCell, .battleshipCell, .subCell'
+                );
                 console.log(orientationBtnLabel);
                 if (orientationBtnLabel === "horizontal") {
                     //switch to vertical label on button - this means the actual ship orientation is currently horizontal!
                     orientationBtnLabel = "vertical";
                     orientationBtn.innerText = "VERTICAL";
                     //remove the 'vertical' class from the ships in the fleet area
-                    if (orientationBtn.classList.contains("vertical")) {
-                        orientationBtn.classList.remove("vertical");
-                    }
+                    draggableShips.forEach((div) => {
+                        if (div.classList.contains("vertical")) {
+                            div.classList.remove("vertical");
+                        }
+                    });
 
                     console.log(
                         `orientationBtnLabel variable now says: ${orientationBtnLabel}`
@@ -150,7 +155,12 @@ async function gameLoop() {
                     orientationBtnLabel = "horizontal";
                     orientationBtn.innerText = "HORIZONTAL";
                     //add the 'vertical' class to the ships in the fleet area
-                    orientationBtn.classList.add("vertical");
+
+                    //orientationBtn.classList.add("vertical");
+                    //TODO: add class vertical to all divs with a draggable=true attribute
+                    draggableShips.forEach((div) => {
+                        div.classList.add("vertical");
+                    });
                     console.log(
                         `orientationBtnLabel variable now says: ${orientationBtnLabel} which is the value of the label on the button`
                     );

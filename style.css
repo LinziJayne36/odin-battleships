@@ -29,6 +29,14 @@
     display: flex;
 }
 
+.typeWrapper.vertical {
+    flex-direction: column-reverse;
+}
+
+.fleetWrapper.vertical {
+    display: flex;
+}
+
 .battleshipCountDiv,
 .cruiserCountDiv,
 .subCountDiv,
@@ -57,9 +65,21 @@
     width: 200px;
 }
 
+.battleship.vertical {
+    width: 47px;
+    height: 200px;
+    flex-direction: column;
+}
+
 .cruiser {
     width: 149px;
     display: flex;
+}
+
+.cruiser.vertical {
+    width: 47px;
+    height: 149px;
+    flex-direction: column;
 }
 
 .cruiserCell {
@@ -74,14 +94,35 @@
     width: 50%;
 }
 
+.subCell.vertical {
+    height: 50%;
+    width: 100%;
+}
+
 .battleshipCell {
     width: 25%;
+}
+
+.battleshipCell.vertical {
+    height: 25%;
+    width: 100%;
+}
+
+.cruiserCell.vertical {
+    height: 33.3%;
+    width: 100%;
 }
 
 .sub {
     width: 96px;
 }
 
+.sub.vertical {
+    height: 96px;
+    width: 47px;
+    flex-direction: column;
+}
+
 .destroyer {
-    width: 48px;
+    width: 47px;
 }
