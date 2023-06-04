@@ -397,41 +397,98 @@ export function drop(event) {
                 battleshipUIcount.innerHTML = "";
             }
         } else if (startCell.includes("3")) {
-            //then there is 2 ship placements to LHS and 1 to RHS
-            y2 = y - 1;
-            battleshipCoord2.push(x, y2); //do at end of this block if all are free
-            secondCoord = `${x.toString()},${y2.toString()}`;
-            console.log(`secondCoord says: ${secondCoord}`);
-            y3 = y - 2;
-            battleshipCoord3.push(x, y3); //do at end of this block if all are free
-            thirdCoord = `${x.toString()},${y3.toString()}`;
-            console.log(`thirdCoord says: ${thirdCoord}`);
-            y4 = y + 1;
-            battleshipCoord4.push(x, y4); //do at end of this block if all are free
-            fourthCoord = `${x.toString()},${y4.toString()}`;
-            console.log(`fourthCoord says: ${fourthCoord}`);
-            secondCell = document.getElementById(`${secondCoord}`);
-            console.log(secondCell);
-            thirdCell = document.getElementById(`${thirdCoord}`);
-            console.log(thirdCell);
-            fourthCell = document.getElementById(`${fourthCoord}`);
-            //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            if (y2 < 1 || y2 > 10 || y3 < 1 || y3 > 10 || y4 < 1 || y4 > 10) {
-                event.preventDefault();
-                return;
+            if (orientationBtnLabel === "vertical") {
+                //then there is 2 ship placements to LHS and 1 to RHS
+                y2 = y - 1;
+                battleshipCoord2.push(x, y2); //do at end of this block if all are free
+                secondCoord = `${x.toString()},${y2.toString()}`;
+                console.log(`secondCoord says: ${secondCoord}`);
+                y3 = y - 2;
+                battleshipCoord3.push(x, y3); //do at end of this block if all are free
+                thirdCoord = `${x.toString()},${y3.toString()}`;
+                console.log(`thirdCoord says: ${thirdCoord}`);
+                y4 = y + 1;
+                battleshipCoord4.push(x, y4); //do at end of this block if all are free
+                fourthCoord = `${x.toString()},${y4.toString()}`;
+                console.log(`fourthCoord says: ${fourthCoord}`);
+                secondCell = document.getElementById(`${secondCoord}`);
+                console.log(secondCell);
+                thirdCell = document.getElementById(`${thirdCoord}`);
+                console.log(thirdCell);
+                fourthCell = document.getElementById(`${fourthCoord}`);
+                //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (
+                    y2 < 1 ||
+                    y2 > 10 ||
+                    y3 < 1 ||
+                    y3 > 10 ||
+                    y4 < 1 ||
+                    y4 > 10
+                ) {
+                    event.preventDefault();
+                    return;
+                }
+
+                if (
+                    secondCell.hasChildNodes() ||
+                    thirdCell.hasChildNodes() ||
+                    fourthCell.hasChildNodes()
+                ) {
+                    console.log(
+                        "At least one of those coords already has a ship"
+                    );
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                draggableElement.style.width = "47px";
+            } else if (orientationBtnLabel === "horizontal") {
+                //then there is 2 ship placements to LHS and 1 to RHS
+                x2 = x - 1;
+                battleshipCoord2.push(x2, y); //do at end of this block if all are free
+                secondCoord = `${x2.toString()},${y.toString()}`;
+                console.log(`secondCoord says: ${secondCoord}`);
+                x3 = x - 2;
+                battleshipCoord3.push(x3, y); //do at end of this block if all are free
+                thirdCoord = `${x3.toString()},${y.toString()}`;
+                console.log(`thirdCoord says: ${thirdCoord}`);
+                x4 = x + 1;
+                battleshipCoord4.push(x4, y); //do at end of this block if all are free
+                fourthCoord = `${x4.toString()},${y.toString()}`;
+                console.log(`fourthCoord says: ${fourthCoord}`);
+                secondCell = document.getElementById(`${secondCoord}`);
+                console.log(secondCell);
+                thirdCell = document.getElementById(`${thirdCoord}`);
+                console.log(thirdCell);
+                fourthCell = document.getElementById(`${fourthCoord}`);
+                //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (
+                    x2 < 1 ||
+                    x2 > 10 ||
+                    x3 < 1 ||
+                    x3 > 10 ||
+                    x4 < 1 ||
+                    x4 > 10
+                ) {
+                    event.preventDefault();
+                    return;
+                }
+
+                if (
+                    secondCell.hasChildNodes() ||
+                    thirdCell.hasChildNodes() ||
+                    fourthCell.hasChildNodes()
+                ) {
+                    console.log(
+                        "At least one of those coords already has a ship"
+                    );
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                draggableElement.style.height = "47px";
             }
 
-            if (
-                secondCell.hasChildNodes() ||
-                thirdCell.hasChildNodes() ||
-                fourthCell.hasChildNodes()
-            ) {
-                console.log("At least one of those coords already has a ship");
-                draggableElement.classList.add("cancelled");
-                event.preventDefault();
-                return;
-            }
-            draggableElement.style.width = "47px";
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("dropped");
@@ -476,42 +533,100 @@ export function drop(event) {
                 battleshipUIcount.innerHTML = "";
             }
         } else if (startCell.includes("4")) {
-            //then there is 3 ship placements to LHS and 0 to RHS
-            y2 = y - 1;
-            battleshipCoord2.push(x, y2); //do at end of this block if all are free
-            secondCoord = `${x.toString()},${y2.toString()}`;
-            console.log(`secondCoord says: ${secondCoord}`);
-            y3 = y - 2;
-            battleshipCoord3.push(x, y3); //do at end of this block if all are free
-            thirdCoord = `${x.toString()},${y3.toString()}`;
-            console.log(`thirdCoord says: ${thirdCoord}`);
-            y4 = y - 3;
+            if (orientationBtnLabel === "vertical") {
+                //then there is 3 ship placements to LHS and 0 to RHS
+                y2 = y - 1;
+                battleshipCoord2.push(x, y2); //do at end of this block if all are free
+                secondCoord = `${x.toString()},${y2.toString()}`;
+                console.log(`secondCoord says: ${secondCoord}`);
+                y3 = y - 2;
+                battleshipCoord3.push(x, y3); //do at end of this block if all are free
+                thirdCoord = `${x.toString()},${y3.toString()}`;
+                console.log(`thirdCoord says: ${thirdCoord}`);
+                y4 = y - 3;
 
-            battleshipCoord4.push(x, y4); //do at end of this block if all are free
-            fourthCoord = `${x.toString()},${y4.toString()}`;
-            console.log(`fourthCoord says: ${fourthCoord}`);
-            secondCell = document.getElementById(`${secondCoord}`);
-            console.log(secondCell);
-            thirdCell = document.getElementById(`${thirdCoord}`);
-            console.log(thirdCell);
-            fourthCell = document.getElementById(`${fourthCoord}`);
-            //only do the cloning, appending, pushing, and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            if (y2 < 1 || y2 > 10 || y3 < 1 || y3 > 10 || y4 < 1 || y4 > 10) {
-                event.preventDefault();
-                return;
+                battleshipCoord4.push(x, y4); //do at end of this block if all are free
+                fourthCoord = `${x.toString()},${y4.toString()}`;
+                console.log(`fourthCoord says: ${fourthCoord}`);
+                secondCell = document.getElementById(`${secondCoord}`);
+                console.log(secondCell);
+                thirdCell = document.getElementById(`${thirdCoord}`);
+                console.log(thirdCell);
+                fourthCell = document.getElementById(`${fourthCoord}`);
+                //only do the cloning, appending, pushing, and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (
+                    y2 < 1 ||
+                    y2 > 10 ||
+                    y3 < 1 ||
+                    y3 > 10 ||
+                    y4 < 1 ||
+                    y4 > 10
+                ) {
+                    event.preventDefault();
+                    return;
+                }
+
+                if (
+                    secondCell.hasChildNodes() ||
+                    thirdCell.hasChildNodes() ||
+                    fourthCell.hasChildNodes()
+                ) {
+                    console.log(
+                        "At least one of those coords already has a ship"
+                    );
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                draggableElement.style.width = "47px";
+            } else if (orientationBtnLabel === "horizontal") {
+                //then there is 3 ship placements to LHS and 0 to RHS
+                x2 = x - 1;
+                battleshipCoord2.push(x2, y); //do at end of this block if all are free
+                secondCoord = `${x2.toString()},${y.toString()}`;
+                console.log(`secondCoord says: ${secondCoord}`);
+                x3 = x - 2;
+                battleshipCoord3.push(x3, y); //do at end of this block if all are free
+                thirdCoord = `${x3.toString()},${y.toString()}`;
+                console.log(`thirdCoord says: ${thirdCoord}`);
+                x4 = x - 3;
+
+                battleshipCoord4.push(x4, y); //do at end of this block if all are free
+                fourthCoord = `${x4.toString()},${y.toString()}`;
+                console.log(`fourthCoord says: ${fourthCoord}`);
+                secondCell = document.getElementById(`${secondCoord}`);
+                console.log(secondCell);
+                thirdCell = document.getElementById(`${thirdCoord}`);
+                console.log(thirdCell);
+                fourthCell = document.getElementById(`${fourthCoord}`);
+                //only do the cloning, appending, pushing, and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (
+                    x2 < 1 ||
+                    x2 > 10 ||
+                    x3 < 1 ||
+                    x3 > 10 ||
+                    x4 < 1 ||
+                    x4 > 10
+                ) {
+                    event.preventDefault();
+                    return;
+                }
+
+                if (
+                    secondCell.hasChildNodes() ||
+                    thirdCell.hasChildNodes() ||
+                    fourthCell.hasChildNodes()
+                ) {
+                    console.log(
+                        "At least one of those coords already has a ship"
+                    );
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                draggableElement.style.height = "47px";
             }
 
-            if (
-                secondCell.hasChildNodes() ||
-                thirdCell.hasChildNodes() ||
-                fourthCell.hasChildNodes()
-            ) {
-                console.log("At least one of those coords already has a ship");
-                draggableElement.classList.add("cancelled");
-                event.preventDefault();
-                return;
-            }
-            draggableElement.style.width = "47px";
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("dropped");
@@ -581,36 +696,74 @@ export function drop(event) {
         let cruiserCoord3 = [];
         //Starting to integrate ship placing logic for rest of grid cells....
         if (startCell.includes("1")) {
-            //then there are 2 more ship placements to the RHS
-            y2 = y + 1;
-            cruiserCoord2.push(x, y2); //do at end of this block if all are free
-            secondCoord = `${x.toString()},${y2.toString()}`;
-            console.log(`secondCoord says: ${secondCoord}`);
-            y3 = y + 2;
-            cruiserCoord3.push(x, y3); //do at end of this block if all are free
-            thirdCoord = `${x.toString()},${y3.toString()}`;
-            console.log(`thirdCoord says: ${thirdCoord}`);
-            secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
-            console.log(secondCell);
-            thirdCell = document.getElementById(`${thirdCoord}`); //finding el where its id === thirdCoord
-            console.log(thirdCell);
-            //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            if (y2 < 1 || y2 > 10 || y3 > 10 || y3 < 1) {
-                console.log("the second coord is off the grid");
-                draggableElement.classList.add("cancelled");
-                event.preventDefault();
-                return;
+            if (orientationBtnLabel === "vertical") {
+                //then there are 2 more ship placements to the RHS
+                y2 = y + 1;
+                cruiserCoord2.push(x, y2); //do at end of this block if all are free
+                secondCoord = `${x.toString()},${y2.toString()}`;
+                console.log(`secondCoord says: ${secondCoord}`);
+                y3 = y + 2;
+                cruiserCoord3.push(x, y3); //do at end of this block if all are free
+                thirdCoord = `${x.toString()},${y3.toString()}`;
+                console.log(`thirdCoord says: ${thirdCoord}`);
+                secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
+                console.log(secondCell);
+                thirdCell = document.getElementById(`${thirdCoord}`); //finding el where its id === thirdCoord
+                console.log(thirdCell);
+                //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (y2 < 1 || y2 > 10 || y3 > 10 || y3 < 1) {
+                    console.log("the second coord is off the grid");
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                console.log(
+                    "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
+                );
+                if (secondCell.hasChildNodes() || thirdCell.hasChildNodes()) {
+                    console.log(
+                        "At least one of those coords already has a ship"
+                    );
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                draggableElement.style.width = "47px";
+            } else if (orientationBtnLabel === "horizontal") {
+                //then there are 2 more ship placements to the RHS
+                x2 = x + 1;
+                cruiserCoord2.push(x2, y); //do at end of this block if all are free
+                secondCoord = `${x2.toString()},${y.toString()}`;
+                console.log(`secondCoord says: ${secondCoord}`);
+                x3 = x + 2;
+                cruiserCoord3.push(x3, y); //do at end of this block if all are free
+                thirdCoord = `${x3.toString()},${y.toString()}`;
+                console.log(`thirdCoord says: ${thirdCoord}`);
+                secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
+                console.log(secondCell);
+                thirdCell = document.getElementById(`${thirdCoord}`); //finding el where its id === thirdCoord
+                console.log(thirdCell);
+                //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (x2 < 1 || x2 > 10 || x3 > 10 || x3 < 1) {
+                    console.log("the second coord is off the grid");
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                console.log(
+                    "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
+                );
+                if (secondCell.hasChildNodes() || thirdCell.hasChildNodes()) {
+                    console.log(
+                        "At least one of those coords already has a ship"
+                    );
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                draggableElement.style.height = "47px";
             }
-            console.log(
-                "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
-            );
-            if (secondCell.hasChildNodes() || thirdCell.hasChildNodes()) {
-                console.log("At least one of those coords already has a ship");
-                draggableElement.classList.add("cancelled");
-                event.preventDefault();
-                return;
-            }
-            draggableElement.style.width = "47px";
+
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("dropped");
@@ -644,32 +797,66 @@ export function drop(event) {
                 cruiserUIcount.innerHTML = "";
             }
         } else if (startCell.includes("2")) {
-            //then there are 1 ship placement to the LHS and 1 to the RHS
-            y2 = y - 1;
-            cruiserCoord2.push(x, y2); //do at end of this block if all are free
-            secondCoord = `${x.toString()},${y2.toString()}`;
-            y3 = y + 1;
-            cruiserCoord3.push(x, y3); //do at end of this block if all are free
-            thirdCoord = `${x.toString()},${y3.toString()}`;
-            secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
-            thirdCell = document.getElementById(`${thirdCoord}`); //finding el where its id === thirdCoord
-            //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            if (y2 < 1 || y2 > 10 || y3 > 10 || y3 < 1) {
-                console.log("the second coord is off the grid");
-                draggableElement.classList.add("cancelled");
-                event.preventDefault();
-                return;
+            if (orientationBtnLabel === "vertical") {
+                //then there are 1 ship placement to the LHS and 1 to the RHS
+                y2 = y - 1;
+                cruiserCoord2.push(x, y2); //do at end of this block if all are free
+                secondCoord = `${x.toString()},${y2.toString()}`;
+                y3 = y + 1;
+                cruiserCoord3.push(x, y3); //do at end of this block if all are free
+                thirdCoord = `${x.toString()},${y3.toString()}`;
+                secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
+                thirdCell = document.getElementById(`${thirdCoord}`); //finding el where its id === thirdCoord
+                //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (y2 < 1 || y2 > 10 || y3 > 10 || y3 < 1) {
+                    console.log("the second coord is off the grid");
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                console.log(
+                    "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
+                );
+                if (secondCell.hasChildNodes() || thirdCell.hasChildNodes()) {
+                    console.log(
+                        "At least one of those coords already has a ship"
+                    );
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                draggableElement.style.width = "47px";
+            } else if (orientationBtnLabel === "horizontal") {
+                //then there are 1 ship placement to the LHS and 1 to the RHS
+                x2 = x - 1;
+                cruiserCoord2.push(x2, y); //do at end of this block if all are free
+                secondCoord = `${x2.toString()},${y.toString()}`;
+                x3 = x + 1;
+                cruiserCoord3.push(x3, y); //do at end of this block if all are free
+                thirdCoord = `${x3.toString()},${y.toString()}`;
+                secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
+                thirdCell = document.getElementById(`${thirdCoord}`); //finding el where its id === thirdCoord
+                //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (x2 < 1 || x2 > 10 || x3 > 10 || x3 < 1) {
+                    console.log("the second coord is off the grid");
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                console.log(
+                    "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
+                );
+                if (secondCell.hasChildNodes() || thirdCell.hasChildNodes()) {
+                    console.log(
+                        "At least one of those coords already has a ship"
+                    );
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                draggableElement.style.height = "47px";
             }
-            console.log(
-                "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
-            );
-            if (secondCell.hasChildNodes() || thirdCell.hasChildNodes()) {
-                console.log("At least one of those coords already has a ship");
-                draggableElement.classList.add("cancelled");
-                event.preventDefault();
-                return;
-            }
-            draggableElement.style.width = "47px";
+
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("dropped");
@@ -703,32 +890,66 @@ export function drop(event) {
                 cruiserUIcount.innerHTML = "";
             }
         } else if (startCell.includes("3")) {
-            //then there are 2 ship placements on LHS
-            y2 = y - 1;
-            cruiserCoord2.push(x, y2); //do at end of this block if all are free
-            secondCoord = `${x.toString()},${y2.toString()}`;
-            y3 = y - 2;
-            cruiserCoord3.push(x, y3); //do at end of this block if all are free
-            thirdCoord = `${x.toString()},${y3.toString()}`;
-            secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
-            thirdCell = document.getElementById(`${thirdCoord}`); //finding el where its id === thirdCoord
-            //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            if (y2 < 1 || y2 > 10 || y3 > 10 || y3 < 1) {
-                console.log("the second coord is off the grid");
-                draggableElement.classList.add("cancelled");
-                event.preventDefault();
-                return;
+            if (orientationBtnLabel === "vertical") {
+                //then there are 2 ship placements on LHS
+                y2 = y - 1;
+                cruiserCoord2.push(x, y2); //do at end of this block if all are free
+                secondCoord = `${x.toString()},${y2.toString()}`;
+                y3 = y - 2;
+                cruiserCoord3.push(x, y3); //do at end of this block if all are free
+                thirdCoord = `${x.toString()},${y3.toString()}`;
+                secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
+                thirdCell = document.getElementById(`${thirdCoord}`); //finding el where its id === thirdCoord
+                //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (y2 < 1 || y2 > 10 || y3 > 10 || y3 < 1) {
+                    console.log("the second coord is off the grid");
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                console.log(
+                    "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
+                );
+                if (secondCell.hasChildNodes() || thirdCell.hasChildNodes()) {
+                    console.log(
+                        "At least one of those coords already has a ship"
+                    );
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                draggableElement.style.width = "47px";
+            } else if (orientationBtnLabel === "horizontal") {
+                //then there are 2 ship placements on LHS
+                x2 = x - 1;
+                cruiserCoord2.push(x2, y); //do at end of this block if all are free
+                secondCoord = `${x2.toString()},${y.toString()}`;
+                x3 = x - 2;
+                cruiserCoord3.push(x3, y); //do at end of this block if all are free
+                thirdCoord = `${x3.toString()},${y.toString()}`;
+                secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
+                thirdCell = document.getElementById(`${thirdCoord}`); //finding el where its id === thirdCoord
+                //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (x2 < 1 || x2 > 10 || x3 > 10 || x3 < 1) {
+                    console.log("the second coord is off the grid");
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                console.log(
+                    "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
+                );
+                if (secondCell.hasChildNodes() || thirdCell.hasChildNodes()) {
+                    console.log(
+                        "At least one of those coords already has a ship"
+                    );
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                draggableElement.style.height = "47px";
             }
-            console.log(
-                "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
-            );
-            if (secondCell.hasChildNodes() || thirdCell.hasChildNodes()) {
-                console.log("At least one of those coords already has a ship");
-                draggableElement.classList.add("cancelled");
-                event.preventDefault();
-                return;
-            }
-            draggableElement.style.width = "47px";
+
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("dropped");
@@ -791,31 +1012,64 @@ export function drop(event) {
         let subCoord2 = [];
         //Starting to integrate ship placing logic for rest of grid cells....
         if (startCell.includes("1")) {
-            console.log(`startCell says: ${startCell}`);
-            //then there are 1 more ship placements to the RHS
-            y2 = y + 1;
-            subCoord2.push(x, y2); //do at end of this block if all are free !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            secondCoord = `${x.toString()},${y2.toString()}`;
-            console.log(`secondCoord says: ${secondCoord}`);
-            secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
-            console.log(secondCell);
-            //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            if (y2 < 1 || y2 > 10) {
-                console.log("the second coord is off the grid");
-                draggableElement.classList.add("cancelled");
-                event.preventDefault();
-                return;
+            if (orientationBtnLabel === "vertical") {
+                console.log(`startCell says: ${startCell}`);
+                //then there are 1 more ship placements to the RHS
+                y2 = y + 1;
+                subCoord2.push(x, y2); //do at end of this block if all are free !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                secondCoord = `${x.toString()},${y2.toString()}`;
+                console.log(`secondCoord says: ${secondCoord}`);
+                secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
+                console.log(secondCell);
+                //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (y2 < 1 || y2 > 10) {
+                    console.log("the second coord is off the grid");
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                console.log(
+                    "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
+                );
+                if (secondCell.hasChildNodes()) {
+                    console.log(
+                        "At least one of those coords already has a ship"
+                    );
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                draggableElement.style.width = "47px";
+            } else if (orientationBtnLabel === "horizontal") {
+                console.log(`startCell says: ${startCell}`);
+                //then there are 1 more ship placements to the RHS
+                x2 = x + 1;
+                subCoord2.push(x2, y); //do at end of this block if all are free !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                secondCoord = `${x2.toString()},${y.toString()}`;
+                console.log(`secondCoord says: ${secondCoord}`);
+                secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
+                console.log(secondCell);
+                //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (x2 < 1 || x2 > 10) {
+                    console.log("the second coord is off the grid");
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                console.log(
+                    "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
+                );
+                if (secondCell.hasChildNodes()) {
+                    console.log(
+                        "At least one of those coords already has a ship"
+                    );
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                draggableElement.style.height = "47px";
             }
-            console.log(
-                "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
-            );
-            if (secondCell.hasChildNodes()) {
-                console.log("At least one of those coords already has a ship");
-                draggableElement.classList.add("cancelled");
-                event.preventDefault();
-                return;
-            }
-            draggableElement.style.width = "47px";
+
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("dropped");
@@ -842,29 +1096,60 @@ export function drop(event) {
                 subUIcount.innerHTML = "";
             }
         } else if (startCell.includes("2")) {
-            //then there are 1 ship placement to the LHS
-            console.log(`startCell says: ${startCell}`);
-            y2 = y - 1;
-            subCoord2.push(x, y2); //do at end of this block if all are free !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            secondCoord = `${x.toString()},${y2.toString()}`;
-            secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
-            //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            if (y2 < 1 || y2 > 10) {
-                console.log("the second coord is off the grid");
-                draggableElement.classList.add("cancelled");
-                event.preventDefault();
-                return;
+            if (orientationBtnLabel === "vertical") {
+                //then there are 1 ship placement to the LHS
+                console.log(`startCell says: ${startCell}`);
+                y2 = y - 1;
+                subCoord2.push(x, y2); //do at end of this block if all are free !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                secondCoord = `${x.toString()},${y2.toString()}`;
+                secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
+                //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (y2 < 1 || y2 > 10) {
+                    console.log("the second coord is off the grid");
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                console.log(
+                    "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
+                );
+                if (secondCell.hasChildNodes()) {
+                    console.log(
+                        "At least one of those coords already has a ship"
+                    );
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                draggableElement.style.width = "47px";
+            } else if (orientationBtnLabel === "horizontal") {
+                //then there are 1 ship placement to the LHS
+                console.log(`startCell says: ${startCell}`);
+                x2 = x - 1;
+                subCoord2.push(x2, y); //do at end of this block if all are free !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                secondCoord = `${x2.toString()},${y.toString()}`;
+                secondCell = document.getElementById(`${secondCoord}`); //finding el where its id === secondCoord
+                //only do the cloning, appending and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (x2 < 1 || x2 > 10) {
+                    console.log("the second coord is off the grid");
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                console.log(
+                    "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
+                );
+                if (secondCell.hasChildNodes()) {
+                    console.log(
+                        "At least one of those coords already has a ship"
+                    );
+                    draggableElement.classList.add("cancelled");
+                    event.preventDefault();
+                    return;
+                }
+                draggableElement.style.height = "47px";
             }
-            console.log(
-                "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
-            );
-            if (secondCell.hasChildNodes()) {
-                console.log("At least one of those coords already has a ship");
-                draggableElement.classList.add("cancelled");
-                event.preventDefault();
-                return;
-            }
-            draggableElement.style.width = "47px";
+
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("dropped");
