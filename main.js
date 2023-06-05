@@ -136,6 +136,7 @@ async function gameLoop() {
                     'div[draggable="true"], .fleetWrapper, .typeWrapper, .shipCell, .cruiserCell, .battleshipCell, .subCell'
                 );
                 console.log(orientationBtnLabel);
+
                 if (orientationBtnLabel === "horizontal") {
                     //switch to vertical label on button - this means the actual ship orientation is currently horizontal!
                     orientationBtnLabel = "vertical";
@@ -144,6 +145,9 @@ async function gameLoop() {
                     draggableShips.forEach((div) => {
                         if (div.classList.contains("vertical")) {
                             div.classList.remove("vertical");
+                            console.log(
+                                "Here is where we should reset the correct width for horizontal"
+                            );
                         }
                     });
 
@@ -160,11 +164,45 @@ async function gameLoop() {
                     //TODO: add class vertical to all divs with a draggable=true attribute
                     draggableShips.forEach((div) => {
                         div.classList.add("vertical");
+                        console.log(
+                            "here is where we should reset the height for vertical"
+                        );
                     });
                     console.log(
                         `orientationBtnLabel variable now says: ${orientationBtnLabel} which is the value of the label on the button`
                     );
                 }
+
+                const cruisers = document.querySelectorAll(
+                    ".typeWrapper .cruiser"
+                );
+                cruisers.forEach((ship) => {
+                    console.log(ship);
+                    if (!ship.classList.contains("vertical")) {
+                        console.log(
+                            "the ship element does not have vertical class"
+                        );
+                        ship.style.width = "149px";
+                        ship.style.height = "47px";
+                    } else if (ship.classList.contains("vertical")) {
+                        console.log(
+                            "the ship element does have the vertical class "
+                        );
+                        ship.style.height = "149px";
+                        ship.style.width = "47px";
+                    }
+                });
+
+                const subs = document.querySelectorAll(".typeWrapper .sub");
+                subs.forEach((subShip) => {
+                    if (!subShip.classList.contains("vertical")) {
+                        subShip.style.width = "96px";
+                        subShip.style.height = "47px";
+                    } else if (subShip.classList.contains("vertical")) {
+                        subShip.style.height = "96px";
+                        subShip.style.width = "47px";
+                    }
+                });
             });
 
             randomBtn.addEventListener("click", async (ev) => {

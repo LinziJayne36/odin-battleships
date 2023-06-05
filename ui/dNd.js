@@ -728,7 +728,8 @@ export function drop(event) {
                     event.preventDefault();
                     return;
                 }
-                draggableElement.style.width = "47px";
+
+                draggableElement.style.width = "47px"; //HOW CAN THIS BE SET CONDITIONALLY SUCH THAT IT DOES NOT SET WIDTH OF SHIPS IN FLEET AREA AS WELL AS THOSE DROPPED ON GRID?
             } else if (orientationBtnLabel === "horizontal") {
                 //then there are 2 more ship placements to the RHS
                 x2 = x + 1;
@@ -1251,6 +1252,33 @@ export function dragEnd(event) {
         event.target.classList.remove("failedDrop");
         return;
     }
+
+    const cruisers = document.querySelectorAll(".typeWrapper .cruiser");
+    cruisers.forEach((ship) => {
+        console.log(ship);
+        if (!ship.classList.contains("vertical")) {
+            console.log("the ship element does not have vertical class");
+            ship.style.width = "149px";
+            ship.style.height = "47px";
+        } else if (ship.classList.contains("vertical")) {
+            console.log("the ship element does have the vertical class ");
+            ship.style.height = "149px";
+            ship.style.width = "47px";
+        }
+    });
+
+    const subs = document.querySelectorAll(".typeWrapper .sub");
+    subs.forEach((subShip) => {
+        if (!subShip.classList.contains("vertical")) {
+            subShip.style.width = "96px";
+            subShip.style.height = "47px";
+        } else if (subShip.classList.contains("vertical")) {
+            subShip.style.height = "96px";
+            subShip.style.width = "47px";
+        }
+    });
+
+    /*
     const allBattleships = document.querySelectorAll(".battleship");
 
     allBattleships.forEach((battleship) => {
@@ -1310,6 +1338,7 @@ export function dragEnd(event) {
             sub.style.height = "96px";
         }
     });
+    */
 
     const undraggableElement = document.getElementById(event.target.id);
     console.log(undraggableElement);
