@@ -16,6 +16,7 @@ import PlayerFleet from "./ui/fleet";
 import { randomBtnDisplay } from "./ui/random";
 import { droppedShips } from "./ui/dNd";
 import { trackDroppedShipsArr } from "./ui/dNd";
+import { userMsg } from "./ui/userMsg";
 //import { handlingGridClicks } from "./dom-interactions/domInteraction";
 import Ship from "./app-logic/ship";
 let computerTurn = {
@@ -316,6 +317,7 @@ async function gameLoop() {
 
                 // Wait for the user to select a square
                 console.log("player to click a square...");
+                userMsg("It's your turn", "add");
                 const selectedSquare = await getPlayerAttackInput(
                     "computerSquares"
                 ); //waiting for player to make their move on cells with class of 'computerSquares'... ... ...
@@ -412,10 +414,13 @@ async function gameLoop() {
                 );
                 throw console.error("Whoa!!! checkMove evaluated to false");
             }
+            userMsg("", "remove");
         } else if (computerTurn.val === true) {
+            userMsg("It's the computer's turn...", "add");
             // Wait for 3 seconds before calculating computer's move... ... ...
             await new Promise((resolve) => setTimeout(resolve, 3000));
             //Take the COMPUTER'S TURN turn --------------------------------------------------------------------
+
             computerPlayer.calcAttackSq();
             console.log(
                 "next is a log of the result from running computerPlayer.calcAttackSq() to get the computer's move..."
@@ -515,6 +520,7 @@ async function gameLoop() {
                 console.log(playerGameboard.hits);
                 console.log(playerGameboard.misses);
                 console.log(playerGameboard.sunk);
+                userMsg("", "remove");
             }
             console.log(computerTurn.val);
         }
