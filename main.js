@@ -348,6 +348,7 @@ async function gameLoop() {
             if (validMove === true) {
                 if (computerGameboard.hitMiss(player.attackSq) === "hit") {
                     //if player's valid move against the computerGameboard is a hit...
+
                     console.log(
                         "next is the Player's attack square that has been deemed a hit - immediately before an X is placed in the board"
                     );
@@ -479,7 +480,11 @@ async function gameLoop() {
                 if (game.isWon) {
                     //if game is won, end game and declare winner
                     console.log("Game is won");
+                    console.log(game.whoWon);
+                    userMsg("", "remove");
+                    userMsg(`GAME OVER! ${game.whoWon} WINS!`);
                 }
+                userMsg("", "remove");
                 //because move was a hit, computerTurn is left as true and computerPlayer takes another turn...
             } else if (
                 playerGameboard.hitMiss(computerPlayer.attackSq) === "miss"
