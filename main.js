@@ -17,6 +17,7 @@ import { randomBtnDisplay } from "./ui/random";
 import { droppedShips } from "./ui/dNd";
 import { trackDroppedShipsArr } from "./ui/dNd";
 import { userMsg } from "./ui/userMsg";
+import { gameOverMsg } from "./ui/gameOver";
 //import { handlingGridClicks } from "./dom-interactions/domInteraction";
 import Ship from "./app-logic/ship";
 let computerTurn = {
@@ -50,6 +51,9 @@ async function gameLoop() {
             console.log("GAME OVER");
             console.log(`${game.whoWon} WINS!`);
             alert(`${game.whoWon} WINS!`);
+            gameOverMsg(`GAME OVER! ${game.whoWon} WINS!`, "add");
+            // userMsg("", "remove");
+            // userMsg(`GAME OVER! ${game.whoWon} WINS!`, "add");
         } else if (
             playerGameboard.shipsLeft < 10 ||
             computerGameboard.shipsLeft < 10
@@ -70,14 +74,8 @@ async function gameLoop() {
     console.log("gameLoop was called");
     startBtnDisplay("remove");
     gameTitleDisplay("remove");
-
     let validMove = false;
     const game = new Game();
-
-    //AT THIS POINT WE'D NEED TO GET THE PLAYER'S SELECTION OF COORDS FOR HIDING THEIR SHIPS
-    //SO, START WORK ON DOM INTERACTION MODULE NOW...
-    //FOR NOW WE CAN CALL THE GENERATERANDOMPOSITIONS METHOD INSTEAD
-
     const player = new Player();
     const playerGameboard = new Gameboard();
     console.log(playerGameboard.board);
@@ -88,35 +86,6 @@ async function gameLoop() {
     playerPlacementGrid.drawGrid();
     randomBtnDisplay("add");
     orientationBtnDisplay("add");
-    /*let randomPlacementSelected = false;
-    const getUserInputPlacements = () => {
-        return new Promise((resolve) => {
-            const randomBtn = document.getElementById("randomBtn");
-
-            randomBtn.addEventListener("click", async (ev) => {
-                const playerPositions = await player.generateRandomPositions();
-                console.log(
-                    "Next is the player's gameboard with the ships placed on it"
-                );
-                playerGameboard.placeShips(playerPositions);
-                console.log(playerGameboard.board);
-                randomPlacementSelected = true;
-                console.log(randomPlacementSelected);
-                randomBtnDisplay("remove");
-                const appWrapper = document.getElementById("app");
-                const placementGrid = document.querySelector(
-                    ".playerPlacementGrid"
-                );
-                const fleetWrapper = document.querySelector(".fleetWrapper");
-                appWrapper.removeChild(fleetWrapper);
-                appWrapper.removeChild(placementGrid);
-                alert("all ships placed - game begins");
-
-                resolve(randomPlacementSelected);
-            });
-        });
-    };*/
-
     let randomPlacementSelected = false;
 
     const getUserInputPlacements = () => {
@@ -467,23 +436,16 @@ async function gameLoop() {
                 console.log(sunkNum);
                 playerGameboard._sunk = sunkNum; //not sure that this is right - should we not instead be updating the number of sunk ships on gameboard by calling isSunk on it?
 
-                /* const sunkShip = playerGameboard.ships.filter(
-                    (ship) => ship._sunk === true
-                );
-
-                if (sunkShip != []) {
-                    console.log(sunkShip);
-                    playerGameboard.issunk(sunkShip);
-                }*/
-
                 checkGame();
                 if (game.isWon) {
                     //if game is won, end game and declare winner
                     console.log("Game is won");
                     console.log(game.whoWon);
-                    userMsg("", "remove");
-                    userMsg(`GAME OVER! ${game.whoWon} WINS!`);
+                    //userMsg("", "remove");
+                    //userMsg(`GAME OVER! ${game.whoWon} WINS!`, "add");
+                    gameOverMsg(`GAME OVER! ${game.whoWon} WINS!`, "add");
                 }
+                //await new Promise((resolve) => setTimeout(resolve, 2000))
                 userMsg("", "remove");
                 //because move was a hit, computerTurn is left as true and computerPlayer takes another turn...
             } else if (
