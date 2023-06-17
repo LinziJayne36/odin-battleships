@@ -16,6 +16,19 @@ export default class Ship {
             this._sunk = false;
         }
     }
+
+    stateType() {
+        if (this.length === 4) {
+            return "Battleship";
+        } else if (this.length === 3) {
+            return "Cruiser";
+        } else if (this.length === 2) {
+            return "Sub";
+        } else if (this.length === 1) {
+            return "Destroyer";
+        }
+    }
+
     get hits() {
         return this._hits;
     }

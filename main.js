@@ -18,6 +18,7 @@ import { droppedShips } from "./ui/dNd";
 import { trackDroppedShipsArr } from "./ui/dNd";
 import { userMsg } from "./ui/userMsg";
 import { gameOverMsg } from "./ui/gameOver";
+import { sunkMsg } from "./ui/sunk";
 //import { handlingGridClicks } from "./dom-interactions/domInteraction";
 import Ship from "./app-logic/ship";
 let computerTurn = {
@@ -351,6 +352,22 @@ async function gameLoop() {
                     computerGameboard._sunk = sunkNum; //setting the number of sunk ships on a gameboard to be the number of ship objects with a sunk property that equals true...
                     console.log(sunkNum);
 
+                    /*----This is flawed. It will state the message correctly the first time a ship is sunk, but after that is is wrong because it 
+                      ----then alerts after every hit instead of every sinking as there is now a ship whose sunk property is true!!!!!
+
+                      ----TODO: try identifying the ship in the ships array that owns the hit coordinate and then check if that ship has a sunk property of true
+                      ----rather than looping over all of them!
+                    let shipType;
+                    computerGameboard.ships.forEach((ship) => {
+                        if (ship.sunk === true) {
+                            shipType = ship.stateType();
+                            alert(shipType);
+                            console.log(shipType);
+                        }
+                    });
+
+                    */
+
                     checkGame();
                     if (game.isWon) {
                         console.log("game is won");
@@ -435,6 +452,20 @@ async function gameLoop() {
                 ).length;
                 console.log(sunkNum);
                 playerGameboard._sunk = sunkNum; //not sure that this is right - should we not instead be updating the number of sunk ships on gameboard by calling isSunk on it?
+                let shipType;
+
+                /* ----This is flawed. It will state the message correctly the first time a ship is sunk, but after that is is wrong because it 
+                   ----then alerts after every hit instead of every sinking as there is now a ship whose sunk property is true!!!!!
+
+                playerGameboard.ships.forEach((ship) => {
+                    if (ship.sunk === true) {
+                        shipType = ship.stateType();
+                        alert(shipType);
+                        console.log(shipType);
+                    }
+                });
+
+                */
 
                 checkGame();
                 if (game.isWon) {
