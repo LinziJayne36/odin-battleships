@@ -356,7 +356,10 @@ async function gameLoop() {
                       ----then alerts after every hit instead of every sinking as there is now a ship whose sunk property is true!!!!!
 
                       ----TODO: try identifying the ship in the ships array that owns the hit coordinate and then check if that ship has a sunk property of true
-                      ----rather than looping over all of them!
+                      ----rather than looping over all of them! And.....we already identified the ship just up above here! shipToHit is our target - literally ;
+                      ----OK!So that works just great! No implement this for the computerPlayer's attack and we're ready to tie it up to the UI for displaying the message :)
+                      )
+
                     let shipType;
                     computerGameboard.ships.forEach((ship) => {
                         if (ship.sunk === true) {
@@ -367,6 +370,13 @@ async function gameLoop() {
                     });
 
                     */
+
+                    let shipType;
+                    if (shipToHit.sunk === true) {
+                        shipType = shipToHit.stateType();
+                        alert(shipType);
+                        console.log(shipType);
+                    }
 
                     checkGame();
                     if (game.isWon) {
@@ -452,7 +462,6 @@ async function gameLoop() {
                 ).length;
                 console.log(sunkNum);
                 playerGameboard._sunk = sunkNum; //not sure that this is right - should we not instead be updating the number of sunk ships on gameboard by calling isSunk on it?
-                let shipType;
 
                 /* ----This is flawed. It will state the message correctly the first time a ship is sunk, but after that is is wrong because it 
                    ----then alerts after every hit instead of every sinking as there is now a ship whose sunk property is true!!!!!
@@ -467,6 +476,12 @@ async function gameLoop() {
 
                 */
 
+                let shipType;
+                if (shipToHit.sunk === true) {
+                    shipType = shipToHit.stateType();
+                    alert(shipType);
+                    console.log(shipType);
+                }
                 checkGame();
                 if (game.isWon) {
                     //if game is won, end game and declare winner
