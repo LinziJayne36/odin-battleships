@@ -375,6 +375,12 @@ async function gameLoop() {
                     if (shipToHit.sunk === true) {
                         shipType = shipToHit.stateType();
                         alert(shipType);
+                        //you sunk their ship
+                        sunkMsg(`You sunk their ${shipType}!`, "add");
+                        await new Promise((resolve) =>
+                            setTimeout(resolve, 1700)
+                        );
+                        sunkMsg("", "remove");
                         console.log(shipType);
                     }
 
@@ -481,6 +487,9 @@ async function gameLoop() {
                     shipType = shipToHit.stateType();
                     alert(shipType);
                     console.log(shipType);
+                    sunkMsg(`They sunk yourr ${shipType}!`, "add");
+                    await new Promise((resolve) => setTimeout(resolve, 1700));
+                    sunkMsg("", "remove");
                 }
                 checkGame();
                 if (game.isWon) {
