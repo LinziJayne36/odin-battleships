@@ -178,6 +178,9 @@ async function gameLoop() {
 
             randomBtn.addEventListener("click", async (ev) => {
                 const playerPositions = await player.generateRandomPositions();
+                //TODO: add and reference class method on grid.js to draw randomly positioned ships on the player grid... ...
+                //player.selectedPositions should give us the randomly selected ships's positions...
+                playerPlacementGrid.drawPositionedShips(playerPositions);
                 console.log(
                     "Next is the player's gameboard with the ships placed on it"
                 );
@@ -185,6 +188,8 @@ async function gameLoop() {
                 console.log(playerGameboard.board);
                 randomPlacementSelected = true;
                 console.log(randomPlacementSelected);
+                //TODO: promise timeout for ship positions to be displayed a while... ...
+                await new Promise((resolve) => setTimeout(resolve, 1700));
                 randomBtnDisplay("remove");
                 orientationBtnDisplay("remove");
                 const appWrapper = document.getElementById("app");
@@ -207,14 +212,14 @@ async function gameLoop() {
 
     // create the ui for player fleet placement
     console.log(
-        "THIS IS WHERE WE CREATE PLAYERFLEETUI !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1"
+        "THIS IS WHERE WE CREATE PLAYERFLEETUI !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
     );
     const playerFleetUI = new PlayerFleet();
     playerFleetUI.drawPlayerFleet();
 
     //TODO now we need to wait for the player to select their ship placements... ... ... !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     const randomPlacementInput = await getUserInputPlacements();
-    console.log("are we getting past our random function promise?");
+
     //if randomPlacementSelected is true then clear the selection screen and populate gametime screen!
     if (randomPlacementInput === true) {
         //clear the selection screen and populate gametime screen!
@@ -250,11 +255,6 @@ async function gameLoop() {
     const playerGrid = new Grid("playerGrid");
     playerGrid.drawGrid();
 
-    /*const playerPositions = await player.generateRandomPositions(); //will only need to run if player presses random button...
-    console.log("Next is the player's gameboard with the ships placed on it");
-    playerGameboard.placeShips(playerPositions);
-    console.log(playerGameboard.board);*/
-
     const computerPlayer = new ComputerPlayer();
     const computerGameboard = new Gameboard();
     console.log(computerGameboard.board);
@@ -265,16 +265,13 @@ async function gameLoop() {
     );
     computerGameboard.placeShips(computerPlayer.selectedPositions);
     console.log(computerGameboard.board);
-    //let loops = 0;
+
     //enter the actual loop
     while (game.isWon === false) {
         // validMove = false;
         console.log("This is the start of a loop iteration");
         console.log(`The computerTurn variable says ${computerTurn.val}`);
-        /*loops++;
-        if (loops > 300) {
-            game.isWon = true;
-        }*/
+
         if (computerTurn.val === false) {
             //Take the PLAYER'S TURN -----------------------------------------------------------------------
 
@@ -351,25 +348,6 @@ async function gameLoop() {
                     ).length;
                     computerGameboard._sunk = sunkNum; //setting the number of sunk ships on a gameboard to be the number of ship objects with a sunk property that equals true...
                     console.log(sunkNum);
-
-                    /*----This is flawed. It will state the message correctly the first time a ship is sunk, but after that is is wrong because it 
-                      ----then alerts after every hit instead of every sinking as there is now a ship whose sunk property is true!!!!!
-
-                      ----TODO: try identifying the ship in the ships array that owns the hit coordinate and then check if that ship has a sunk property of true
-                      ----rather than looping over all of them! And.....we already identified the ship just up above here! shipToHit is our target - literally ;
-                      ----OK!So that works just great! No implement this for the computerPlayer's attack and we're ready to tie it up to the UI for displaying the message :)
-                      )
-
-                    let shipType;
-                    computerGameboard.ships.forEach((ship) => {
-                        if (ship.sunk === true) {
-                            shipType = ship.stateType();
-                            alert(shipType);
-                            console.log(shipType);
-                        }
-                    });
-
-                    */
 
                     let shipType;
                     if (shipToHit.sunk === true) {
@@ -467,20 +445,7 @@ async function gameLoop() {
                     (ship) => ship.sunk === true
                 ).length;
                 console.log(sunkNum);
-                playerGameboard._sunk = sunkNum; //not sure that this is right - should we not instead be updating the number of sunk ships on gameboard by calling isSunk on it?
-
-                /* ----This is flawed. It will state the message correctly the first time a ship is sunk, but after that is is wrong because it 
-                   ----then alerts after every hit instead of every sinking as there is now a ship whose sunk property is true!!!!!
-
-                playerGameboard.ships.forEach((ship) => {
-                    if (ship.sunk === true) {
-                        shipType = ship.stateType();
-                        alert(shipType);
-                        console.log(shipType);
-                    }
-                });
-
-                */
+                playerGameboard._sunk = sunkNum;
 
                 let shipType;
                 if (shipToHit.sunk === true) {

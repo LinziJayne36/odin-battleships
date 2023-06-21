@@ -102,4 +102,27 @@ export default class Grid {
             }
         });
     }
+
+    drawPositionedShips(positionsToDraw) {
+        alert("drawPositions just called on grid class");
+        console.log(positionsToDraw); //the positions successfully being passed into this method
+        let battleShipPlacesArr = positionsToDraw[0].coords;
+        let eachBattleshipCoord = [];
+        const allGridCells = document.querySelectorAll(`.${this.sqClass}`);
+        battleShipPlacesArr.forEach((place) => {
+            eachBattleshipCoord.push(`${place[0]},${place[1]}`);
+            //eachBattleshipCoord.push(place[1]);
+            console.log(eachBattleshipCoord);
+            allGridCells.forEach((cell) => {
+                eachBattleshipCoord.forEach((coord) => {
+                    if (cell.id === coord) {
+                        cell.style = "background-color: red;";
+                        console.log(
+                            `just colored the grid cell with coord of ${cell.id} `
+                        );
+                    }
+                });
+            });
+        });
+    }
 }
