@@ -106,6 +106,8 @@ export default class Grid {
     drawPositionedShips(positionsToDraw) {
         alert("drawPositions just called on grid class");
         console.log(positionsToDraw); //the positions successfully being passed into this method
+
+        //Show position of the battleship
         let battleShipPlacesArr = positionsToDraw[0].coords;
         let eachBattleshipCoord = [];
         const allGridCells = document.querySelectorAll(`.${this.sqClass}`);
@@ -124,5 +126,50 @@ export default class Grid {
                 });
             });
         });
+
+        //Show position of the 2 cruisers
+        let cruiserPlacesArr = [];
+        let eachCruiserCoord = [];
+        cruiserPlacesArr.push(positionsToDraw[1].coords);
+        cruiserPlacesArr.push(positionsToDraw[2].coords);
+        console.log(battleShipPlacesArr);
+        console.log(cruiserPlacesArr);
+
+        /*cruiserPlacesArr.forEach((place) => {
+            eachCruiserCoord.push(`${place[0]},${place[1]}`);
+
+            console.log(eachCruiserCoord);
+            allGridCells.forEach((cell) => {
+                eachCruiserCoord.forEach((coord) => {
+                    if (cell.id === coord) {
+                        cell.style = "background-color: red;";
+                        console.log(
+                            `just colored the grid cell with coord of ${cell.id} `
+                        );
+                    }
+                });
+            });
+        });*/
+
+        cruiserPlacesArr.forEach((arr) => {
+            arr.forEach((pair) => {
+                eachCruiserCoord.push(`${pair[0]},${pair[1]}`);
+                console.log(eachCruiserCoord);
+                allGridCells.forEach((cell) => {
+                    eachCruiserCoord.forEach((coord) => {
+                        if (cell.id === coord) {
+                            cell.style = "background-color: red;";
+                            console.log(
+                                `just colored the grid cell with coord of ${cell.id} `
+                            );
+                        }
+                    });
+                });
+            });
+        });
+
+        //Show position of the 3 subs
+
+        //Show positions of the 4 destroyers
     }
 }
