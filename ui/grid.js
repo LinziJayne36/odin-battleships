@@ -135,22 +135,6 @@ export default class Grid {
         console.log(battleShipPlacesArr);
         console.log(cruiserPlacesArr);
 
-        /*cruiserPlacesArr.forEach((place) => {
-            eachCruiserCoord.push(`${place[0]},${place[1]}`);
-
-            console.log(eachCruiserCoord);
-            allGridCells.forEach((cell) => {
-                eachCruiserCoord.forEach((coord) => {
-                    if (cell.id === coord) {
-                        cell.style = "background-color: red;";
-                        console.log(
-                            `just colored the grid cell with coord of ${cell.id} `
-                        );
-                    }
-                });
-            });
-        });*/
-
         cruiserPlacesArr.forEach((arr) => {
             arr.forEach((pair) => {
                 eachCruiserCoord.push(`${pair[0]},${pair[1]}`);
@@ -169,7 +153,54 @@ export default class Grid {
         });
 
         //Show position of the 3 subs
+        let subPlacesArr = [];
+        let eachSubCoord = [];
 
+        subPlacesArr.push(positionsToDraw[3].coords);
+        subPlacesArr.push(positionsToDraw[4].coords);
+        subPlacesArr.push(positionsToDraw[5].coords);
+        console.log(subPlacesArr);
+        subPlacesArr.forEach((arr) => {
+            arr.forEach((pair) => {
+                eachSubCoord.push(`${pair[0]},${pair[1]}`);
+                console.log(eachSubCoord);
+                allGridCells.forEach((cell) => {
+                    eachSubCoord.forEach((coord) => {
+                        if (cell.id === coord) {
+                            cell.style = "background-color: red;";
+                            console.log(
+                                `just colored the grid cell with coord of ${cell.id} `
+                            );
+                        }
+                    });
+                });
+            });
+        });
         //Show positions of the 4 destroyers
+        let destroyerPlacesArr = [];
+        let eachDestroyerCoord = [];
+
+        destroyerPlacesArr.push(positionsToDraw[6].coords);
+        destroyerPlacesArr.push(positionsToDraw[7].coords);
+        destroyerPlacesArr.push(positionsToDraw[8].coords);
+        destroyerPlacesArr.push(positionsToDraw[9].coords);
+
+        console.log(destroyerPlacesArr);
+        destroyerPlacesArr.forEach((arr) => {
+            arr.forEach((pair) => {
+                eachDestroyerCoord.push(`${pair[0]},${pair[1]}`);
+                console.log(eachDestroyerCoord);
+                allGridCells.forEach((cell) => {
+                    eachDestroyerCoord.forEach((coord) => {
+                        if (cell.id === coord) {
+                            cell.style = "background-color: red;";
+                            console.log(
+                                `just colored the grid cell with coord of ${cell.id} `
+                            );
+                        }
+                    });
+                });
+            });
+        });
     }
 }
