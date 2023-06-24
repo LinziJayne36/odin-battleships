@@ -62,7 +62,7 @@ body {
 .sub,
 .destroyer {
     height: 47px;
-    background-color: rgba(16, 11, 83, 0.9);
+    background-color: rgba(217, 216, 226, 0.9);
     position: relative;
     cursor: move;
     display: flex;

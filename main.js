@@ -88,7 +88,7 @@ async function gameLoop() {
     randomBtnDisplay("add");
     orientationBtnDisplay("add");
     let randomPlacementSelected = false;
-
+    const playerGrid = new Grid("playerGrid");
     const getUserInputPlacements = () => {
         return new Promise((resolve) => {
             const randomBtn = document.querySelector("#randomBtn");
@@ -200,7 +200,8 @@ async function gameLoop() {
                 appWrapper.removeChild(fleetWrapper);
                 appWrapper.removeChild(placementGrid);
                 alert("all ships placed - game begins");
-
+                playerGrid.drawGrid();
+                playerGrid.drawPositionedShips(playerPositions);
                 resolve(randomPlacementSelected);
             });
 
@@ -221,20 +222,12 @@ async function gameLoop() {
     const randomPlacementInput = await getUserInputPlacements();
     let droppedShipsArr;
     //if randomPlacementSelected is true then clear the selection screen and populate gametime screen!
-    if (randomPlacementInput === true) {
-        //clear the selection screen and populate gametime screen!
+    if (randomPlacementInput === false) {
         console.log(`randomPlacementInput says: ${randomPlacementInput}`);
-    } else {
-        console.log(`randomPlacementInput says: ${randomPlacementInput}`);
-        //so then we must wait for player to select all their ships manually
-        //console.log(droppedShips);
-        //playerGameboard.placeShips(droppedShips);
-        //console.log(droppedShips);
+
         droppedShipsArr = await trackDroppedShipsArr();
 
         console.log(droppedShipsArr);
-
-        //gameTitleDisplay("remove");
 
         //clear the selection screen and populate gametime screen!
         playerGameboard.placeShips(droppedShipsArr);
@@ -245,12 +238,14 @@ async function gameLoop() {
         appWrapper.removeChild(placementGrid);
     }
 
-    //player and computer grids are created...
+    if (droppedShipsArr !== undefined) {
+        playerGrid.drawGrid();
+        playerGrid.drawPositionedShips(droppedShipsArr);
+    }
+
     const computerGrid = new Grid("computerGrid");
     computerGrid.drawGrid();
 
-    const playerGrid = new Grid("playerGrid");
-    playerGrid.drawGrid();
     if (randomPlacementInput === false) {
         playerGrid.drawPositionedShips(droppedShipsArr);
     }

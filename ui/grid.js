@@ -119,7 +119,8 @@ export default class Grid {
             allGridCells.forEach((cell) => {
                 eachBattleshipCoord.forEach((coord) => {
                     if (cell.id === coord) {
-                        cell.style = "background-color: red;";
+                        cell.style =
+                            "background-color: rgba(217, 216, 226, 0.9);";
                         console.log(
                             `just colored the grid cell with coord of ${cell.id} `
                         );
@@ -143,7 +144,8 @@ export default class Grid {
                 allGridCells.forEach((cell) => {
                     eachCruiserCoord.forEach((coord) => {
                         if (cell.id === coord) {
-                            cell.style = "background-color: red;";
+                            cell.style =
+                                "background-color: rgba(217, 216, 226, 0.9);";
                             console.log(
                                 `just colored the grid cell with coord of ${cell.id} `
                             );
@@ -168,7 +170,8 @@ export default class Grid {
                 allGridCells.forEach((cell) => {
                     eachSubCoord.forEach((coord) => {
                         if (cell.id === coord) {
-                            cell.style = "background-color: red;";
+                            cell.style =
+                                "background-color: rgba(217, 216, 226, 0.9);";
                             console.log(
                                 `just colored the grid cell with coord of ${cell.id} `
                             );
@@ -194,7 +197,8 @@ export default class Grid {
                 allGridCells.forEach((cell) => {
                     eachDestroyerCoord.forEach((coord) => {
                         if (cell.id === coord) {
-                            cell.style = "background-color: red;";
+                            cell.style =
+                                "background-color: rgba(217, 216, 226, 0.9);";
                             console.log(
                                 `just colored the grid cell with coord of ${cell.id} `
                             );
