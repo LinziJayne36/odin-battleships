@@ -175,9 +175,9 @@ async function gameLoop() {
                     }
                 });
             });
-
+            let playerPositions;
             randomBtn.addEventListener("click", async (ev) => {
-                const playerPositions = await player.generateRandomPositions();
+                playerPositions = await player.generateRandomPositions();
                 //TODO: add and reference class method on grid.js to draw randomly positioned ships on the player grid... ...
                 //player.selectedPositions should give us the randomly selected ships's positions...
                 playerPlacementGrid.drawPositionedShips(playerPositions);
@@ -219,7 +219,7 @@ async function gameLoop() {
 
     //TODO now we need to wait for the player to select their ship placements... ... ... !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     const randomPlacementInput = await getUserInputPlacements();
-
+    let droppedShipsArr;
     //if randomPlacementSelected is true then clear the selection screen and populate gametime screen!
     if (randomPlacementInput === true) {
         //clear the selection screen and populate gametime screen!
@@ -230,11 +230,8 @@ async function gameLoop() {
         //console.log(droppedShips);
         //playerGameboard.placeShips(droppedShips);
         //console.log(droppedShips);
-        const droppedShipsArr = await trackDroppedShipsArr(); //atm, this resolves each and every time the array receives a single
+        droppedShipsArr = await trackDroppedShipsArr();
 
-        console.log(
-            "Are we getting past our trackDroppedShipsArr promise, because if it is not resolving then we really shouldn't be seeing this log"
-        );
         console.log(droppedShipsArr);
 
         //gameTitleDisplay("remove");
@@ -254,6 +251,9 @@ async function gameLoop() {
 
     const playerGrid = new Grid("playerGrid");
     playerGrid.drawGrid();
+    if (randomPlacementInput === false) {
+        playerGrid.drawPositionedShips(droppedShipsArr);
+    }
 
     const computerPlayer = new ComputerPlayer();
     const computerGameboard = new Gameboard();

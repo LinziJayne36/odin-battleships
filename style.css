@@ -27,6 +27,7 @@ body {
     background-color: #adc7d9;
     border-top: solid #808080;
     border-left: solid #808080;
+    border-width: 0.5px;
     cursor: pointer;
 }
 

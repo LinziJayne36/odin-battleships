@@ -9,6 +9,7 @@ export default class Grid {
         this.size = 100;
         this.whoseGrid = owner;
         this.sqClass = this.whichClass();
+        this.playerPositions = [];
         // this.handleClick = handleClick;
     }
 
