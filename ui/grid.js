@@ -208,4 +208,23 @@ export default class Grid {
             });
         });
     }
+
+    drawSunkShip(coords) {
+        const allGridCells = document.querySelectorAll(`.${this.sqClass}`);
+        console.log(coords);
+        let sunkShipCoords = [];
+        coords.forEach((coord) => {
+            sunkShipCoords.push(`${coord[0]},${coord[1]}`);
+        });
+        allGridCells.forEach((cell) => {
+            sunkShipCoords.forEach((coord) => {
+                if (cell.id === coord) {
+                    cell.style = "background-color: rgb(255, 71, 26);";
+                    console.log(
+                        `just colored the grid cell with coord of ${cell.id} `
+                    );
+                }
+            });
+        });
+    }
 }

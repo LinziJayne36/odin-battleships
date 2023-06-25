@@ -260,6 +260,7 @@ async function gameLoop() {
     );
     computerGameboard.placeShips(computerPlayer.selectedPositions);
     console.log(computerGameboard.board);
+    console.log(playerGameboard.ships);
 
     //enter the actual loop
     while (game.isWon === false) {
@@ -348,6 +349,7 @@ async function gameLoop() {
                     if (shipToHit.sunk === true) {
                         shipType = shipToHit.stateType();
                         alert(shipType);
+                        computerGrid.drawSunkShip(shipToHit.coords);
                         //you sunk their ship
                         sunkMsg(`You sunk their ${shipType}!`, "add");
                         await new Promise((resolve) =>
@@ -446,8 +448,9 @@ async function gameLoop() {
                 if (shipToHit.sunk === true) {
                     shipType = shipToHit.stateType();
                     alert(shipType);
+                    playerGrid.drawSunkShip(shipToHit.coords);
                     console.log(shipType);
-                    sunkMsg(`They sunk yourr ${shipType}!`, "add");
+                    sunkMsg(`They sunk your ${shipType}!`, "add");
                     await new Promise((resolve) => setTimeout(resolve, 1700));
                     sunkMsg("", "remove");
                 }
