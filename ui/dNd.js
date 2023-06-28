@@ -130,6 +130,7 @@ export function drop(event) {
         //draggableElement.style.width = "47px";
         //should start off empty and have x,y pushed if ALL coords are free
         //let battleshipArr = [[x, y]];
+        let battleshipNeighbours = [];
         let battleshipArr = [];
 
         let battleshipCoord2 = [];
@@ -170,15 +171,33 @@ export function drop(event) {
                     return;
                 }
                 draggableElement.style.width = "47px";
+
+                // let battleshipCoord1 = [x, y];
+                battleshipNeighbours.push([x - 1, y]);
+                battleshipNeighbours.push([x - 1, y - 1]);
+                battleshipNeighbours.push([x, y - 1]);
+                battleshipNeighbours.push([x + 1, y - 1]);
+                battleshipNeighbours.push([x + 1, y]);
+                battleshipNeighbours.push([x - 1, y + 1]);
+                battleshipNeighbours.push([x - 1, y + 2]);
+                battleshipNeighbours.push([x - 1, y + 3]);
+                battleshipNeighbours.push([x - 1, y + 4]);
+                battleshipNeighbours.push([x, y + 4]);
+                battleshipNeighbours.push([x + 1, y + 4]);
+                battleshipNeighbours.push([x + 1, y + 3]);
+                battleshipNeighbours.push([x + 1, y + 2]);
+                battleshipNeighbours.push([x + 1, y + 1]);
+                console.log(battleshipNeighbours);
             } else if (orientationBtnLabel === "horizontal") {
                 x2 = x + 1;
                 battleshipCoord2.push(x2, y); //do at end of this block if all are free
                 secondCoord = `${x2.toString()},${y.toString()}`;
                 console.log(`secondCoord says: ${secondCoord}`);
                 x3 = x + 2;
-                battleshipCoord3.push(y, x3); //do at end of this block if all are free
+                battleshipCoord3.push(x3, y); //do at end of this block if all are free
                 thirdCoord = `${x3.toString()},${y.toString()}`;
                 console.log(`thirdCoord says: ${thirdCoord}`);
+                console.log(`battleshipCoord3 says: ${battleshipCoord3}`);
                 x4 = x + 3;
                 fourthCoord = `${x4.toString()},${y.toString()}`;
                 battleshipCoord4.push(x4, y); //do at end of this block if all are free
@@ -203,6 +222,21 @@ export function drop(event) {
                     return;
                 }
                 draggableElement.style.height = "47px";
+                battleshipNeighbours.push([x - 1, y - 1]);
+                battleshipNeighbours.push([x - 1, y]);
+                battleshipNeighbours.push([x - 1, y + 1]);
+                battleshipNeighbours.push([x, y + 1]);
+                battleshipNeighbours.push([x + 1, y + 1]);
+                battleshipNeighbours.push([x + 2, y + 1]);
+                battleshipNeighbours.push([x + 3, y + 1]);
+                battleshipNeighbours.push([x + 4, y + 1]);
+                battleshipNeighbours.push([x + 4, y]);
+                battleshipNeighbours.push([x + 4, y - 1]);
+                battleshipNeighbours.push([x + 3, y - 1]);
+                battleshipNeighbours.push([x + 2, y - 1]);
+                battleshipNeighbours.push([x + 1, y - 1]);
+                battleshipNeighbours.push([x + 3, y - 1]);
+                console.log(battleshipNeighbours);
             }
 
             if (
@@ -306,6 +340,22 @@ export function drop(event) {
                     return;
                 }
                 draggableElement.style.width = "47px";
+                // let battleshipCoord1 = [x, y];
+                battleshipNeighbours.push([x - 1, y]);
+                battleshipNeighbours.push([x - 1, y - 1]);
+                battleshipNeighbours.push([x, y - 2]);
+                battleshipNeighbours.push([x + 1, y - 1]);
+                battleshipNeighbours.push([x + 1, y]);
+                battleshipNeighbours.push([x - 1, y + 1]);
+                battleshipNeighbours.push([x - 1, y + 2]);
+                battleshipNeighbours.push([x - 1, y + 3]);
+                battleshipNeighbours.push([x + 1, y - 2]);
+                battleshipNeighbours.push([x, y + 3]);
+                battleshipNeighbours.push([x - 1, y - 2]);
+                battleshipNeighbours.push([x + 1, y + 3]);
+                battleshipNeighbours.push([x + 1, y + 2]);
+                battleshipNeighbours.push([x + 1, y + 1]);
+                console.log(battleshipNeighbours);
             } else if (orientationBtnLabel === "horizontal") {
                 //then there is 1 ship placement above and 2 below
                 x2 = x - 1;
@@ -351,6 +401,21 @@ export function drop(event) {
                     return;
                 }
                 draggableElement.style.height = "47px";
+                battleshipNeighbours.push([x - 1, y - 1]);
+                battleshipNeighbours.push([x - 2, y - 1]);
+                battleshipNeighbours.push([x - 1, y + 1]);
+                battleshipNeighbours.push([x, y + 1]);
+                battleshipNeighbours.push([x + 1, y + 1]);
+                battleshipNeighbours.push([x + 2, y + 1]);
+                battleshipNeighbours.push([x + 3, y + 1]);
+                battleshipNeighbours.push([x + 3, y]);
+                battleshipNeighbours.push([x + 1, y - 1]);
+                battleshipNeighbours.push([x - 2, y]);
+                battleshipNeighbours.push([x + 3, y - 1]);
+                battleshipNeighbours.push([x + 2, y - 1]);
+                battleshipNeighbours.push([x, y - 1]);
+                battleshipNeighbours.push([x - 2, y + 1]);
+                console.log(battleshipNeighbours);
             }
 
             let draggableElementClone = draggableElement.cloneNode(true);
@@ -579,9 +644,9 @@ export function drop(event) {
                     event.preventDefault();
                     return;
                 }
-                draggableElement.style.width = "46px";
+                draggableElement.style.width = "47px";
             } else if (orientationBtnLabel === "horizontal") {
-                //then there is 3 ship placements to LHS and 0 to RHS
+                //then there is 3 ship placements above and 0 to below
                 x2 = x - 1;
                 battleshipCoord2.push(x2, y); //do at end of this block if all are free
                 secondCoord = `${x2.toString()},${y.toString()}`;
@@ -683,6 +748,22 @@ export function drop(event) {
             coords: battleshipArrCoords,
             length: 4,
         });
+        //TODO: now the battleship is successfully dropped, must reference the battleshipNeighbors array and disable its neighbour squares... ... ...
+        if (orientationBtnLabel === "vertical") {
+            //ship lies horizontally...
+            /*let battleshipNeighbours = [];
+            let battleshipCoord1 = [x, y];
+            battleshipNeighbours.push([x - 1, y]);
+            battleshipNeighbours.push([x - 1, y - 1]);
+            battleshipNeighbours.push([x, y - 1]);
+            battleshipNeighbours.push([x + 1, y - 1]);
+            battleshipNeighbours.push([x + 1, y]);
+            console.log(battleshipNeighbours);*/
+        }
+        console.log(
+            `battleshipCoord3 is now correctly saying: ${battleshipCoord3}`
+        ); //coord displays as y,x instead of x,y
+        // console.log(battleshipArrCoords);
         console.log(droppedShips);
         //droppedShips.push(battleshipArr);
 
