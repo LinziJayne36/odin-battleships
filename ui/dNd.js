@@ -553,6 +553,7 @@ export function drop(event) {
                 thirdCell = document.getElementById(`${thirdCoord}`);
                 console.log(thirdCell);
                 fourthCell = document.getElementById(`${fourthCoord}`);
+
                 //only do the cloning, appending, pushing, and the making cells off-limits if all coords are free and on the board!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 if (
                     y2 < 1 ||
@@ -578,7 +579,7 @@ export function drop(event) {
                     event.preventDefault();
                     return;
                 }
-                draggableElement.style.width = "47px";
+                draggableElement.style.width = "46px";
             } else if (orientationBtnLabel === "horizontal") {
                 //then there is 3 ship placements to LHS and 0 to RHS
                 x2 = x - 1;

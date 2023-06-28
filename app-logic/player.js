@@ -22,23 +22,7 @@ export default class Player {
     get selectedPositions() {
         return this._selectedPositions;
     }
-
-    /*return new Promise((resolve) => {
-        const squares = document.querySelectorAll(`.${cellClass}`);
-        let inputCoord;
-        squares.forEach((square) => {
-            square.addEventListener("click", (event) => {
-                const row = parseInt(event.target.dataset.row);
-                const col = parseInt(event.target.dataset.col);
-                inputCoord = [row, col];
-                squares.forEach((square) =>
-                    square.removeEventListener("click", () => {})
-                );
-                resolve(inputCoord);
-            });
-        });
-    });*/
-
+    /*
     generateRandomPositions() {
         return new Promise((resolve) => {
             const selectedPositions = [];
@@ -71,8 +55,8 @@ export default class Player {
                     let isOverlap = false;
                     for (let i = 0; i < length; i++) {
                         const coordToCheck = isVertical
-                            ? [firstCoord[0] + i, firstCoord[1]]
-                            : [firstCoord[0], firstCoord[1] + i];
+                            ? [firstCoord[0] + i, firstCoord[1]] //do this in horizontal oriented ship
+                            : [firstCoord[0], firstCoord[1] + i]; //do this in vertical oriented ship
                         if (usedCoords.includes(coordToCheck.toString())) {
                             isOverlap = true;
                             break;
@@ -94,7 +78,9 @@ export default class Player {
                             isValid = false;
                             break;
                         }
+
                         isValid = true;
+                        console.log(coordToAdd);
                     }
                     if (isValid) {
                         for (let i = 0; i < length; i++) {
@@ -102,25 +88,155 @@ export default class Player {
                                 ? [firstCoord[0] + i, firstCoord[1]]
                                 : [firstCoord[0], firstCoord[1] + i];
                             coords.push(coordToAdd);
+                            console.log(coordToAdd);
+
                             usedCoords.push(coordToAdd.toString());
                         }
                         break;
                     }
+                    
                 }
 
                 selectedPositions.push({
-                    coords: coords,
+                    coords: coords, //where coords are suggested coords for 1 ship cell only...
                     length: length,
+                });
+                console.log(selectedPositions);
+
+                let neighbourSquares = [];
+                //TODO: find neighbouring coordinates of each coord in selectedPositions.coords array and push these to usedCoords array
+
+                //this just puts each selected coord into a readable string
+                let eachCoord = [];
+                coords.forEach((coordPair) => {
+                    eachCoord.push(`${coordPair[0]},${coordPair[1]}`);
+                    console.log(eachCoord);
                 });
             };
 
-            addShip(4);
+            addShip(4); //add one battleship
+
+            //add 2 cruisers
             for (let i = 0; i < 2; i++) {
                 addShip(3);
             }
+
+            //add 3 subs
             for (let i = 0; i < 3; i++) {
                 addShip(2, Math.random() < 0.5);
             }
+
+            //add 4 destroyers
+            for (let i = 0; i < 4; i++) {
+                addShip(1, Math.random() < 0.5);
+            }
+
+            this._selectedPositions = selectedPositions;
+            resolve(this._selectedPositions);
+        });
+    }
+*/
+    generateRandomPositions() {
+        return new Promise((resolve) => {
+            const selectedPositions = [];
+            const usedCoords = [];
+
+            const addShip = (length) => {
+                const coords = [];
+                let isValid = false;
+                let iterations = 0;
+
+                while (!isValid && iterations < 100) {
+                    iterations++;
+
+                    const isVertical = Math.random() < 0.5;
+                    let x, y;
+
+                    if (isVertical) {
+                        x = Math.floor(Math.random() * 10) + 1;
+                        y = Math.floor(Math.random() * (11 - length)) + 1;
+                    } else {
+                        x = Math.floor(Math.random() * (11 - length)) + 1;
+                        y = Math.floor(Math.random() * 10) + 1;
+                    }
+
+                    const cells = [];
+
+                    for (let i = 0; i < length; i++) {
+                        if (isVertical) {
+                            const nx = x;
+                            const ny = y + i;
+                            cells.push([nx, ny]);
+                        } else {
+                            const nx = x + i;
+                            const ny = y;
+                            cells.push([nx, ny]);
+                        }
+                    }
+
+                    let isOverlap = false;
+
+                    for (const [nx, ny] of cells) {
+                        const neighbors = [
+                            [nx, ny], // current cell
+                            [nx, ny - 1], // above
+                            [nx, ny + 1], // below
+                            [nx - 1, ny], // left
+                            [nx + 1, ny], // right
+                            [nx - 1, ny - 1], // top left diagonal
+                            [nx + 1, ny - 1], // top right diagonal
+                            [nx - 1, ny + 1], // bottom left diagonal
+                            [nx + 1, ny + 1], // bottom right diagonal
+                        ];
+
+                        for (const [cx, cy] of neighbors) {
+                            if (
+                                cx >= 1 &&
+                                cx <= 10 &&
+                                cy >= 1 &&
+                                cy <= 10 &&
+                                usedCoords.includes([cx, cy].toString())
+                            ) {
+                                isOverlap = true;
+                                break;
+                            }
+                        }
+
+                        if (isOverlap) {
+                            break;
+                        }
+                    }
+
+                    if (!isOverlap) {
+                        for (const [nx, ny] of cells) {
+                            coords.push([nx, ny]);
+                            usedCoords.push([nx, ny].toString());
+                        }
+                        isValid = true;
+                    }
+                }
+
+                if (isValid) {
+                    selectedPositions.push({
+                        coords: coords,
+                        length: length,
+                    });
+                }
+            };
+
+            addShip(4); //add one battleship
+
+            //add 2 cruisers
+            for (let i = 0; i < 2; i++) {
+                addShip(3);
+            }
+
+            //add 3 subs
+            for (let i = 0; i < 3; i++) {
+                addShip(2, Math.random() < 0.5);
+            }
+
+            //add 4 destroyers
             for (let i = 0; i < 4; i++) {
                 addShip(1, Math.random() < 0.5);
             }
@@ -161,99 +277,3 @@ export default class Player {
         this.alreadyAttacked.push(randCell);
     }
 }
-
-/*
-generateRandomPositions() {
-        const selectedPositions = [];
-        const usedCoords = [];
-
-        const addShip = (length) => {
-            const coords = [];
-            let isValid = false;
-            let iterations = 0;
-
-            while (!isValid && iterations < 100) {
-                iterations++;
-
-                const firstCoord = [
-                    Math.floor(Math.random() * 10) + 1,
-                    Math.floor(Math.random() * 10) + 1,
-                ];
-
-                // Check if any coordinate is out of bounds
-                if (firstCoord[0] > 10 || firstCoord[1] > 10) {
-                    continue;
-                }
-
-                // Check if any coordinate is already used
-                let isOverlap = false;
-                for (let i = 0; i < length; i++) {
-                    const coordToCheck = [firstCoord[0] + i, firstCoord[1]];
-                    if (usedCoords.includes(coordToCheck.toString())) {
-                        isOverlap = true;
-                        break;
-                    }
-                    const coordToCheck2 = [firstCoord[0], firstCoord[1] + i];
-                    if (usedCoords.includes(coordToCheck2.toString())) {
-                        isOverlap = true;
-                        break;
-                    }
-                }
-                if (isOverlap) {
-                    continue;
-                }
-
-                // Check if all coordinates are valid
-                for (let i = 0; i < length; i++) {
-                    const coordToCheck = [firstCoord[0] + i, firstCoord[1]];
-                    if (
-                        coordToCheck[0] > 10 ||
-                        coordToCheck[1] > 10 ||
-                        coordToCheck[0] < 1 ||
-                        coordToCheck[1] < 1
-                    ) {
-                        isValid = false;
-                        break;
-                    }
-                    const coordToCheck2 = [firstCoord[0], firstCoord[1] + i];
-                    if (
-                        coordToCheck2[0] > 10 ||
-                        coordToCheck2[1] > 10 ||
-                        coordToCheck2[0] < 1 ||
-                        coordToCheck2[1] < 1
-                    ) {
-                        isValid = false;
-                        break;
-                    }
-                    isValid = true;
-                }
-                if (isValid) {
-                    for (let i = 0; i < length; i++) {
-                        const coordToAdd = [firstCoord[0] + i, firstCoord[1]];
-                        coords.push(coordToAdd);
-                        usedCoords.push(coordToAdd.toString());
-                    }
-                    break;
-                }
-            }
-
-            selectedPositions.push({
-                coords: coords,
-                length: length,
-            });
-        };
-
-        addShip(4);
-        for (let i = 0; i < 2; i++) {
-            addShip(3);
-        }
-        for (let i = 0; i < 3; i++) {
-            addShip(2);
-        }
-        for (let i = 0; i < 4; i++) {
-            addShip(1);
-        }
-
-        this._selectedPositions = selectedPositions;
-    }
-*/
