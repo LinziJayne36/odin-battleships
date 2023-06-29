@@ -125,14 +125,42 @@ export function drop(event) {
     let secondCoord;
     let thirdCoord;
     let fourthCoord;
+    let battleshipNeighbours = [];
+    let cruiserNeighbours = [];
+    let subNeighbours = [];
+    let destroyerNeighbours = [];
+    const markDisable = (neighbourType) => {
+        const allGridCells = document.querySelectorAll(".playerSquares");
+        allGridCells.forEach((cell) => {
+            console.log(cell.id);
+            let strNeighbour;
+            neighbourType.forEach((neighbour) => {
+                console.log(neighbour);
+                strNeighbour = `${neighbour[0]},${neighbour[1]}`;
+                console.log(strNeighbour);
+                if (cell.id === strNeighbour) {
+                    cell.style = "background-color: rgba(149, 149, 156, 0.9);";
+
+                    //const adjacentElem = document.createElement("div");
+                    //cell.appendChild(adjacentElem);
+                    cell.classList.add("adjacent");
+
+                    console.log(
+                        `just colored the grid cell with coord of ${cell.id} `
+                    );
+                }
+            });
+        });
+    };
+
     if (draggableElement.id.includes("battleship")) {
         len = 4;
         //draggableElement.style.width = "47px";
         //should start off empty and have x,y pushed if ALL coords are free
         //let battleshipArr = [[x, y]];
-        let battleshipNeighbours = [];
-        let battleshipArr = [];
 
+        let battleshipArr = [];
+        let battleshipCoord1 = [x, y];
         let battleshipCoord2 = [];
         let battleshipCoord3 = [];
         let battleshipCoord4 = [];
@@ -170,6 +198,7 @@ export function drop(event) {
                     event.preventDefault();
                     return;
                 }
+
                 draggableElement.style.width = "47px";
 
                 // let battleshipCoord1 = [x, y];
@@ -188,6 +217,8 @@ export function drop(event) {
                 battleshipNeighbours.push([x + 1, y + 2]);
                 battleshipNeighbours.push([x + 1, y + 1]);
                 console.log(battleshipNeighbours);
+                //console.log(allGridCells);
+                markDisable(battleshipNeighbours);
             } else if (orientationBtnLabel === "horizontal") {
                 x2 = x + 1;
                 battleshipCoord2.push(x2, y); //do at end of this block if all are free
@@ -235,8 +266,9 @@ export function drop(event) {
                 battleshipNeighbours.push([x + 3, y - 1]);
                 battleshipNeighbours.push([x + 2, y - 1]);
                 battleshipNeighbours.push([x + 1, y - 1]);
-                battleshipNeighbours.push([x + 3, y - 1]);
+                battleshipNeighbours.push([x, y - 1]);
                 console.log(battleshipNeighbours);
+                markDisable(battleshipNeighbours);
             }
 
             if (
@@ -356,6 +388,7 @@ export function drop(event) {
                 battleshipNeighbours.push([x + 1, y + 2]);
                 battleshipNeighbours.push([x + 1, y + 1]);
                 console.log(battleshipNeighbours);
+                markDisable(battleshipNeighbours);
             } else if (orientationBtnLabel === "horizontal") {
                 //then there is 1 ship placement above and 2 below
                 x2 = x - 1;
@@ -416,6 +449,7 @@ export function drop(event) {
                 battleshipNeighbours.push([x, y - 1]);
                 battleshipNeighbours.push([x - 2, y + 1]);
                 console.log(battleshipNeighbours);
+                markDisable(battleshipNeighbours);
             }
 
             let draggableElementClone = draggableElement.cloneNode(true);
@@ -507,6 +541,23 @@ export function drop(event) {
                     return;
                 }
                 draggableElement.style.width = "47px";
+                // let battleshipCoord1 = [x, y];
+                battleshipNeighbours.push([x - 1, y]);
+                battleshipNeighbours.push([x - 1, y + 1]);
+                battleshipNeighbours.push([x - 1, y + 2]);
+                battleshipNeighbours.push([x, y + 2]);
+                battleshipNeighbours.push([x + 1, y + 2]);
+                battleshipNeighbours.push([x + 1, y + 1]);
+                battleshipNeighbours.push([x + 1, y]);
+                battleshipNeighbours.push([x + 1, y - 1]);
+                battleshipNeighbours.push([x + 1, y - 2]);
+                battleshipNeighbours.push([x + 1, y - 3]);
+                battleshipNeighbours.push([x, y - 3]);
+                battleshipNeighbours.push([x - 1, y - 3]);
+                battleshipNeighbours.push([x - 1, y - 2]);
+                battleshipNeighbours.push([x - 1, y - 1]);
+                markDisable(battleshipNeighbours);
+                console.log(battleshipNeighbours);
             } else if (orientationBtnLabel === "horizontal") {
                 //then there is 2 ship placements to LHS and 1 to RHS
                 x2 = x - 1;
@@ -552,6 +603,23 @@ export function drop(event) {
                     return;
                 }
                 draggableElement.style.height = "47px";
+
+                battleshipNeighbours.push([x, y + 1]);
+                battleshipNeighbours.push([x + 1, y + 1]);
+                battleshipNeighbours.push([x + 2, y + 1]);
+                battleshipNeighbours.push([x + 2, y]);
+                battleshipNeighbours.push([x + 2, y - 1]);
+                battleshipNeighbours.push([x + 1, y - 1]);
+                battleshipNeighbours.push([x, y - 1]);
+                battleshipNeighbours.push([x - 1, y - 1]);
+                battleshipNeighbours.push([x - 2, y - 1]);
+                battleshipNeighbours.push([x - 3, y - 1]);
+                battleshipNeighbours.push([x - 3, y]);
+                battleshipNeighbours.push([x - 3, y + 1]);
+                battleshipNeighbours.push([x - 2, y + 1]);
+                battleshipNeighbours.push([x - 1, y + 1]);
+                console.log(battleshipNeighbours);
+                markDisable(battleshipNeighbours);
             }
 
             let draggableElementClone = draggableElement.cloneNode(true);
@@ -645,6 +713,22 @@ export function drop(event) {
                     return;
                 }
                 draggableElement.style.width = "47px";
+                battleshipNeighbours.push([x - 1, y]);
+                battleshipNeighbours.push([x - 1, y + 1]);
+                battleshipNeighbours.push([x, y + 1]);
+                battleshipNeighbours.push([x + 1, y + 1]);
+                battleshipNeighbours.push([x + 1, y]);
+                battleshipNeighbours.push([x + 1, y - 1]);
+                battleshipNeighbours.push([x + 1, y - 2]);
+                battleshipNeighbours.push([x + 1, y - 3]);
+                battleshipNeighbours.push([x + 1, y - 4]);
+                battleshipNeighbours.push([x, y - 4]);
+                battleshipNeighbours.push([x - 1, y - 4]);
+                battleshipNeighbours.push([x - 1, y - 3]);
+                battleshipNeighbours.push([x - 1, y - 2]);
+                battleshipNeighbours.push([x - 1, y - 1]);
+                console.log(battleshipNeighbours);
+                markDisable(battleshipNeighbours);
             } else if (orientationBtnLabel === "horizontal") {
                 //then there is 3 ship placements above and 0 to below
                 x2 = x - 1;
@@ -691,6 +775,22 @@ export function drop(event) {
                     return;
                 }
                 draggableElement.style.height = "47px";
+                battleshipNeighbours.push([x, y + 1]);
+                battleshipNeighbours.push([x + 1, y + 1]);
+                battleshipNeighbours.push([x + 1, y]);
+                battleshipNeighbours.push([x + 1, y - 1]);
+                battleshipNeighbours.push([x, y - 1]);
+                battleshipNeighbours.push([x - 1, y - 1]);
+                battleshipNeighbours.push([x - 2, y - 1]);
+                battleshipNeighbours.push([x - 3, y - 1]);
+                battleshipNeighbours.push([x - 4, y - 1]);
+                battleshipNeighbours.push([x - 4, y]);
+                battleshipNeighbours.push([x - 4, y + 1]);
+                battleshipNeighbours.push([x - 3, y + 1]);
+                battleshipNeighbours.push([x - 2, y + 1]);
+                battleshipNeighbours.push([x - 1, y + 1]);
+                console.log(battleshipNeighbours);
+                markDisable(battleshipNeighbours);
             }
 
             let draggableElementClone = draggableElement.cloneNode(true);
@@ -748,18 +848,7 @@ export function drop(event) {
             coords: battleshipArrCoords,
             length: 4,
         });
-        //TODO: now the battleship is successfully dropped, must reference the battleshipNeighbors array and disable its neighbour squares... ... ...
-        if (orientationBtnLabel === "vertical") {
-            //ship lies horizontally...
-            /*let battleshipNeighbours = [];
-            let battleshipCoord1 = [x, y];
-            battleshipNeighbours.push([x - 1, y]);
-            battleshipNeighbours.push([x - 1, y - 1]);
-            battleshipNeighbours.push([x, y - 1]);
-            battleshipNeighbours.push([x + 1, y - 1]);
-            battleshipNeighbours.push([x + 1, y]);
-            console.log(battleshipNeighbours);*/
-        }
+
         console.log(
             `battleshipCoord3 is now correctly saying: ${battleshipCoord3}`
         ); //coord displays as y,x instead of x,y
@@ -811,7 +900,21 @@ export function drop(event) {
                     return;
                 }
 
-                draggableElement.style.width = "47px"; //HOW CAN THIS BE SET CONDITIONALLY SUCH THAT IT DOES NOT SET WIDTH OF SHIPS IN FLEET AREA AS WELL AS THOSE DROPPED ON GRID?
+                draggableElement.style.width = "47px";
+                cruiserNeighbours.push([x - 1, y]);
+                cruiserNeighbours.push([x - 1, y + 1]);
+                cruiserNeighbours.push([x - 1, y + 2]);
+                cruiserNeighbours.push([x - 1, y + 3]);
+                cruiserNeighbours.push([x, y + 3]);
+                cruiserNeighbours.push([x + 1, y + 3]);
+                cruiserNeighbours.push([x + 1, y + 2]);
+                cruiserNeighbours.push([x + 1, y + 1]);
+                cruiserNeighbours.push([x + 1, y]);
+                cruiserNeighbours.push([x + 1, y - 1]);
+                cruiserNeighbours.push([x, y - 1]);
+                cruiserNeighbours.push([x - 1, y - 1]);
+                console.log(cruiserNeighbours);
+                markDisable(cruiserNeighbours);
             } else if (orientationBtnLabel === "horizontal") {
                 //then there are 2 more ship placements to the RHS
                 x2 = x + 1;
@@ -845,6 +948,20 @@ export function drop(event) {
                     return;
                 }
                 draggableElement.style.height = "47px";
+                cruiserNeighbours.push([x, y + 1]);
+                cruiserNeighbours.push([x + 1, y + 1]);
+                cruiserNeighbours.push([x + 2, y + 1]);
+                cruiserNeighbours.push([x + 3, y + 1]);
+                cruiserNeighbours.push([x + 3, y]);
+                cruiserNeighbours.push([x + 3, y - 1]);
+                cruiserNeighbours.push([x + 2, y - 1]);
+                cruiserNeighbours.push([x + 1, y - 1]);
+                cruiserNeighbours.push([x, y - 1]);
+                cruiserNeighbours.push([x - 1, y - 1]);
+                cruiserNeighbours.push([x - 1, y]);
+                cruiserNeighbours.push([x - 1, y + 1]);
+                console.log(cruiserNeighbours);
+                markDisable(cruiserNeighbours);
             }
 
             let draggableElementClone = draggableElement.cloneNode(true);
@@ -909,6 +1026,20 @@ export function drop(event) {
                     return;
                 }
                 draggableElement.style.width = "47px";
+                cruiserNeighbours.push([x - 1, y]); //0
+                cruiserNeighbours.push([x - 1, y + 1]); //1
+                cruiserNeighbours.push([x - 1, y + 2]); //2
+                cruiserNeighbours.push([x, y + 2]); //3
+                cruiserNeighbours.push([x + 1, y + 2]); //4
+                cruiserNeighbours.push([x + 1, y + 1]); //5
+                cruiserNeighbours.push([x + 1, y]); //6
+                cruiserNeighbours.push([x + 1, y - 1]); //7
+                cruiserNeighbours.push([x + 1, y - 2]); //8
+                cruiserNeighbours.push([x, y - 2]); //9
+                cruiserNeighbours.push([x - 1, y - 2]); //10
+                cruiserNeighbours.push([x - 1, y - 1]); //11
+                console.log(cruiserNeighbours);
+                markDisable(cruiserNeighbours);
             } else if (orientationBtnLabel === "horizontal") {
                 //then there are 1 ship placement to the LHS and 1 to the RHS
                 x2 = x - 1;
@@ -938,6 +1069,20 @@ export function drop(event) {
                     return;
                 }
                 draggableElement.style.height = "47px";
+                cruiserNeighbours.push([x, y + 1]);
+                cruiserNeighbours.push([x + 1, y + 1]);
+                cruiserNeighbours.push([x + 2, y + 1]);
+                cruiserNeighbours.push([x + 2, y]);
+                cruiserNeighbours.push([x + 2, y - 1]);
+                cruiserNeighbours.push([x + 1, y - 1]);
+                cruiserNeighbours.push([x, y - 1]);
+                cruiserNeighbours.push([x - 1, y - 1]);
+                cruiserNeighbours.push([x - 2, y - 1]);
+                cruiserNeighbours.push([x - 2, y]);
+                cruiserNeighbours.push([x - 2, y + 1]);
+                cruiserNeighbours.push([x - 1, y + 1]);
+                console.log(cruiserNeighbours);
+                markDisable(cruiserNeighbours);
             }
 
             let draggableElementClone = draggableElement.cloneNode(true);
@@ -1002,6 +1147,20 @@ export function drop(event) {
                     return;
                 }
                 draggableElement.style.width = "47px";
+                cruiserNeighbours.push([x - 1, y]);
+                cruiserNeighbours.push([x - 1, y + 1]);
+                cruiserNeighbours.push([x, y + 1]);
+                cruiserNeighbours.push([x + 1, y + 1]);
+                cruiserNeighbours.push([x + 1, y]);
+                cruiserNeighbours.push([x + 1, y - 1]);
+                cruiserNeighbours.push([x + 1, y - 2]);
+                cruiserNeighbours.push([x + 1, y - 3]);
+                cruiserNeighbours.push([x, y - 3]);
+                cruiserNeighbours.push([x - 1, y - 3]);
+                cruiserNeighbours.push([x - 1, y - 2]);
+                cruiserNeighbours.push([x - 1, y - 1]);
+                console.log(cruiserNeighbours);
+                markDisable(cruiserNeighbours);
             } else if (orientationBtnLabel === "horizontal") {
                 //then there are 2 ship placements on LHS
                 x2 = x - 1;
@@ -1031,6 +1190,20 @@ export function drop(event) {
                     return;
                 }
                 draggableElement.style.height = "47px";
+                cruiserNeighbours.push([x, y + 1]);
+                cruiserNeighbours.push([x + 1, y + 1]);
+                cruiserNeighbours.push([x + 1, y]);
+                cruiserNeighbours.push([x + 1, y - 1]);
+                cruiserNeighbours.push([x, y - 1]);
+                cruiserNeighbours.push([x - 1, y - 1]);
+                cruiserNeighbours.push([x - 2, y - 1]);
+                cruiserNeighbours.push([x - 3, y - 1]);
+                cruiserNeighbours.push([x - 3, y]);
+                cruiserNeighbours.push([x - 3, y + 1]);
+                cruiserNeighbours.push([x - 2, y + 1]);
+                cruiserNeighbours.push([x - 1, y + 1]);
+                console.log(cruiserNeighbours);
+                markDisable(cruiserNeighbours);
             }
 
             let draggableElementClone = draggableElement.cloneNode(true);
@@ -1123,6 +1296,18 @@ export function drop(event) {
                     return;
                 }
                 draggableElement.style.width = "47px";
+                subNeighbours.push([x - 1, y]);
+                subNeighbours.push([x - 1, y + 1]);
+                subNeighbours.push([x - 1, y + 2]);
+                subNeighbours.push([x, y + 2]);
+                subNeighbours.push([x + 1, y + 2]);
+                subNeighbours.push([x + 1, y + 1]);
+                subNeighbours.push([x + 1, y]);
+                subNeighbours.push([x + 1, y - 1]);
+                subNeighbours.push([x, y - 1]);
+                subNeighbours.push([x - 1, y - 1]);
+                console.log(subNeighbours);
+                markDisable(subNeighbours);
             } else if (orientationBtnLabel === "horizontal") {
                 console.log(`startCell says: ${startCell}`);
                 //then there are 1 more ship placements to the RHS
@@ -1151,6 +1336,18 @@ export function drop(event) {
                     return;
                 }
                 draggableElement.style.height = "47px";
+                subNeighbours.push([x - 1, y]);
+                subNeighbours.push([x - 1, y + 1]);
+                subNeighbours.push([x, y + 1]);
+                subNeighbours.push([x + 1, y + 1]);
+                subNeighbours.push([x + 2, y + 1]);
+                subNeighbours.push([x + 2, y]); //
+                subNeighbours.push([x + 2, y - 1]);
+                subNeighbours.push([x + 1, y - 1]);
+                subNeighbours.push([x, y - 1]);
+                subNeighbours.push([x - 1, y - 1]);
+                console.log(subNeighbours);
+                markDisable(subNeighbours);
             }
 
             let draggableElementClone = draggableElement.cloneNode(true);
@@ -1205,6 +1402,18 @@ export function drop(event) {
                     return;
                 }
                 draggableElement.style.width = "47px";
+                subNeighbours.push([x - 1, y]);
+                subNeighbours.push([x - 1, y + 1]);
+                subNeighbours.push([x, y + 1]);
+                subNeighbours.push([x + 1, y + 1]);
+                subNeighbours.push([x + 1, y]);
+                subNeighbours.push([x + 1, y - 1]);
+                subNeighbours.push([x + 1, y - 2]);
+                subNeighbours.push([x, y - 2]);
+                subNeighbours.push([x - 1, y - 2]);
+                subNeighbours.push([x - 1, y - 1]);
+                console.log(subNeighbours);
+                markDisable(subNeighbours);
             } else if (orientationBtnLabel === "horizontal") {
                 //then there are 1 ship placement to the LHS
                 console.log(`startCell says: ${startCell}`);
@@ -1231,6 +1440,18 @@ export function drop(event) {
                     return;
                 }
                 draggableElement.style.height = "47px";
+                subNeighbours.push([x, y + 1]);
+                subNeighbours.push([x + 1, y + 1]);
+                subNeighbours.push([x + 1, y]);
+                subNeighbours.push([x + 1, y - 1]);
+                subNeighbours.push([x, y - 1]);
+                subNeighbours.push([x - 1, y - 1]);
+                subNeighbours.push([x - 2, y - 1]);
+                subNeighbours.push([x - 2, y]);
+                subNeighbours.push([x - 2, y + 1]);
+                subNeighbours.push([x - 1, y + 1]);
+                console.log(subNeighbours);
+                markDisable(subNeighbours);
             }
 
             let draggableElementClone = draggableElement.cloneNode(true);
@@ -1286,6 +1507,16 @@ export function drop(event) {
 
         //we leave the width as it is at 149px..
         draggableElement.style.width = "47px";
+        destroyerNeighbours.push([x - 1, y]);
+        destroyerNeighbours.push([x - 1, y + 1]);
+        destroyerNeighbours.push([x, y + 1]);
+        destroyerNeighbours.push([x + 1, y + 1]);
+        destroyerNeighbours.push([x + 1, y]);
+        destroyerNeighbours.push([x + 1, y - 1]);
+        destroyerNeighbours.push([x, y - 1]);
+        destroyerNeighbours.push([x - 1, y - 1]);
+        console.log(destroyerNeighbours);
+        markDisable(destroyerNeighbours);
         let draggableElementClone = draggableElement.cloneNode(true);
         dropzone.appendChild(draggableElementClone);
         //and do destroyerArr.push([x, y]) here because at the beginning the array should be empty as we dont know at that point if all coords will be free
@@ -1321,6 +1552,7 @@ export function drop(event) {
     }
 
     console.log(droppedShips);
+
     //should we give .cancelled to the ship if not dropped? Perhaps, but then we'd need to have given a class of .dropped whenever it was dropped so we can check
 }
 
