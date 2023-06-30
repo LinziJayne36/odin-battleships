@@ -95,6 +95,7 @@ export function drop(event) {
     //splitting the width ready to drop...and calculating which coords to put the ship on
     let startCell = refClickedShipCell.id; //id of shipCell mouse picked up on eg 'cruiseCell1'
     console.log(`startCell says: ${startCell}`);
+    let firstCell;
     let secondCell;
     let thirdCell;
     let fourthCell;
@@ -146,7 +147,7 @@ export function drop(event) {
                     cell.classList.add("adjacent");
 
                     console.log(
-                        `just colored the grid cell with coord of ${cell.id} `
+                        `just colored the grid cell with coord of ${cell.id} grey to indicate disabled`
                     );
                 }
             });
@@ -159,8 +160,9 @@ export function drop(event) {
         //should start off empty and have x,y pushed if ALL coords are free
         //let battleshipArr = [[x, y]];
 
-        let battleshipArr = [];
-        let battleshipCoord1 = [x, y];
+        //let battleshipArr = [];
+        //let battleshipCoord1 = [x, y];
+        firstCell = document.getElementById(`${x},${y}`);
         let battleshipCoord2 = [];
         let battleshipCoord3 = [];
         let battleshipCoord4 = [];
@@ -199,7 +201,7 @@ export function drop(event) {
                     return;
                 }
 
-                draggableElement.style.width = "47px";
+                //draggableElement.style.width = "47px";
 
                 // let battleshipCoord1 = [x, y];
                 battleshipNeighbours.push([x - 1, y]);
@@ -218,7 +220,8 @@ export function drop(event) {
                 battleshipNeighbours.push([x + 1, y + 1]);
                 console.log(battleshipNeighbours);
                 //console.log(allGridCells);
-                markDisable(battleshipNeighbours);
+                //markDisable(battleshipNeighbours);
+                //draggableElement.style.width = "47px";
             } else if (orientationBtnLabel === "horizontal") {
                 x2 = x + 1;
                 battleshipCoord2.push(x2, y); //do at end of this block if all are free
@@ -252,7 +255,8 @@ export function drop(event) {
                     event.preventDefault();
                     return;
                 }
-                draggableElement.style.height = "47px";
+
+                // draggableElement.style.height = "47px";
                 battleshipNeighbours.push([x - 1, y - 1]);
                 battleshipNeighbours.push([x - 1, y]);
                 battleshipNeighbours.push([x - 1, y + 1]);
@@ -268,20 +272,32 @@ export function drop(event) {
                 battleshipNeighbours.push([x + 1, y - 1]);
                 battleshipNeighbours.push([x, y - 1]);
                 console.log(battleshipNeighbours);
-                markDisable(battleshipNeighbours);
+                //markDisable(battleshipNeighbours);
             }
-
+            console.log(firstCell);
             if (
                 secondCell.hasChildNodes() ||
                 thirdCell.hasChildNodes() ||
-                fourthCell.hasChildNodes()
+                fourthCell.hasChildNodes() ||
+                firstCell.classList.contains("adjacent") ||
+                secondCell.classList.contains("adjacent") ||
+                thirdCell.classList.contains("adjacent") ||
+                fourthCell.classList.contains("adjacent")
             ) {
-                console.log("At least one of those coords already has a ship");
+                console.log(
+                    "At least one of those coords already has a ship, or is too close to a ship"
+                );
                 draggableElement.classList.add("cancelled");
                 event.preventDefault();
                 return;
             }
+            if (orientationBtnLabel === "vertical") {
+                draggableElement.style.width = "47px";
+            } else {
+                draggableElement.style.height = "47px";
+            }
 
+            markDisable(battleshipNeighbours);
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("dropped");
@@ -359,7 +375,7 @@ export function drop(event) {
                     return;
                 }
 
-                if (
+                /* if (
                     secondCell.hasChildNodes() ||
                     thirdCell.hasChildNodes() ||
                     fourthCell.hasChildNodes()
@@ -370,8 +386,8 @@ export function drop(event) {
                     draggableElement.classList.add("cancelled");
                     event.preventDefault();
                     return;
-                }
-                draggableElement.style.width = "47px";
+                }*/
+                //draggableElement.style.width = "47px";
                 // let battleshipCoord1 = [x, y];
                 battleshipNeighbours.push([x - 1, y]);
                 battleshipNeighbours.push([x - 1, y - 1]);
@@ -388,7 +404,7 @@ export function drop(event) {
                 battleshipNeighbours.push([x + 1, y + 2]);
                 battleshipNeighbours.push([x + 1, y + 1]);
                 console.log(battleshipNeighbours);
-                markDisable(battleshipNeighbours);
+                //markDisable(battleshipNeighbours);
             } else if (orientationBtnLabel === "horizontal") {
                 //then there is 1 ship placement above and 2 below
                 x2 = x - 1;
@@ -421,7 +437,7 @@ export function drop(event) {
                     return;
                 }
 
-                if (
+                /*if (
                     secondCell.hasChildNodes() ||
                     thirdCell.hasChildNodes() ||
                     fourthCell.hasChildNodes()
@@ -432,8 +448,8 @@ export function drop(event) {
                     draggableElement.classList.add("cancelled");
                     event.preventDefault();
                     return;
-                }
-                draggableElement.style.height = "47px";
+                }*/
+                // draggableElement.style.height = "47px";
                 battleshipNeighbours.push([x - 1, y - 1]);
                 battleshipNeighbours.push([x - 2, y - 1]);
                 battleshipNeighbours.push([x - 1, y + 1]);
@@ -449,9 +465,32 @@ export function drop(event) {
                 battleshipNeighbours.push([x, y - 1]);
                 battleshipNeighbours.push([x - 2, y + 1]);
                 console.log(battleshipNeighbours);
-                markDisable(battleshipNeighbours);
+                //markDisable(battleshipNeighbours);
+            }
+            console.log(firstCell);
+            if (
+                secondCell.hasChildNodes() ||
+                thirdCell.hasChildNodes() ||
+                fourthCell.hasChildNodes() ||
+                firstCell.classList.contains("adjacent") ||
+                secondCell.classList.contains("adjacent") ||
+                thirdCell.classList.contains("adjacent") ||
+                fourthCell.classList.contains("adjacent")
+            ) {
+                console.log(
+                    "At least one of those coords already has a ship, or is too close to a ship"
+                );
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
+            if (orientationBtnLabel === "vertical") {
+                draggableElement.style.width = "47px";
+            } else {
+                draggableElement.style.height = "47px";
             }
 
+            markDisable(battleshipNeighbours);
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("dropped");
@@ -528,7 +567,7 @@ export function drop(event) {
                     return;
                 }
 
-                if (
+                /*  if (
                     secondCell.hasChildNodes() ||
                     thirdCell.hasChildNodes() ||
                     fourthCell.hasChildNodes()
@@ -539,8 +578,8 @@ export function drop(event) {
                     draggableElement.classList.add("cancelled");
                     event.preventDefault();
                     return;
-                }
-                draggableElement.style.width = "47px";
+                }*/
+                // draggableElement.style.width = "47px";
                 // let battleshipCoord1 = [x, y];
                 battleshipNeighbours.push([x - 1, y]);
                 battleshipNeighbours.push([x - 1, y + 1]);
@@ -556,7 +595,7 @@ export function drop(event) {
                 battleshipNeighbours.push([x - 1, y - 3]);
                 battleshipNeighbours.push([x - 1, y - 2]);
                 battleshipNeighbours.push([x - 1, y - 1]);
-                markDisable(battleshipNeighbours);
+                // markDisable(battleshipNeighbours);
                 console.log(battleshipNeighbours);
             } else if (orientationBtnLabel === "horizontal") {
                 //then there is 2 ship placements to LHS and 1 to RHS
@@ -590,7 +629,7 @@ export function drop(event) {
                     return;
                 }
 
-                if (
+                /* if (
                     secondCell.hasChildNodes() ||
                     thirdCell.hasChildNodes() ||
                     fourthCell.hasChildNodes()
@@ -601,8 +640,8 @@ export function drop(event) {
                     draggableElement.classList.add("cancelled");
                     event.preventDefault();
                     return;
-                }
-                draggableElement.style.height = "47px";
+                }*/
+                // draggableElement.style.height = "47px";
 
                 battleshipNeighbours.push([x, y + 1]);
                 battleshipNeighbours.push([x + 1, y + 1]);
@@ -619,9 +658,32 @@ export function drop(event) {
                 battleshipNeighbours.push([x - 2, y + 1]);
                 battleshipNeighbours.push([x - 1, y + 1]);
                 console.log(battleshipNeighbours);
-                markDisable(battleshipNeighbours);
+                //markDisable(battleshipNeighbours);
+            }
+            console.log(firstCell);
+            if (
+                secondCell.hasChildNodes() ||
+                thirdCell.hasChildNodes() ||
+                fourthCell.hasChildNodes() ||
+                firstCell.classList.contains("adjacent") ||
+                secondCell.classList.contains("adjacent") ||
+                thirdCell.classList.contains("adjacent") ||
+                fourthCell.classList.contains("adjacent")
+            ) {
+                console.log(
+                    "At least one of those coords already has a ship, or is too close to a ship"
+                );
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
+            if (orientationBtnLabel === "vertical") {
+                draggableElement.style.width = "47px";
+            } else {
+                draggableElement.style.height = "47px";
             }
 
+            markDisable(battleshipNeighbours);
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("dropped");
@@ -700,7 +762,7 @@ export function drop(event) {
                     return;
                 }
 
-                if (
+                /*if (
                     secondCell.hasChildNodes() ||
                     thirdCell.hasChildNodes() ||
                     fourthCell.hasChildNodes()
@@ -711,8 +773,8 @@ export function drop(event) {
                     draggableElement.classList.add("cancelled");
                     event.preventDefault();
                     return;
-                }
-                draggableElement.style.width = "47px";
+                }*/
+                //draggableElement.style.width = "47px";
                 battleshipNeighbours.push([x - 1, y]);
                 battleshipNeighbours.push([x - 1, y + 1]);
                 battleshipNeighbours.push([x, y + 1]);
@@ -728,7 +790,7 @@ export function drop(event) {
                 battleshipNeighbours.push([x - 1, y - 2]);
                 battleshipNeighbours.push([x - 1, y - 1]);
                 console.log(battleshipNeighbours);
-                markDisable(battleshipNeighbours);
+                //markDisable(battleshipNeighbours);
             } else if (orientationBtnLabel === "horizontal") {
                 //then there is 3 ship placements above and 0 to below
                 x2 = x - 1;
@@ -762,7 +824,7 @@ export function drop(event) {
                     return;
                 }
 
-                if (
+                /*if (
                     secondCell.hasChildNodes() ||
                     thirdCell.hasChildNodes() ||
                     fourthCell.hasChildNodes()
@@ -773,8 +835,8 @@ export function drop(event) {
                     draggableElement.classList.add("cancelled");
                     event.preventDefault();
                     return;
-                }
-                draggableElement.style.height = "47px";
+                }*/
+                // draggableElement.style.height = "47px";
                 battleshipNeighbours.push([x, y + 1]);
                 battleshipNeighbours.push([x + 1, y + 1]);
                 battleshipNeighbours.push([x + 1, y]);
@@ -790,9 +852,32 @@ export function drop(event) {
                 battleshipNeighbours.push([x - 2, y + 1]);
                 battleshipNeighbours.push([x - 1, y + 1]);
                 console.log(battleshipNeighbours);
-                markDisable(battleshipNeighbours);
+                // markDisable(battleshipNeighbours);
+            }
+            console.log(firstCell);
+            if (
+                secondCell.hasChildNodes() ||
+                thirdCell.hasChildNodes() ||
+                fourthCell.hasChildNodes() ||
+                firstCell.classList.contains("adjacent") ||
+                secondCell.classList.contains("adjacent") ||
+                thirdCell.classList.contains("adjacent") ||
+                fourthCell.classList.contains("adjacent")
+            ) {
+                console.log(
+                    "At least one of those coords already has a ship, or is too close to a ship"
+                );
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
+            if (orientationBtnLabel === "vertical") {
+                draggableElement.style.width = "47px";
+            } else {
+                draggableElement.style.height = "47px";
             }
 
+            markDisable(battleshipNeighbours);
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("dropped");
@@ -862,7 +947,7 @@ export function drop(event) {
         //draggableElement.style.width = "47px";
         //should start off empty and have x,y pushed if ALL coords are free
         let cruiserArr = [];
-
+        firstCell = document.getElementById(`${x},${y}`);
         let cruiserCoord2 = [];
         let cruiserCoord3 = [];
         //Starting to integrate ship placing logic for rest of grid cells....
@@ -891,6 +976,7 @@ export function drop(event) {
                 console.log(
                     "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
                 );
+                /*
                 if (secondCell.hasChildNodes() || thirdCell.hasChildNodes()) {
                     console.log(
                         "At least one of those coords already has a ship"
@@ -898,9 +984,9 @@ export function drop(event) {
                     draggableElement.classList.add("cancelled");
                     event.preventDefault();
                     return;
-                }
+                }*/
 
-                draggableElement.style.width = "47px";
+                // draggableElement.style.width = "47px";
                 cruiserNeighbours.push([x - 1, y]);
                 cruiserNeighbours.push([x - 1, y + 1]);
                 cruiserNeighbours.push([x - 1, y + 2]);
@@ -914,7 +1000,7 @@ export function drop(event) {
                 cruiserNeighbours.push([x, y - 1]);
                 cruiserNeighbours.push([x - 1, y - 1]);
                 console.log(cruiserNeighbours);
-                markDisable(cruiserNeighbours);
+                //markDisable(cruiserNeighbours);
             } else if (orientationBtnLabel === "horizontal") {
                 //then there are 2 more ship placements to the RHS
                 x2 = x + 1;
@@ -939,15 +1025,15 @@ export function drop(event) {
                 console.log(
                     "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
                 );
-                if (secondCell.hasChildNodes() || thirdCell.hasChildNodes()) {
+                /* if (secondCell.hasChildNodes() || thirdCell.hasChildNodes()) {
                     console.log(
                         "At least one of those coords already has a ship"
                     );
                     draggableElement.classList.add("cancelled");
                     event.preventDefault();
                     return;
-                }
-                draggableElement.style.height = "47px";
+                }*/
+                // draggableElement.style.height = "47px";
                 cruiserNeighbours.push([x, y + 1]);
                 cruiserNeighbours.push([x + 1, y + 1]);
                 cruiserNeighbours.push([x + 2, y + 1]);
@@ -961,8 +1047,30 @@ export function drop(event) {
                 cruiserNeighbours.push([x - 1, y]);
                 cruiserNeighbours.push([x - 1, y + 1]);
                 console.log(cruiserNeighbours);
-                markDisable(cruiserNeighbours);
+                // markDisable(cruiserNeighbours);
             }
+            console.log(firstCell);
+            if (
+                secondCell.hasChildNodes() ||
+                thirdCell.hasChildNodes() ||
+                firstCell.classList.contains("adjacent") ||
+                secondCell.classList.contains("adjacent") ||
+                thirdCell.classList.contains("adjacent")
+            ) {
+                console.log(
+                    "At least one of those coords already has a ship, or is too close to a ship"
+                );
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
+            if (orientationBtnLabel === "vertical") {
+                draggableElement.style.width = "47px";
+            } else {
+                draggableElement.style.height = "47px";
+            }
+
+            markDisable(cruiserNeighbours);
 
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
@@ -1017,15 +1125,16 @@ export function drop(event) {
                 console.log(
                     "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
                 );
-                if (secondCell.hasChildNodes() || thirdCell.hasChildNodes()) {
+                /*if (secondCell.hasChildNodes() || thirdCell.hasChildNodes()) {
                     console.log(
                         "At least one of those coords already has a ship"
                     );
                     draggableElement.classList.add("cancelled");
                     event.preventDefault();
                     return;
-                }
-                draggableElement.style.width = "47px";
+                }*/
+
+                //draggableElement.style.width = "47px";
                 cruiserNeighbours.push([x - 1, y]); //0
                 cruiserNeighbours.push([x - 1, y + 1]); //1
                 cruiserNeighbours.push([x - 1, y + 2]); //2
@@ -1039,7 +1148,7 @@ export function drop(event) {
                 cruiserNeighbours.push([x - 1, y - 2]); //10
                 cruiserNeighbours.push([x - 1, y - 1]); //11
                 console.log(cruiserNeighbours);
-                markDisable(cruiserNeighbours);
+                // markDisable(cruiserNeighbours);
             } else if (orientationBtnLabel === "horizontal") {
                 //then there are 1 ship placement to the LHS and 1 to the RHS
                 x2 = x - 1;
@@ -1060,15 +1169,15 @@ export function drop(event) {
                 console.log(
                     "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
                 );
-                if (secondCell.hasChildNodes() || thirdCell.hasChildNodes()) {
+                /*if (secondCell.hasChildNodes() || thirdCell.hasChildNodes()) {
                     console.log(
                         "At least one of those coords already has a ship"
                     );
                     draggableElement.classList.add("cancelled");
                     event.preventDefault();
                     return;
-                }
-                draggableElement.style.height = "47px";
+                }*/
+                // draggableElement.style.height = "47px";
                 cruiserNeighbours.push([x, y + 1]);
                 cruiserNeighbours.push([x + 1, y + 1]);
                 cruiserNeighbours.push([x + 2, y + 1]);
@@ -1082,8 +1191,30 @@ export function drop(event) {
                 cruiserNeighbours.push([x - 2, y + 1]);
                 cruiserNeighbours.push([x - 1, y + 1]);
                 console.log(cruiserNeighbours);
-                markDisable(cruiserNeighbours);
+                //markDisable(cruiserNeighbours);
             }
+            console.log(firstCell);
+            if (
+                secondCell.hasChildNodes() ||
+                thirdCell.hasChildNodes() ||
+                firstCell.classList.contains("adjacent") ||
+                secondCell.classList.contains("adjacent") ||
+                thirdCell.classList.contains("adjacent")
+            ) {
+                console.log(
+                    "At least one of those coords already has a ship, or is too close to a ship"
+                );
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
+            if (orientationBtnLabel === "vertical") {
+                draggableElement.style.width = "47px";
+            } else {
+                draggableElement.style.height = "47px";
+            }
+
+            markDisable(cruiserNeighbours);
 
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
@@ -1138,15 +1269,15 @@ export function drop(event) {
                 console.log(
                     "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
                 );
-                if (secondCell.hasChildNodes() || thirdCell.hasChildNodes()) {
+                /*if (secondCell.hasChildNodes() || thirdCell.hasChildNodes()) {
                     console.log(
                         "At least one of those coords already has a ship"
                     );
                     draggableElement.classList.add("cancelled");
                     event.preventDefault();
                     return;
-                }
-                draggableElement.style.width = "47px";
+                }*/
+                //draggableElement.style.width = "47px";
                 cruiserNeighbours.push([x - 1, y]);
                 cruiserNeighbours.push([x - 1, y + 1]);
                 cruiserNeighbours.push([x, y + 1]);
@@ -1160,7 +1291,7 @@ export function drop(event) {
                 cruiserNeighbours.push([x - 1, y - 2]);
                 cruiserNeighbours.push([x - 1, y - 1]);
                 console.log(cruiserNeighbours);
-                markDisable(cruiserNeighbours);
+                //markDisable(cruiserNeighbours);
             } else if (orientationBtnLabel === "horizontal") {
                 //then there are 2 ship placements on LHS
                 x2 = x - 1;
@@ -1181,15 +1312,15 @@ export function drop(event) {
                 console.log(
                     "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
                 );
-                if (secondCell.hasChildNodes() || thirdCell.hasChildNodes()) {
+                /*if (secondCell.hasChildNodes() || thirdCell.hasChildNodes()) {
                     console.log(
                         "At least one of those coords already has a ship"
                     );
                     draggableElement.classList.add("cancelled");
                     event.preventDefault();
                     return;
-                }
-                draggableElement.style.height = "47px";
+                }*/
+                // draggableElement.style.height = "47px";
                 cruiserNeighbours.push([x, y + 1]);
                 cruiserNeighbours.push([x + 1, y + 1]);
                 cruiserNeighbours.push([x + 1, y]);
@@ -1203,8 +1334,30 @@ export function drop(event) {
                 cruiserNeighbours.push([x - 2, y + 1]);
                 cruiserNeighbours.push([x - 1, y + 1]);
                 console.log(cruiserNeighbours);
-                markDisable(cruiserNeighbours);
+                // markDisable(cruiserNeighbours);
             }
+            console.log(firstCell);
+            if (
+                secondCell.hasChildNodes() ||
+                thirdCell.hasChildNodes() ||
+                firstCell.classList.contains("adjacent") ||
+                secondCell.classList.contains("adjacent") ||
+                thirdCell.classList.contains("adjacent")
+            ) {
+                console.log(
+                    "At least one of those coords already has a ship, or is too close to a ship"
+                );
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
+            if (orientationBtnLabel === "vertical") {
+                draggableElement.style.width = "47px";
+            } else {
+                draggableElement.style.height = "47px";
+            }
+
+            markDisable(cruiserNeighbours);
 
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
@@ -1264,7 +1417,7 @@ export function drop(event) {
         //draggableElement.style.width = "47px";
         //should start off empty and have x,y pushed if ALL coords are free
         let subArr = [];
-
+        firstCell = document.getElementById(`${x},${y}`);
         let subCoord2 = [];
         //Starting to integrate ship placing logic for rest of grid cells....
         if (startCell.includes("1")) {
@@ -1287,15 +1440,15 @@ export function drop(event) {
                 console.log(
                     "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
                 );
-                if (secondCell.hasChildNodes()) {
+                /* if (secondCell.hasChildNodes()) {
                     console.log(
                         "At least one of those coords already has a ship"
                     );
                     draggableElement.classList.add("cancelled");
                     event.preventDefault();
                     return;
-                }
-                draggableElement.style.width = "47px";
+                }*/
+                // draggableElement.style.width = "47px";
                 subNeighbours.push([x - 1, y]);
                 subNeighbours.push([x - 1, y + 1]);
                 subNeighbours.push([x - 1, y + 2]);
@@ -1307,7 +1460,7 @@ export function drop(event) {
                 subNeighbours.push([x, y - 1]);
                 subNeighbours.push([x - 1, y - 1]);
                 console.log(subNeighbours);
-                markDisable(subNeighbours);
+                // markDisable(subNeighbours);
             } else if (orientationBtnLabel === "horizontal") {
                 console.log(`startCell says: ${startCell}`);
                 //then there are 1 more ship placements to the RHS
@@ -1327,15 +1480,15 @@ export function drop(event) {
                 console.log(
                     "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
                 );
-                if (secondCell.hasChildNodes()) {
+                /* if (secondCell.hasChildNodes()) {
                     console.log(
                         "At least one of those coords already has a ship"
                     );
                     draggableElement.classList.add("cancelled");
                     event.preventDefault();
                     return;
-                }
-                draggableElement.style.height = "47px";
+                }*/
+                // draggableElement.style.height = "47px";
                 subNeighbours.push([x - 1, y]);
                 subNeighbours.push([x - 1, y + 1]);
                 subNeighbours.push([x, y + 1]);
@@ -1347,9 +1500,27 @@ export function drop(event) {
                 subNeighbours.push([x, y - 1]);
                 subNeighbours.push([x - 1, y - 1]);
                 console.log(subNeighbours);
-                markDisable(subNeighbours);
+                // markDisable(subNeighbours);
             }
 
+            if (
+                secondCell.hasChildNodes() ||
+                firstCell.classList.contains("adjacent") ||
+                secondCell.classList.contains("adjacent")
+            ) {
+                console.log(
+                    "At least one of those coords already has a ship, or is too close to a ship"
+                );
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
+            if (orientationBtnLabel === "vertical") {
+                draggableElement.style.width = "47px";
+            } else {
+                draggableElement.style.height = "47px";
+            }
+            markDisable(subNeighbours);
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("dropped");
@@ -1393,15 +1564,15 @@ export function drop(event) {
                 console.log(
                     "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
                 );
-                if (secondCell.hasChildNodes()) {
+                /* if (secondCell.hasChildNodes()) {
                     console.log(
                         "At least one of those coords already has a ship"
                     );
                     draggableElement.classList.add("cancelled");
                     event.preventDefault();
                     return;
-                }
-                draggableElement.style.width = "47px";
+                }*/
+                //draggableElement.style.width = "47px";
                 subNeighbours.push([x - 1, y]);
                 subNeighbours.push([x - 1, y + 1]);
                 subNeighbours.push([x, y + 1]);
@@ -1413,7 +1584,7 @@ export function drop(event) {
                 subNeighbours.push([x - 1, y - 2]);
                 subNeighbours.push([x - 1, y - 1]);
                 console.log(subNeighbours);
-                markDisable(subNeighbours);
+                // markDisable(subNeighbours);
             } else if (orientationBtnLabel === "horizontal") {
                 //then there are 1 ship placement to the LHS
                 console.log(`startCell says: ${startCell}`);
@@ -1431,15 +1602,15 @@ export function drop(event) {
                 console.log(
                     "this code should not be running if any of the ship coords were off the grid !!!----------------------------------------------------------------------------"
                 );
-                if (secondCell.hasChildNodes()) {
+                /*if (secondCell.hasChildNodes()) {
                     console.log(
                         "At least one of those coords already has a ship"
                     );
                     draggableElement.classList.add("cancelled");
                     event.preventDefault();
                     return;
-                }
-                draggableElement.style.height = "47px";
+                }*/
+                // draggableElement.style.height = "47px";
                 subNeighbours.push([x, y + 1]);
                 subNeighbours.push([x + 1, y + 1]);
                 subNeighbours.push([x + 1, y]);
@@ -1451,9 +1622,27 @@ export function drop(event) {
                 subNeighbours.push([x - 2, y + 1]);
                 subNeighbours.push([x - 1, y + 1]);
                 console.log(subNeighbours);
-                markDisable(subNeighbours);
+                // markDisable(subNeighbours);
             }
 
+            if (
+                secondCell.hasChildNodes() ||
+                firstCell.classList.contains("adjacent") ||
+                secondCell.classList.contains("adjacent")
+            ) {
+                console.log(
+                    "At least one of those coords already has a ship, or is too close to a ship"
+                );
+                draggableElement.classList.add("cancelled");
+                event.preventDefault();
+                return;
+            }
+            if (orientationBtnLabel === "vertical") {
+                draggableElement.style.width = "47px";
+            } else {
+                draggableElement.style.height = "47px";
+            }
+            markDisable(subNeighbours);
             let draggableElementClone = draggableElement.cloneNode(true);
             dropzone.appendChild(draggableElementClone);
             draggableElementClone.classList.add("dropped");
@@ -1504,9 +1693,9 @@ export function drop(event) {
         len = 1;
         //should start off empty and have x,y pushed if ALL coords are free
         let destroyerArr = [[x, y]];
-
+        firstCell = document.getElementById(`${x},${y}`);
         //we leave the width as it is at 149px..
-        draggableElement.style.width = "47px";
+        //draggableElement.style.width = "47px";
         destroyerNeighbours.push([x - 1, y]);
         destroyerNeighbours.push([x - 1, y + 1]);
         destroyerNeighbours.push([x, y + 1]);
@@ -1516,6 +1705,13 @@ export function drop(event) {
         destroyerNeighbours.push([x, y - 1]);
         destroyerNeighbours.push([x - 1, y - 1]);
         console.log(destroyerNeighbours);
+        if (firstCell.classList.contains("adjacent")) {
+            console.log("That coord is too close to another ship");
+            draggableElement.classList.add("cancelled");
+            event.preventDefault();
+            return;
+        }
+        draggableElement.style.width = "47px";
         markDisable(destroyerNeighbours);
         let draggableElementClone = draggableElement.cloneNode(true);
         dropzone.appendChild(draggableElementClone);
