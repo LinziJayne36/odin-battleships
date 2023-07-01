@@ -20,6 +20,7 @@ export default class Gameboard {
         this._hits = []; //this.hits;
         this._sunk = 0;
         //this._shipsLeft = 10; //this.shipsLeftover();
+        this.battlshipAdjacents = null;
     }
 
     updateBoard(info) {

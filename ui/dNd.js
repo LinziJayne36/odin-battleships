@@ -219,6 +219,7 @@ export function drop(event) {
                 battleshipNeighbours.push([x + 1, y + 2]);
                 battleshipNeighbours.push([x + 1, y + 1]);
                 console.log(battleshipNeighbours);
+
                 //console.log(allGridCells);
                 //markDisable(battleshipNeighbours);
                 //draggableElement.style.width = "47px";
@@ -1706,7 +1707,7 @@ export function drop(event) {
         destroyerNeighbours.push([x - 1, y - 1]);
         console.log(destroyerNeighbours);
         if (firstCell.classList.contains("adjacent")) {
-            console.log("That coord is too close to another ship");
+            console.log("That coord is too close to another6 ship");
             draggableElement.classList.add("cancelled");
             event.preventDefault();
             return;
