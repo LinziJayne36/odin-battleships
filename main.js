@@ -303,7 +303,9 @@ async function gameLoop() {
                     console.log(
                         "next comes the true|false result of whether coordinates selected by player object are valid"
                     );
-
+                    if (!validMove) {
+                        userMsg(" ", "remove");
+                    }
                     console.log(validMove);
                 }
             }
@@ -613,6 +615,7 @@ async function gameLoop() {
                 /*alert of invalid move*/ console.log(
                     "Invalid player move - choose again!!!"
                 );
+
                 throw console.error("Whoa!!! checkMove evaluated to false");
             }
             userMsg("", "remove");
@@ -623,10 +626,26 @@ async function gameLoop() {
             //Take the COMPUTER'S TURN turn --------------------------------------------------------------------
 
             computerPlayer.calcAttackSq();
+
             console.log(
                 "next is a log of the result from running computerPlayer.calcAttackSq() to get the computer's move..."
             );
             console.log(computerPlayer.attackSq);
+            //TODO: check if the attack sq inner text has X or /
+            let attackedElem = document.getElementById(
+                `${computerPlayer.attackSq[0]},${computerPlayer.attackSq[1]}`
+            );
+            attackedElem.classList.add("computerTargeting");
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+            attackedElem.classList.remove("computerTargeting");
+
+            if (
+                attackedElem.innerText === "/" ||
+                attackedElem.innerText === "X"
+            ) {
+                userMsg(" ", "remove");
+                //computerPlayer.calcAttackSq();
+            }
             if (playerGameboard.hitMiss(computerPlayer.attackSq) === "hit") {
                 //If computerPlayer's move against the players board is a hit...
                 console.log(
@@ -668,10 +687,232 @@ async function gameLoop() {
                 playerGameboard._sunk = sunkNum;
 
                 let shipType;
+                let sunkNeighbours = [];
                 if (shipToHit.sunk === true) {
                     shipType = shipToHit.stateType();
                     alert(shipType);
                     playerGrid.drawSunkShip(shipToHit.coords);
+                    //TODO: identify neighbouring squares...
+                    let firstCoord = shipToHit.coords[0]; //this is the first coord of the sunk ship - use this to work out our neighbour squares
+                    let secondCoord;
+                    let orientation;
+                    if (shipToHit.coords[1]) {
+                        secondCoord = shipToHit.coords[1];
+                        if (firstCoord[0] === secondCoord[0]) {
+                            orientation = "horizontal";
+                        } else {
+                            orientation = "vertical";
+                        }
+                    }
+
+                    let x = firstCoord[0];
+                    let y = firstCoord[1];
+                    if (shipToHit.length === 4) {
+                        if (orientation === "horizontal") {
+                            //ie if our ship lies horizontally...
+                            sunkNeighbours.push([x - 1, y]);
+                            sunkNeighbours.push([x - 1, y - 1]);
+                            sunkNeighbours.push([x, y - 1]);
+                            sunkNeighbours.push([x + 1, y - 1]);
+                            sunkNeighbours.push([x + 1, y]);
+                            sunkNeighbours.push([x - 1, y + 1]);
+                            sunkNeighbours.push([x - 1, y + 2]);
+                            sunkNeighbours.push([x - 1, y + 3]);
+                            sunkNeighbours.push([x - 1, y + 4]);
+                            sunkNeighbours.push([x, y + 4]);
+                            sunkNeighbours.push([x + 1, y + 4]);
+                            sunkNeighbours.push([x + 1, y + 3]);
+                            sunkNeighbours.push([x + 1, y + 2]);
+                            sunkNeighbours.push([x + 1, y + 1]);
+                            console.log(sunkNeighbours);
+                            sunkNeighbours.forEach((neighbour) => {
+                                let xSunk = neighbour[0];
+                                console.log(neighbour);
+                                playerGameboard.misses.push(neighbour);
+                                if (xSunk < 11) {
+                                    playerGameboard.updateBoard([
+                                        [neighbour[0], neighbour[1], "/"],
+                                    ]);
+                                    playerGrid.drawShot(neighbour, "/");
+                                    console.log(playerGameboard.board);
+                                }
+                            });
+                        } else if (orientation === "vertical") {
+                            //ie our ship lies vertically
+                            sunkNeighbours.push([x - 1, y - 1]);
+                            sunkNeighbours.push([x - 1, y]);
+                            sunkNeighbours.push([x - 1, y + 1]);
+                            sunkNeighbours.push([x, y + 1]);
+                            sunkNeighbours.push([x + 1, y + 1]);
+                            sunkNeighbours.push([x + 2, y + 1]);
+                            sunkNeighbours.push([x + 3, y + 1]);
+                            sunkNeighbours.push([x + 4, y + 1]);
+                            sunkNeighbours.push([x + 4, y]);
+                            sunkNeighbours.push([x + 4, y - 1]);
+                            sunkNeighbours.push([x + 3, y - 1]);
+                            sunkNeighbours.push([x + 2, y - 1]);
+                            sunkNeighbours.push([x + 1, y - 1]);
+                            sunkNeighbours.push([x, y - 1]);
+                            console.log(sunkNeighbours);
+                            sunkNeighbours.forEach((neighbour) => {
+                                let xSunk = neighbour[0];
+                                let ySunk = neighbour[1];
+                                console.log(neighbour);
+                                playerGameboard.misses.push(neighbour);
+                                if (xSunk < 11) {
+                                    playerGameboard.updateBoard([
+                                        [neighbour[0], neighbour[1], "/"],
+                                    ]);
+                                    playerGrid.drawShot(neighbour, "/");
+                                    console.log(playerGameboard.board);
+                                }
+                            });
+                        }
+                    } else if (shipToHit.length === 3) {
+                        if (orientation === "horizontal") {
+                            //ie if our ship lies horizontally...
+                            sunkNeighbours.push([x - 1, y]);
+                            sunkNeighbours.push([x - 1, y + 1]);
+                            sunkNeighbours.push([x - 1, y + 2]);
+                            sunkNeighbours.push([x - 1, y + 3]);
+                            sunkNeighbours.push([x, y + 3]);
+                            sunkNeighbours.push([x + 1, y + 3]);
+                            sunkNeighbours.push([x + 1, y + 2]);
+                            sunkNeighbours.push([x + 1, y + 1]);
+                            sunkNeighbours.push([x + 1, y]);
+                            sunkNeighbours.push([x + 1, y - 1]);
+                            sunkNeighbours.push([x, y - 1]);
+                            sunkNeighbours.push([x - 1, y - 1]);
+                            console.log(sunkNeighbours);
+                            sunkNeighbours.forEach((neighbour) => {
+                                let xSunk = neighbour[0];
+                                let ySunk = neighbour[1];
+                                console.log(neighbour);
+                                playerGameboard.misses.push(neighbour);
+                                if (xSunk < 11) {
+                                    playerGameboard.updateBoard([
+                                        [neighbour[0], neighbour[1], "/"],
+                                    ]);
+                                    playerGrid.drawShot(neighbour, "/");
+                                    console.log(playerGameboard.board);
+                                }
+                            });
+                        } else if (orientation === "vertical") {
+                            //ie our ship lies vertically
+                            sunkNeighbours.push([x, y + 1]);
+                            sunkNeighbours.push([x + 1, y + 1]);
+                            sunkNeighbours.push([x + 2, y + 1]);
+                            sunkNeighbours.push([x + 3, y + 1]);
+                            sunkNeighbours.push([x + 3, y]);
+                            sunkNeighbours.push([x + 3, y - 1]);
+                            sunkNeighbours.push([x + 2, y - 1]);
+                            sunkNeighbours.push([x + 1, y - 1]);
+                            sunkNeighbours.push([x, y - 1]);
+                            sunkNeighbours.push([x - 1, y - 1]);
+                            sunkNeighbours.push([x - 1, y]);
+                            sunkNeighbours.push([x - 1, y + 1]);
+                            console.log(sunkNeighbours);
+                            sunkNeighbours.forEach((neighbour) => {
+                                let xSunk = neighbour[0];
+                                let ySunk = neighbour[1];
+                                console.log(neighbour);
+                                playerGameboard.misses.push(neighbour);
+                                if (xSunk < 11) {
+                                    playerGameboard.updateBoard([
+                                        [neighbour[0], neighbour[1], "/"],
+                                    ]);
+                                    playerGrid.drawShot(neighbour, "/");
+                                    console.log(playerGameboard.board);
+                                }
+                            });
+                        }
+                    } else if (shipToHit.length === 2) {
+                        if (orientation === "horizontal") {
+                            //ie if our ship lies horizontally...
+                            sunkNeighbours.push([x - 1, y]);
+                            sunkNeighbours.push([x - 1, y + 1]);
+                            sunkNeighbours.push([x - 1, y + 2]);
+                            sunkNeighbours.push([x, y + 2]);
+                            sunkNeighbours.push([x + 1, y + 2]);
+                            sunkNeighbours.push([x + 1, y + 1]);
+                            sunkNeighbours.push([x + 1, y]);
+                            sunkNeighbours.push([x + 1, y - 1]);
+                            sunkNeighbours.push([x, y - 1]);
+                            sunkNeighbours.push([x - 1, y - 1]);
+                            console.log(sunkNeighbours);
+                            sunkNeighbours.forEach((neighbour) => {
+                                let xSunk = neighbour[0];
+                                let ySunk = neighbour[1];
+                                console.log(neighbour);
+                                playerGameboard.misses.push(neighbour);
+                                if (xSunk < 11) {
+                                    playerGameboard.updateBoard([
+                                        [neighbour[0], neighbour[1], "/"],
+                                    ]);
+                                    playerGrid.drawShot(neighbour, "/");
+                                    console.log(playerGameboard.board);
+                                }
+                            });
+                        } else if (orientation === "vertical") {
+                            //ie our ship lies vertically
+                            sunkNeighbours.push([x - 1, y]);
+                            sunkNeighbours.push([x - 1, y + 1]);
+                            sunkNeighbours.push([x, y + 1]);
+                            sunkNeighbours.push([x + 1, y + 1]);
+                            sunkNeighbours.push([x + 2, y + 1]);
+                            sunkNeighbours.push([x + 2, y]); //
+                            sunkNeighbours.push([x + 2, y - 1]);
+                            sunkNeighbours.push([x + 1, y - 1]);
+                            sunkNeighbours.push([x, y - 1]);
+                            sunkNeighbours.push([x - 1, y - 1]);
+                            console.log(sunkNeighbours);
+                            sunkNeighbours.forEach((neighbour) => {
+                                let xSunk = neighbour[0];
+                                let ySunk = neighbour[1];
+                                console.log(neighbour);
+                                playerGameboard.misses.push(neighbour);
+                                if (xSunk < 11) {
+                                    playerGameboard.updateBoard([
+                                        [neighbour[0], neighbour[1], "/"],
+                                    ]);
+                                    playerGrid.drawShot(neighbour, "/");
+                                    console.log(playerGameboard.board);
+                                }
+                            });
+                        }
+                    } else if (shipToHit.length === 1) {
+                        sunkNeighbours.push([x - 1, y]);
+                        sunkNeighbours.push([x - 1, y + 1]);
+                        sunkNeighbours.push([x, y + 1]);
+                        sunkNeighbours.push([x + 1, y + 1]);
+                        sunkNeighbours.push([x + 1, y]);
+                        sunkNeighbours.push([x + 1, y - 1]);
+                        sunkNeighbours.push([x, y - 1]);
+                        sunkNeighbours.push([x - 1, y - 1]);
+                        console.log(sunkNeighbours);
+                        sunkNeighbours.forEach((neighbour) => {
+                            let xSunk = neighbour[0];
+                            let ySunk = neighbour[1];
+                            console.log(neighbour);
+                            playerGameboard.misses.push(neighbour);
+                            if (xSunk < 11) {
+                                playerGameboard.updateBoard([
+                                    [neighbour[0], neighbour[1], "/"],
+                                ]);
+                                playerGrid.drawShot(neighbour, "/");
+                                console.log(playerGameboard.board);
+                            }
+                        });
+                        /* sunkNeighbours.forEach((neighbour) => {
+                                console.log(neighbour);
+                                computerGameboard.misses.push(neighbour);
+                                computerGameboard.updateBoard([
+                                    [neighbour[0], neighbour[1], "/"],
+                                ]);
+                                computerGrid.drawShot(neighbour, "/");
+                                console.log(computerGameboard.board);
+                            });*/
+                    }
                     console.log(shipType);
                     sunkMsg(`They sunk your ${shipType}!`, "add");
                     await new Promise((resolve) => setTimeout(resolve, 1700));
