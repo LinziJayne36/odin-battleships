@@ -84,17 +84,17 @@ export default class Grid {
 
         console.log(allGridCells);
         allGridCells.forEach((cell) => {
-            console.log(cell);
-            console.log(cell.dataset);
-            console.log(cell.dataset.row, cell.dataset.col);
+            //console.log(cell);
+            //console.log(cell.dataset);
+            //console.log(cell.dataset.row, cell.dataset.col);
             let dataVals = [
                 parseInt(cell.dataset.row),
                 parseInt(cell.dataset.col),
             ];
-            console.log(dataVals);
-            console.log(typeof dataVals);
-            console.log(enemyShot);
-            console.log(typeof enemyShot);
+            //console.log(dataVals);
+            //console.log(typeof dataVals);
+            //console.log(enemyShot);
+            //console.log(typeof enemyShot);
             if (dataVals[0] === enemyShot[0] && dataVals[1] === enemyShot[1]) {
                 console.log(
                     "YAY!The two are equal!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"

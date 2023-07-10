@@ -19,6 +19,7 @@ import { trackDroppedShipsArr } from "./ui/dNd";
 import { userMsg } from "./ui/userMsg";
 import { gameOverMsg } from "./ui/gameOver";
 import { sunkMsg } from "./ui/sunk";
+import { restartBtnDisplay } from "./ui/restart";
 //import { handlingGridClicks } from "./dom-interactions/domInteraction";
 import Ship from "./app-logic/ship";
 let computerTurn = {
@@ -53,8 +54,6 @@ async function gameLoop() {
             console.log(`${game.whoWon} WINS!`);
             alert(`${game.whoWon} WINS!`);
             gameOverMsg(`GAME OVER! ${game.whoWon} WINS!`, "add");
-            // userMsg("", "remove");
-            // userMsg(`GAME OVER! ${game.whoWon} WINS!`, "add");
         } else if (
             playerGameboard.shipsLeft < 10 ||
             computerGameboard.shipsLeft < 10
@@ -925,6 +924,7 @@ async function gameLoop() {
                     console.log(game.whoWon);
                     //userMsg("", "remove");
                     //userMsg(`GAME OVER! ${game.whoWon} WINS!`, "add");
+                    gameOverMsg("", "remove");
                     gameOverMsg(`GAME OVER! ${game.whoWon} WINS!`, "add");
                 }
                 //await new Promise((resolve) => setTimeout(resolve, 2000))
@@ -974,6 +974,7 @@ async function gameLoop() {
             console.log(computerTurn.val);
         }
     }
+    restartBtnDisplay("add");
     console.log(
         `We just broke out of the main game while loop... isWon is testing ${game.isWon}`
     );
