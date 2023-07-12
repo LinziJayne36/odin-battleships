@@ -975,6 +975,11 @@ async function gameLoop() {
         }
     }
     restartBtnDisplay("add");
+    let restartBtn = document.getElementById("restartBtn");
+    restartBtn.addEventListener("click", (ev) => {
+        console.log("restartBtn event listener was just triggered");
+        //TODO: write code to reset whole game
+    });
     console.log(
         `We just broke out of the main game while loop... isWon is testing ${game.isWon}`
     );

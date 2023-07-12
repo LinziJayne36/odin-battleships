@@ -5,7 +5,7 @@ export const restartBtnDisplay = (addRemove) => {
             "should be adding the restart button now, if the restartBtnDisplay function is even running"
         );
         const restartBtn = document.createElement("button");
-        restartBtn.setAttribute("id", "startButton");
+        restartBtn.setAttribute("id", "restartButton");
         restartBtn.innerText = "RESTART";
         appWrapper.appendChild(restartBtn);
     } else if (addRemove === "remove") {
