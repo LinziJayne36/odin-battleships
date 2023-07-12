@@ -393,8 +393,15 @@ async function gameLoop() {
                                         computerGameboard.updateBoard([
                                             [neighbour[0], neighbour[1], "/"],
                                         ]);
-                                        computerGrid.drawShot(neighbour, "/");
-                                        console.log(computerGameboard.board);
+                                        if (neighbour.innerText !== "X") {
+                                            computerGrid.drawShot(
+                                                neighbour,
+                                                "/"
+                                            );
+                                            console.log(
+                                                computerGameboard.board
+                                            );
+                                        }
                                     }
                                 });
                             } else if (orientation === "vertical") {
@@ -423,8 +430,15 @@ async function gameLoop() {
                                         computerGameboard.updateBoard([
                                             [neighbour[0], neighbour[1], "/"],
                                         ]);
-                                        computerGrid.drawShot(neighbour, "/");
-                                        console.log(computerGameboard.board);
+                                        if (neighbour.innerText !== "X") {
+                                            computerGrid.drawShot(
+                                                neighbour,
+                                                "/"
+                                            );
+                                            console.log(
+                                                computerGameboard.board
+                                            );
+                                        }
                                     }
                                 });
                             }
@@ -453,8 +467,15 @@ async function gameLoop() {
                                         computerGameboard.updateBoard([
                                             [neighbour[0], neighbour[1], "/"],
                                         ]);
-                                        computerGrid.drawShot(neighbour, "/");
-                                        console.log(computerGameboard.board);
+                                        if (neighbour.innerText !== "X") {
+                                            computerGrid.drawShot(
+                                                neighbour,
+                                                "/"
+                                            );
+                                            console.log(
+                                                computerGameboard.board
+                                            );
+                                        }
                                     }
                                 });
                             } else if (orientation === "vertical") {
@@ -481,8 +502,15 @@ async function gameLoop() {
                                         computerGameboard.updateBoard([
                                             [neighbour[0], neighbour[1], "/"],
                                         ]);
-                                        computerGrid.drawShot(neighbour, "/");
-                                        console.log(computerGameboard.board);
+                                        if (neighbour.innerText !== "X") {
+                                            computerGrid.drawShot(
+                                                neighbour,
+                                                "/"
+                                            );
+                                            console.log(
+                                                computerGameboard.board
+                                            );
+                                        }
                                     }
                                 });
                             }
@@ -509,8 +537,15 @@ async function gameLoop() {
                                         computerGameboard.updateBoard([
                                             [neighbour[0], neighbour[1], "/"],
                                         ]);
-                                        computerGrid.drawShot(neighbour, "/");
-                                        console.log(computerGameboard.board);
+                                        if (neighbour.innerText !== "X") {
+                                            computerGrid.drawShot(
+                                                neighbour,
+                                                "/"
+                                            );
+                                            console.log(
+                                                computerGameboard.board
+                                            );
+                                        }
                                     }
                                 });
                             } else if (orientation === "vertical") {
@@ -535,8 +570,15 @@ async function gameLoop() {
                                         computerGameboard.updateBoard([
                                             [neighbour[0], neighbour[1], "/"],
                                         ]);
-                                        computerGrid.drawShot(neighbour, "/");
-                                        console.log(computerGameboard.board);
+                                        if (neighbour.innerText !== "X") {
+                                            computerGrid.drawShot(
+                                                neighbour,
+                                                "/"
+                                            );
+                                            console.log(
+                                                computerGameboard.board
+                                            );
+                                        }
                                     }
                                 });
                             }
@@ -559,8 +601,10 @@ async function gameLoop() {
                                     computerGameboard.updateBoard([
                                         [neighbour[0], neighbour[1], "/"],
                                     ]);
-                                    computerGrid.drawShot(neighbour, "/");
-                                    console.log(computerGameboard.board);
+                                    if (neighbour.innerText !== "X") {
+                                        computerGrid.drawShot(neighbour, "/");
+                                        console.log(computerGameboard.board);
+                                    }
                                 }
                             });
                             /* sunkNeighbours.forEach((neighbour) => {
@@ -732,8 +776,10 @@ async function gameLoop() {
                                     playerGameboard.updateBoard([
                                         [neighbour[0], neighbour[1], "/"],
                                     ]);
-                                    playerGrid.drawShot(neighbour, "/");
-                                    console.log(playerGameboard.board);
+                                    if (neighbour.innerText !== "X") {
+                                        playerGrid.drawShot(neighbour, "/");
+                                        console.log(playerGameboard.board);
+                                    }
                                 }
                             });
                         } else if (orientation === "vertical") {
@@ -762,8 +808,10 @@ async function gameLoop() {
                                     playerGameboard.updateBoard([
                                         [neighbour[0], neighbour[1], "/"],
                                     ]);
-                                    playerGrid.drawShot(neighbour, "/");
-                                    console.log(playerGameboard.board);
+                                    if (neighbour.innerText !== "X") {
+                                        playerGrid.drawShot(neighbour, "/");
+                                        console.log(playerGameboard.board);
+                                    }
                                 }
                             });
                         }
@@ -792,8 +840,10 @@ async function gameLoop() {
                                     playerGameboard.updateBoard([
                                         [neighbour[0], neighbour[1], "/"],
                                     ]);
-                                    playerGrid.drawShot(neighbour, "/");
-                                    console.log(playerGameboard.board);
+                                    if (neighbour.innerText !== "X") {
+                                        playerGrid.drawShot(neighbour, "/");
+                                        console.log(playerGameboard.board);
+                                    }
                                 }
                             });
                         } else if (orientation === "vertical") {
@@ -820,8 +870,10 @@ async function gameLoop() {
                                     playerGameboard.updateBoard([
                                         [neighbour[0], neighbour[1], "/"],
                                     ]);
-                                    playerGrid.drawShot(neighbour, "/");
-                                    console.log(playerGameboard.board);
+                                    if (neighbour.innerText !== "X") {
+                                        playerGrid.drawShot(neighbour, "/");
+                                        console.log(playerGameboard.board);
+                                    }
                                 }
                             });
                         }
@@ -848,8 +900,10 @@ async function gameLoop() {
                                     playerGameboard.updateBoard([
                                         [neighbour[0], neighbour[1], "/"],
                                     ]);
-                                    playerGrid.drawShot(neighbour, "/");
-                                    console.log(playerGameboard.board);
+                                    if (neighbour.innerText !== "X") {
+                                        playerGrid.drawShot(neighbour, "/");
+                                        console.log(playerGameboard.board);
+                                    }
                                 }
                             });
                         } else if (orientation === "vertical") {
@@ -874,8 +928,10 @@ async function gameLoop() {
                                     playerGameboard.updateBoard([
                                         [neighbour[0], neighbour[1], "/"],
                                     ]);
-                                    playerGrid.drawShot(neighbour, "/");
-                                    console.log(playerGameboard.board);
+                                    if (neighbour.innerText !== "X") {
+                                        playerGrid.drawShot(neighbour, "/");
+                                        console.log(playerGameboard.board);
+                                    }
                                 }
                             });
                         }
@@ -898,8 +954,10 @@ async function gameLoop() {
                                 playerGameboard.updateBoard([
                                     [neighbour[0], neighbour[1], "/"],
                                 ]);
-                                playerGrid.drawShot(neighbour, "/");
-                                console.log(playerGameboard.board);
+                                if (neighbour.innerText !== "X") {
+                                    playerGrid.drawShot(neighbour, "/");
+                                    console.log(playerGameboard.board);
+                                }
                             }
                         });
                         /* sunkNeighbours.forEach((neighbour) => {
