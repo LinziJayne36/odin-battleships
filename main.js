@@ -389,11 +389,16 @@ async function gameLoop() {
                                     let xSunk = neighbour[0];
                                     console.log(neighbour);
                                     computerGameboard.misses.push(neighbour);
-                                    if (xSunk < 11) {
-                                        computerGameboard.updateBoard([
-                                            [neighbour[0], neighbour[1], "/"],
-                                        ]);
-                                        if (neighbour.innerText !== "X") {
+                                    if (neighbour.innerText !== "X") {
+                                        if (xSunk < 11) {
+                                            computerGameboard.updateBoard([
+                                                [
+                                                    neighbour[0],
+                                                    neighbour[1],
+                                                    "/",
+                                                ],
+                                            ]);
+
                                             computerGrid.drawShot(
                                                 neighbour,
                                                 "/"
@@ -426,11 +431,16 @@ async function gameLoop() {
                                     let ySunk = neighbour[1];
                                     console.log(neighbour);
                                     computerGameboard.misses.push(neighbour);
-                                    if (xSunk < 11) {
-                                        computerGameboard.updateBoard([
-                                            [neighbour[0], neighbour[1], "/"],
-                                        ]);
-                                        if (neighbour.innerText !== "X") {
+                                    if (neighbour.innerText !== "X") {
+                                        if (xSunk < 11) {
+                                            computerGameboard.updateBoard([
+                                                [
+                                                    neighbour[0],
+                                                    neighbour[1],
+                                                    "/",
+                                                ],
+                                            ]);
+
                                             computerGrid.drawShot(
                                                 neighbour,
                                                 "/"
@@ -463,11 +473,16 @@ async function gameLoop() {
                                     let ySunk = neighbour[1];
                                     console.log(neighbour);
                                     computerGameboard.misses.push(neighbour);
-                                    if (xSunk < 11) {
-                                        computerGameboard.updateBoard([
-                                            [neighbour[0], neighbour[1], "/"],
-                                        ]);
-                                        if (neighbour.innerText !== "X") {
+                                    if (neighbour.innerText !== "X") {
+                                        if (xSunk < 11) {
+                                            computerGameboard.updateBoard([
+                                                [
+                                                    neighbour[0],
+                                                    neighbour[1],
+                                                    "/",
+                                                ],
+                                            ]);
+
                                             computerGrid.drawShot(
                                                 neighbour,
                                                 "/"
@@ -498,11 +513,16 @@ async function gameLoop() {
                                     let ySunk = neighbour[1];
                                     console.log(neighbour);
                                     computerGameboard.misses.push(neighbour);
-                                    if (xSunk < 11) {
-                                        computerGameboard.updateBoard([
-                                            [neighbour[0], neighbour[1], "/"],
-                                        ]);
-                                        if (neighbour.innerText !== "X") {
+                                    if (neighbour.innerText !== "X") {
+                                        if (xSunk < 11) {
+                                            computerGameboard.updateBoard([
+                                                [
+                                                    neighbour[0],
+                                                    neighbour[1],
+                                                    "/",
+                                                ],
+                                            ]);
+
                                             computerGrid.drawShot(
                                                 neighbour,
                                                 "/"
@@ -533,11 +553,16 @@ async function gameLoop() {
                                     let ySunk = neighbour[1];
                                     console.log(neighbour);
                                     computerGameboard.misses.push(neighbour);
-                                    if (xSunk < 11) {
-                                        computerGameboard.updateBoard([
-                                            [neighbour[0], neighbour[1], "/"],
-                                        ]);
-                                        if (neighbour.innerText !== "X") {
+                                    if (neighbour.innerText !== "X") {
+                                        if (xSunk < 11) {
+                                            computerGameboard.updateBoard([
+                                                [
+                                                    neighbour[0],
+                                                    neighbour[1],
+                                                    "/",
+                                                ],
+                                            ]);
+
                                             computerGrid.drawShot(
                                                 neighbour,
                                                 "/"
@@ -566,11 +591,16 @@ async function gameLoop() {
                                     let ySunk = neighbour[1];
                                     console.log(neighbour);
                                     computerGameboard.misses.push(neighbour);
-                                    if (xSunk < 11) {
-                                        computerGameboard.updateBoard([
-                                            [neighbour[0], neighbour[1], "/"],
-                                        ]);
-                                        if (neighbour.innerText !== "X") {
+                                    if (neighbour.innerText !== "X") {
+                                        if (xSunk < 11) {
+                                            computerGameboard.updateBoard([
+                                                [
+                                                    neighbour[0],
+                                                    neighbour[1],
+                                                    "/",
+                                                ],
+                                            ]);
+
                                             computerGrid.drawShot(
                                                 neighbour,
                                                 "/"
@@ -597,11 +627,12 @@ async function gameLoop() {
                                 let ySunk = neighbour[1];
                                 console.log(neighbour);
                                 computerGameboard.misses.push(neighbour);
-                                if (xSunk < 11) {
-                                    computerGameboard.updateBoard([
-                                        [neighbour[0], neighbour[1], "/"],
-                                    ]);
-                                    if (neighbour.innerText !== "X") {
+                                if (neighbour.innerText !== "X") {
+                                    if (xSunk < 11) {
+                                        computerGameboard.updateBoard([
+                                            [neighbour[0], neighbour[1], "/"],
+                                        ]);
+
                                         computerGrid.drawShot(neighbour, "/");
                                         console.log(computerGameboard.board);
                                     }
@@ -772,11 +803,12 @@ async function gameLoop() {
                                 let xSunk = neighbour[0];
                                 console.log(neighbour);
                                 playerGameboard.misses.push(neighbour);
-                                if (xSunk < 11) {
-                                    playerGameboard.updateBoard([
-                                        [neighbour[0], neighbour[1], "/"],
-                                    ]);
-                                    if (neighbour.innerText !== "X") {
+                                if (neighbour.innerText !== "X") {
+                                    if (xSunk < 11) {
+                                        playerGameboard.updateBoard([
+                                            [neighbour[0], neighbour[1], "/"],
+                                        ]);
+
                                         playerGrid.drawShot(neighbour, "/");
                                         console.log(playerGameboard.board);
                                     }
@@ -804,11 +836,12 @@ async function gameLoop() {
                                 let ySunk = neighbour[1];
                                 console.log(neighbour);
                                 playerGameboard.misses.push(neighbour);
-                                if (xSunk < 11) {
-                                    playerGameboard.updateBoard([
-                                        [neighbour[0], neighbour[1], "/"],
-                                    ]);
-                                    if (neighbour.innerText !== "X") {
+                                if (neighbour.innerText !== "X") {
+                                    if (xSunk < 11) {
+                                        playerGameboard.updateBoard([
+                                            [neighbour[0], neighbour[1], "/"],
+                                        ]);
+
                                         playerGrid.drawShot(neighbour, "/");
                                         console.log(playerGameboard.board);
                                     }
@@ -836,11 +869,12 @@ async function gameLoop() {
                                 let ySunk = neighbour[1];
                                 console.log(neighbour);
                                 playerGameboard.misses.push(neighbour);
-                                if (xSunk < 11) {
-                                    playerGameboard.updateBoard([
-                                        [neighbour[0], neighbour[1], "/"],
-                                    ]);
-                                    if (neighbour.innerText !== "X") {
+                                if (neighbour.innerText !== "X") {
+                                    if (xSunk < 11) {
+                                        playerGameboard.updateBoard([
+                                            [neighbour[0], neighbour[1], "/"],
+                                        ]);
+
                                         playerGrid.drawShot(neighbour, "/");
                                         console.log(playerGameboard.board);
                                     }
@@ -866,11 +900,12 @@ async function gameLoop() {
                                 let ySunk = neighbour[1];
                                 console.log(neighbour);
                                 playerGameboard.misses.push(neighbour);
-                                if (xSunk < 11) {
-                                    playerGameboard.updateBoard([
-                                        [neighbour[0], neighbour[1], "/"],
-                                    ]);
-                                    if (neighbour.innerText !== "X") {
+                                if (neighbour.innerText !== "X") {
+                                    if (xSunk < 11) {
+                                        playerGameboard.updateBoard([
+                                            [neighbour[0], neighbour[1], "/"],
+                                        ]);
+
                                         playerGrid.drawShot(neighbour, "/");
                                         console.log(playerGameboard.board);
                                     }
@@ -896,11 +931,12 @@ async function gameLoop() {
                                 let ySunk = neighbour[1];
                                 console.log(neighbour);
                                 playerGameboard.misses.push(neighbour);
-                                if (xSunk < 11) {
-                                    playerGameboard.updateBoard([
-                                        [neighbour[0], neighbour[1], "/"],
-                                    ]);
-                                    if (neighbour.innerText !== "X") {
+                                if (neighbour.innerText !== "X") {
+                                    if (xSunk < 11) {
+                                        playerGameboard.updateBoard([
+                                            [neighbour[0], neighbour[1], "/"],
+                                        ]);
+
                                         playerGrid.drawShot(neighbour, "/");
                                         console.log(playerGameboard.board);
                                     }
@@ -924,11 +960,12 @@ async function gameLoop() {
                                 let ySunk = neighbour[1];
                                 console.log(neighbour);
                                 playerGameboard.misses.push(neighbour);
-                                if (xSunk < 11) {
-                                    playerGameboard.updateBoard([
-                                        [neighbour[0], neighbour[1], "/"],
-                                    ]);
-                                    if (neighbour.innerText !== "X") {
+                                if (neighbour.innerText !== "X") {
+                                    if (xSunk < 11) {
+                                        playerGameboard.updateBoard([
+                                            [neighbour[0], neighbour[1], "/"],
+                                        ]);
+
                                         playerGrid.drawShot(neighbour, "/");
                                         console.log(playerGameboard.board);
                                     }
@@ -950,11 +987,12 @@ async function gameLoop() {
                             let ySunk = neighbour[1];
                             console.log(neighbour);
                             playerGameboard.misses.push(neighbour);
-                            if (xSunk < 11) {
-                                playerGameboard.updateBoard([
-                                    [neighbour[0], neighbour[1], "/"],
-                                ]);
-                                if (neighbour.innerText !== "X") {
+                            if (neighbour.innerText !== "X") {
+                                if (xSunk < 11) {
+                                    playerGameboard.updateBoard([
+                                        [neighbour[0], neighbour[1], "/"],
+                                    ]);
+
                                     playerGrid.drawShot(neighbour, "/");
                                     console.log(playerGameboard.board);
                                 }
