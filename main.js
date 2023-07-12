@@ -768,6 +768,7 @@ async function gameLoop() {
                     playerGrid.drawSunkShip(shipToHit.coords);
                     //TODO: identify neighbouring squares...
                     let firstCoord = shipToHit.coords[0]; //this is the first coord of the sunk ship - use this to work out our neighbour squares
+                    console.log(shipToHit.coords);
                     let secondCoord;
                     let orientation;
                     if (shipToHit.coords[1]) {
@@ -930,8 +931,13 @@ async function gameLoop() {
                                 let xSunk = neighbour[0];
                                 let ySunk = neighbour[1];
                                 console.log(neighbour);
-                                playerGameboard.misses.push(neighbour);
+                                const allGridCells = document.querySelectorAll(
+                                    `.${this.sqClass}`
+                                );
+
                                 if (neighbour.innerText !== "X") {
+                                    console.log(neighbour.innerText);
+                                    playerGameboard.misses.push(neighbour);
                                     if (xSunk < 11) {
                                         playerGameboard.updateBoard([
                                             [neighbour[0], neighbour[1], "/"],
@@ -1047,6 +1053,7 @@ async function gameLoop() {
                         "/",
                     ],
                 ]);
+
                 playerGrid.drawShot(computerPlayer.attackSq, "/");
 
                 //set computerTurn to false as the computerPlayer's turn is now over because they did not get a hit

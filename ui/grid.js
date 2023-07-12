@@ -172,6 +172,7 @@ export default class Grid {
                         if (cell.id === coord) {
                             cell.style =
                                 "background-color: rgba(217, 216, 226, 0.9);";
+
                             console.log(
                                 `just colored the grid cell with coord of ${cell.id} `
                             );
@@ -220,6 +221,7 @@ export default class Grid {
             sunkShipCoords.forEach((coord) => {
                 if (cell.id === coord) {
                     cell.style = "background-color: rgb(255, 71, 26);";
+                    cell.innerText = "X";
                     console.log(
                         `just colored the grid cell with coord of ${cell.id} `
                     );
