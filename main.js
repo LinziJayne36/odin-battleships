@@ -975,11 +975,13 @@ async function gameLoop() {
         }
     }
     restartBtnDisplay("add");
-    let restartBtn = document.getElementById("restartBtn");
+    /*let restartBtn = document.getElementById("restartBtn");
+    console.log(restartBtn)
     restartBtn.addEventListener("click", (ev) => {
         console.log("restartBtn event listener was just triggered");
         //TODO: write code to reset whole game
-    });
+        location.reload();
+    });*/
     console.log(
         `We just broke out of the main game while loop... isWon is testing ${game.isWon}`
     );
