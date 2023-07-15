@@ -766,22 +766,58 @@ async function gameLoop() {
                     shipType = shipToHit.stateType();
                     alert(shipType);
                     playerGrid.drawSunkShip(shipToHit.coords);
-                    //TODO: identify neighbouring squares...
-                    let firstCoord = shipToHit.coords[0]; //this is the first coord of the sunk ship - use this to work out our neighbour squares
+
+                    //identify neighbouring squares...
+
+                    //let orderedShipCoords = shipToHit.coords.reverse();
+                    function sortCoordinatesByGrid(arr) {
+                        // Create a copy of the array to avoid modifying the original one
+                        const sortedArray = [...arr];
+
+                        // Custom sorting function for coordinate pairs
+                        sortedArray.sort((a, b) => {
+                            // Compare the first element (X coordinate)
+                            if (a[0] !== b[0]) {
+                                return a[0] - b[0];
+                            }
+                            // If the X coordinates are the same, compare the second element (Y coordinate)
+                            return a[1] - b[1];
+                        });
+
+                        return sortedArray;
+                    }
+
+                    const sortedCoords = sortCoordinatesByGrid(
+                        shipToHit.coords
+                    );
+                    console.log(sortedCoords); // Output: [[10, 1], [10, 2], [10, 3]]
+
+                    // let firstCoord = reversedShipCoords[0]; //this fix did not work because although it fixes issue with horizontal 2 cell, it creates issues in others.
+                    let firstCoord = sortedCoords[0];
+                    //let firstCoord = shipToHit.coords[0]; //this is the first coord of the sunk ship - use this to work out our neighbour squares
                     console.log(shipToHit.coords);
                     let secondCoord;
                     let orientation;
-                    if (shipToHit.coords[1]) {
-                        secondCoord = shipToHit.coords[1];
+                    if (sortedCoords[1]) {
+                        secondCoord = sortedCoords[1];
                         if (firstCoord[0] === secondCoord[0]) {
                             orientation = "horizontal";
                         } else {
                             orientation = "vertical";
                         }
                     }
+                    /*if (shipToHit.coords[1]) {
+                        secondCoord = shipToHit.coords[1];
+                        if (firstCoord[0] === secondCoord[0]) {
+                            orientation = "horizontal";
+                        } else {
+                            orientation = "vertical";
+                        }
+                    }*/
 
                     let x = firstCoord[0];
                     let y = firstCoord[1];
+                    //
                     if (shipToHit.length === 4) {
                         if (orientation === "horizontal") {
                             //ie if our ship lies horizontally...
@@ -1013,7 +1049,36 @@ async function gameLoop() {
                                 computerGrid.drawShot(neighbour, "/");
                                 console.log(computerGameboard.board);
                             });*/
+                        //
                     }
+                    if (shipToHit.length === 1) {
+                        sunkNeighbours.push([x - 1, y]);
+                        sunkNeighbours.push([x - 1, y + 1]);
+                        sunkNeighbours.push([x, y + 1]);
+                        sunkNeighbours.push([x + 1, y + 1]);
+                        sunkNeighbours.push([x + 1, y]);
+                        sunkNeighbours.push([x + 1, y - 1]);
+                        sunkNeighbours.push([x, y - 1]);
+                        sunkNeighbours.push([x - 1, y - 1]);
+                        console.log(sunkNeighbours);
+                        sunkNeighbours.forEach((neighbour) => {
+                            let xSunk = neighbour[0];
+                            let ySunk = neighbour[1];
+                            console.log(neighbour);
+                            playerGameboard.misses.push(neighbour);
+                            if (neighbour.innerText !== "X") {
+                                if (xSunk < 11) {
+                                    playerGameboard.updateBoard([
+                                        [neighbour[0], neighbour[1], "/"],
+                                    ]);
+
+                                    playerGrid.drawShot(neighbour, "/");
+                                    console.log(playerGameboard.board);
+                                }
+                            }
+                        });
+                    }
+
                     console.log(shipType);
                     sunkMsg(`They sunk your ${shipType}!`, "add");
                     await new Promise((resolve) => setTimeout(resolve, 1700));
