@@ -91,7 +91,7 @@ export default class Grid {
                 parseInt(cell.dataset.row),
                 parseInt(cell.dataset.col),
             ];
-            //console.log(dataVals);
+            console.log(dataVals);
             //console.log(typeof dataVals);
             //console.log(enemyShot);
             //console.log(typeof enemyShot);
@@ -105,7 +105,7 @@ export default class Grid {
     }
 
     drawPositionedShips(positionsToDraw) {
-        alert("drawPositions just called on grid class");
+        //alert("drawPositions just called on grid class");
         console.log(positionsToDraw); //the positions successfully being passed into this method
 
         //Show position of the battleship

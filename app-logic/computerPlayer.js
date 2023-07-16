@@ -209,8 +209,17 @@ export default class ComputerPlayer {
                 allCells.push([y, x]);
             }
         }
+        let unusedCells = [];
+        let cellElem;
+        allCells.forEach((cell) => {
+            cellElem = document.getElementById(`${cell[0]},${cell[1]}`);
+            if (cellElem.innerText !== "X" && cellElem.innerText !== "/") {
+                unusedCells.push(cell);
+            }
+        });
 
-        const availableCells = allCells.filter((cell) => {
+        //TODO: Identify those cells which already have X or /  and exclude them from being added to available cells
+        const availableCells = unusedCells.filter((cell) => {
             for (let attackedCell of this.alreadyAttacked) {
                 if (
                     cell[0] === attackedCell[0] &&
@@ -223,7 +232,7 @@ export default class ComputerPlayer {
         });
         if (availableCells.length === 0) {
             // no available cells left, return null or throw an error
-            return "full"; //this should never happen once the computer chooses smartly and player chooses themselves
+            return "full"; //this should never happen once the computer chooses smartly
         }
         const randIndex = Math.floor(Math.random() * availableCells.length);
         const randCell = availableCells[randIndex];
