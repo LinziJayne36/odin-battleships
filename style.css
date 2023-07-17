@@ -1,11 +1,42 @@
 body {
     display: flex;
+    font-family: "Orbitron", sans-serif;
+    background-color: rgb(11, 6, 85);
+    color: rgb(245, 245, 245);
 }
 
 #app {
+    display: flex;
+    flex-direction: column;
     max-width: 680px;
-    max-height: 980px;
     margin: 0 auto;
+}
+
+#title {
+    font-weight: 600;
+    margin-top: 3em;
+    font-size: 6em;
+}
+
+#startButton {
+    display: flex;
+    text-align: center;
+    margin: 0 auto;
+    cursor: pointer;
+    background-color: transparent;
+    border-color: rgb(245, 245, 245);
+    border-width: 1.5px;
+    border-radius: 5px;
+    color: rgb(245, 245, 245);
+    padding: 1em 2em;
+    font-size: 2.5em;
+}
+
+#randomBtn,
+#orientationBtn {
+    margin: 0 auto 1em auto;
+    width: 30%;
+    cursor: pointer;
 }
 
 .computerGrid,
@@ -17,6 +48,13 @@ body {
     margin: auto;
     height: 500px;
     width: 500px;
+    color: #000000;
+    font-size: 2em;
+}
+
+.playerGrid {
+    margin-top: 3em;
+    margin-bottom: 3em;
 }
 
 .playerSquares,
@@ -143,4 +181,9 @@ body {
 
 .destroyer {
     width: 47px;
+}
+
+.userMsg {
+    margin: 1em 0;
+    font-size: 1.5em;
 }
