@@ -1,10 +1,8 @@
-/*export function handlingGridClicks(row, col) {
-    console.log(`grid cell ${row}, ${col} was clicked`);
-}*/
+import { playSound } from "../ui/uiSounds/playSound";
 
 export const getPlayerAttackInput = (cellClass) => {
     //ie. 'playerSquares' or 'computerSquares'
-    //where cellClass tells us which player'g grid we are attaching the event listeners to...
+    //where cellClass tells us which player's grid we are attaching the event listeners to...
     return new Promise((resolve) => {
         const squares = document.querySelectorAll(`.${cellClass}`);
         let inputCoord;
@@ -13,6 +11,9 @@ export const getPlayerAttackInput = (cellClass) => {
                 const row = parseInt(event.target.dataset.row);
                 const col = parseInt(event.target.dataset.col);
                 inputCoord = [row, col];
+                if (square.innerText === "/" || square.innerText === "X") {
+                    playSound("disallowed");
+                }
                 squares.forEach((square) =>
                     square.removeEventListener("click", () => {})
                 );

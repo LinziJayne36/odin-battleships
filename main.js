@@ -20,7 +20,8 @@ import { userMsg } from "./ui/userMsg";
 import { gameOverMsg } from "./ui/gameOver";
 import { sunkMsg } from "./ui/sunk";
 import { restartBtnDisplay } from "./ui/restart";
-import { playFireShotSound } from "./ui/uiSounds/playFireShotSound";
+import { playSound } from "./ui/uiSounds/playSound";
+import { playMusic } from "./ui/uiSounds/playMusic";
 //import { handlingGridClicks } from "./dom-interactions/domInteraction";
 import Ship from "./app-logic/ship";
 let computerTurn = {
@@ -30,6 +31,7 @@ let computerTurn = {
 let orientationBtnLabel = "vertical";
 gameTitleDisplay("add");
 startBtnDisplay("add");
+playMusic("start");
 const playerFleetUI = new PlayerFleet();
 async function gameLoop() {
     //checkGame function
@@ -53,7 +55,13 @@ async function gameLoop() {
 
             console.log("GAME OVER");
             console.log(`${game.whoWon} WINS!`);
-            alert(`${game.whoWon} WINS!`);
+            //alert(`${game.whoWon} WINS!`);
+            if (game.whoWon === "COMPUTER") {
+                playSound("lose");
+            } else if (game.whoWon === "PLAYER") {
+                //play win sound
+                playSound("win");
+            }
             gameOverMsg(`GAME OVER! ${game.whoWon} WINS!`, "add");
         } else if (
             playerGameboard.shipsLeft < 10 ||
@@ -75,6 +83,7 @@ async function gameLoop() {
     console.log("gameLoop was called");
     startBtnDisplay("remove");
     gameTitleDisplay("remove");
+    playMusic("stop");
     let validMove = false;
     const game = new Game();
     const player = new Player();
@@ -261,7 +270,7 @@ async function gameLoop() {
     computerGameboard.placeShips(computerPlayer.selectedPositions);
     console.log(computerGameboard.board);
     console.log(playerGameboard.ships);
-
+    playSound("start");
     //enter the actual loop
     while (game.isWon === false) {
         // validMove = false;
@@ -320,7 +329,7 @@ async function gameLoop() {
                         "next is the Player's attack square that has been deemed a hit - immediately before an X is placed in the board"
                     );
                     //PLAY HIT SOUND...
-                    playFireShotSound("hit");
+                    playSound("hit");
                     console.log(player.attackSq);
                     computerGameboard.updateBoard([
                         [player.attackSq[0], player.attackSq[1], "X"],
@@ -594,7 +603,7 @@ async function gameLoop() {
                         }
 
                         //you sunk their ship
-                        playFireShotSound("sunk");
+                        playSound("sunk");
                         sunkMsg(`You sunk their ${shipType}!`, "add");
                         await new Promise((resolve) =>
                             setTimeout(resolve, 1700)
@@ -619,7 +628,7 @@ async function gameLoop() {
                     );
                     console.log(player.attackSq);
                     //PLAY MISS SOUND
-                    playFireShotSound("miss");
+                    playSound("miss");
                     //update computerGameboard.misses with coord of missed shot
                     computerGameboard.misses.push(player.attackSq);
 
@@ -673,7 +682,7 @@ async function gameLoop() {
                     "Next is the computerPlayer's attack square that hit the player's board - immediately before an X is placed on the players board"
                 );
                 console.log(computerPlayer.attackSq);
-                playFireShotSound("hit");
+                playSound("hit");
                 //update the player's gameboard board porperty with the coordinated of the computerPlayer's successful hit
                 playerGameboard.updateBoard([
                     [
@@ -1018,7 +1027,7 @@ async function gameLoop() {
                     }
 
                     console.log(shipType);
-                    playFireShotSound("sunk");
+                    playSound("sunk");
                     sunkMsg(`They sunk your ${shipType}!`, "add");
                     await new Promise((resolve) => setTimeout(resolve, 1700));
                     sunkMsg("", "remove");
@@ -1043,7 +1052,7 @@ async function gameLoop() {
                     "next is the computerPlayer's attack square that has been deemed a miss on enemy board - immediately before / is marked on their board"
                 );
                 console.log(computerPlayer.attackSq);
-                playFireShotSound("miss");
+                playSound("miss");
                 //update playerGameboard.misses with coord of missed shot
                 playerGameboard.misses.push(computerPlayer.attackSq);
                 console.log(
