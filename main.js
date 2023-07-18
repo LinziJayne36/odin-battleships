@@ -20,6 +20,7 @@ import { userMsg } from "./ui/userMsg";
 import { gameOverMsg } from "./ui/gameOver";
 import { sunkMsg } from "./ui/sunk";
 import { restartBtnDisplay } from "./ui/restart";
+import { playFireShotSound } from "./ui/uiSounds/playFireShotSound";
 //import { handlingGridClicks } from "./dom-interactions/domInteraction";
 import Ship from "./app-logic/ship";
 let computerTurn = {
@@ -286,6 +287,8 @@ async function gameLoop() {
                 console.log(selectedSquare);
                 //now, must set the attackSq property of player on player obj
                 player.attackSq = selectedSquare;
+                //PLAY SHOT FIRED SOUND - will wait and play appropriate hit/miss/sunk sound depending on shot outcome
+                //playFireShotSound("hit");
                 //player.calcAttackSq();
 
                 console.log("New attack square calculated by player object");
@@ -316,6 +319,8 @@ async function gameLoop() {
                     console.log(
                         "next is the Player's attack square that has been deemed a hit - immediately before an X is placed in the board"
                     );
+                    //PLAY HIT SOUND...
+                    playFireShotSound("hit");
                     console.log(player.attackSq);
                     computerGameboard.updateBoard([
                         [player.attackSq[0], player.attackSq[1], "X"],
@@ -589,6 +594,7 @@ async function gameLoop() {
                         }
 
                         //you sunk their ship
+                        playFireShotSound("sunk");
                         sunkMsg(`You sunk their ${shipType}!`, "add");
                         await new Promise((resolve) =>
                             setTimeout(resolve, 1700)
@@ -612,6 +618,8 @@ async function gameLoop() {
                         "next is the player's attack square that has been deemed a miss on enemy board- immediately before an / is placed in the board"
                     );
                     console.log(player.attackSq);
+                    //PLAY MISS SOUND
+                    playFireShotSound("miss");
                     //update computerGameboard.misses with coord of missed shot
                     computerGameboard.misses.push(player.attackSq);
 
@@ -665,6 +673,7 @@ async function gameLoop() {
                     "Next is the computerPlayer's attack square that hit the player's board - immediately before an X is placed on the players board"
                 );
                 console.log(computerPlayer.attackSq);
+                playFireShotSound("hit");
                 //update the player's gameboard board porperty with the coordinated of the computerPlayer's successful hit
                 playerGameboard.updateBoard([
                     [
@@ -1009,6 +1018,7 @@ async function gameLoop() {
                     }
 
                     console.log(shipType);
+                    playFireShotSound("sunk");
                     sunkMsg(`They sunk your ${shipType}!`, "add");
                     await new Promise((resolve) => setTimeout(resolve, 1700));
                     sunkMsg("", "remove");
@@ -1033,6 +1043,7 @@ async function gameLoop() {
                     "next is the computerPlayer's attack square that has been deemed a miss on enemy board - immediately before / is marked on their board"
                 );
                 console.log(computerPlayer.attackSq);
+                playFireShotSound("miss");
                 //update playerGameboard.misses with coord of missed shot
                 playerGameboard.misses.push(computerPlayer.attackSq);
                 console.log(
