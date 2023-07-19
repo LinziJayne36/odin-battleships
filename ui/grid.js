@@ -63,7 +63,7 @@ export default class Grid {
                 cellDiv.setAttribute("ondragover", allowDrop); */
                 gridContainer.setAttribute(
                     "style",
-                    "border-right: solid; border-bottom: solid;border-width: 0.5px;"
+                    "border: solid; border-bottom: solid;border-width: 0.5px;"
                 );
                 gridContainer.appendChild(cellDiv);
             }
@@ -220,7 +220,7 @@ export default class Grid {
         allGridCells.forEach((cell) => {
             sunkShipCoords.forEach((coord) => {
                 if (cell.id === coord) {
-                    cell.style = "background-color: rgb(255, 71, 26);";
+                    cell.style = "background-color: rgba(172, 17, 53, 0.87);";
                     cell.innerText = "X";
                     console.log(
                         `just colored the grid cell with coord of ${cell.id} `

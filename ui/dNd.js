@@ -19,6 +19,8 @@ import { orientationBtnLabel } from "../main";
 
 export function drag(event) {
     console.log("drag event fired");
+    const randomDisable = document.getElementById("randomBtn");
+    randomDisable.style = "display: none;";
     console.log(event.target.id);
 
     event.dataTransfer.setData("text", event.target.id);
@@ -140,7 +142,7 @@ export function drop(event) {
                 strNeighbour = `${neighbour[0]},${neighbour[1]}`;
                 console.log(strNeighbour);
                 if (cell.id === strNeighbour) {
-                    cell.style = "background-color: rgba(149, 149, 156, 0.9);";
+                    cell.style = "background-color: rgba(149, 149, 156, 0.6);";
 
                     //const adjacentElem = document.createElement("div");
                     //cell.appendChild(adjacentElem);

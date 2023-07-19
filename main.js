@@ -21,7 +21,7 @@ import { gameOverMsg } from "./ui/gameOver";
 import { sunkMsg } from "./ui/sunk";
 import { restartBtnDisplay } from "./ui/restart";
 import { playSound } from "./ui/uiSounds/playSound";
-import { playMusic } from "./ui/uiSounds/playMusic";
+
 //import { handlingGridClicks } from "./dom-interactions/domInteraction";
 import Ship from "./app-logic/ship";
 let computerTurn = {
@@ -31,7 +31,7 @@ let computerTurn = {
 let orientationBtnLabel = "vertical";
 gameTitleDisplay("add");
 startBtnDisplay("add");
-playMusic("start");
+
 const playerFleetUI = new PlayerFleet();
 async function gameLoop() {
     //checkGame function
@@ -83,7 +83,7 @@ async function gameLoop() {
     console.log("gameLoop was called");
     startBtnDisplay("remove");
     gameTitleDisplay("remove");
-    playMusic("stop");
+
     let validMove = false;
     const game = new Game();
     const player = new Player();

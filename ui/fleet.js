@@ -134,7 +134,6 @@ export default class PlayerFleet {
             let cellsq = e.target.id;
             console.log(cellsq);
             cruiser.dataset.clicked = cellsq;
-            // e.target.id.dataset.cellsquare = e.target.id;
         });
         cruiser.addEventListener("dragstart", drag);
         cruiser.addEventListener("dragend", dragEnd);
@@ -152,7 +151,6 @@ export default class PlayerFleet {
             let cellsq = e.target.id;
             console.log(cellsq);
             sub.dataset.clicked = cellsq;
-            // e.target.id.dataset.cellsquare = e.target.id;
         });
 
         //Adds the created elements
@@ -200,36 +198,9 @@ export default class PlayerFleet {
             let cellsq = e.target.id;
             console.log(cellsq);
             destroyer.dataset.clicked = cellsq;
-            // e.target.id.dataset.cellsquare = e.target.id;
         });
 
         destroyer.addEventListener("dragstart", drag);
         destroyer.addEventListener("dragend", dragEnd);
     }
-    /*
-    removeLastBattleship() {
-        const battleship = document.querySelector(".battleship");
-        battleship.removeChild(battleshipCell1);
-        battleship.removeChild(battleshipCell2);
-        battleship.removeChild(battleshipCell3);
-        battleship.removeChild(battleshipCell4);
-    }
-
-    removeLastCruiser() {
-        const cruiser = document.querySelector(".cruiser");
-        cruiser.removeChild(cruiserCell1);
-        cruiser.removeChild(cruiserCell2);
-        cruiser.removeChild(cruiserCell3);
-    }
-
-    removeLastSub() {
-        const sub = docoment.querySelector(".sub");
-        sub.removeChild(subCell1);
-        sub.removeChild(subCell2);
-    }
-
-    removeLastDestroyer() {
-        const destroyer = document.querySelector(".destroyer");
-        destroyer.removeChild(destroyerCell1);
-    }*/
 }
