@@ -23,27 +23,25 @@ body {
     text-align: center;
     margin: 0 auto;
     cursor: pointer;
-    background-color: transparent;
-    border-color: rgb(245, 245, 245);
-    border-width: 3.5px;
-    border-radius: 5px;
-    color: rgb(245, 245, 245);
-    padding: 1em 2em;
-    font-size: 2.5em;
+    background-image: radial-gradient(#ffb800, #ff8f0c);
+    border-color: #ff8f0c;
+    border-radius: 50px;
+    color: rgb(66, 31, 2);
+    padding: 0.85em 2.25em;
+    font-size: 2em;
+    font-weight: 600;
 }
 
 #randomBtn,
 #orientationBtn {
     margin: 0 auto 1em auto;
-
+    background-image: radial-gradient(#ffb800, #ff8f0c);
+    border-color: #ff8f0c;
+    color: rgb(66, 31, 2);
     cursor: pointer;
-    background-color: transparent;
-    color: rgb(245, 245, 245);
     border-style: solid;
-    border-width: 2.5px;
-    border-color: rgb(245, 245, 245);
     padding: 0.5em 0.75em;
-    border-radius: 6px;
+    border-radius: 60px;
 }
 
 #orientationBtn {
@@ -62,6 +60,7 @@ body {
     color: #000000;
     font-size: 2.25em;
     font-weight: 600;
+    box-shadow: 0px 0px 20px 8px #d8e7f5;
 }
 
 .playerGrid {
@@ -72,6 +71,7 @@ body {
 .playerPlacementGrid {
     margin-top: 10%;
     margin-bottom: 2em;
+    box-shadow: 0px 0px 62px 25px #d8e7f5;
 }
 
 .playerSquares,
@@ -100,6 +100,19 @@ body {
 
 .typeWrapper {
     display: flex;
+    margin-bottom: 3px;
+    margin-right: 3px;
+}
+
+#battleshipWrapper,
+#cruiserWrapper {
+    margin-bottom: 4px;
+    margin-right: 4px;
+}
+
+#battleshipWrapper {
+    margin-bottom: 6px;
+    margin-right: 6px;
 }
 
 .typeWrapper.vertical {
@@ -211,14 +224,18 @@ body {
         font-size: 4em;
     }
     #startButton {
-        padding: 1em 1.5em;
-        font-size: 1.5em;
+        padding: 0.5em 2em;
+        font-size: 1em;
     }
 }
 
-@media screen and (max-width: 680px) {
+@media screen and (max-width: 768px) {
     #title {
         font-size: 3em;
+    }
+    #startButton {
+        padding: 0.25em 1.75em;
+        font-size: 1em;
     }
 }
 
@@ -257,7 +274,7 @@ body {
     }
 }
 
-@media screen and (max-height: 1000px) {
+@media screen and (max-height: 1024px) {
     .playerGrid {
         margin-top: 0.25em;
         margin-bottom: 0.25em;
@@ -273,78 +290,5 @@ body {
     .sunkMsg {
         margin-top: 0.5em;
         font-size: 1em;
-    } /*
-    .battleship,
-    .cruiser,
-    .sub,
-    .destroyer {
-        height: 25px;
     }
-
-    .battleship {
-        width: 104px;
-    }
-
-    .battleship.vertical {
-        width: 25px;
-        height: 104px;
-        flex-direction: column;
-    }
-
-    .cruiser {
-        width: 74px;
-        display: flex;
-    }
-
-    .cruiser.vertical {
-        width: 25px;
-        height: 74px;
-        flex-direction: column;
-    }
-
-    .cruiserCell {
-        width: 33.3%;
-    }
-
-    .destroyerCell {
-        width: 100%;
-    }
-
-    .subCell {
-        width: 50%;
-    }
-
-    .subCell.vertical {
-        height: 50%;
-        width: 100%;
-    }
-
-    .battleshipCell {
-        width: 25%;
-    }
-
-    .battleshipCell.vertical {
-        height: 25%;
-        width: 100%;
-    }
-
-    .cruiserCell.vertical {
-        height: 33.3%;
-        width: 100%;
-    }
-
-    .sub {
-        width: 54px;
-    }
-
-    .sub.vertical {
-        height: 54px;
-        width: 25px;
-        flex-direction: column;
-    }
-
-    .destroyer {
-        width: 25px;
-    }
-    */
 }
