@@ -28,6 +28,10 @@ let computerTurn = {
     val: false,
 };
 
+//smart state for computer player
+let lastHit = [];
+let possTargets = [];
+
 let orientationBtnLabel = "vertical";
 gameTitleDisplay("add");
 startBtnDisplay("add");
@@ -653,9 +657,12 @@ async function gameLoop() {
             userMsg("It's the computer's turn...", "add");
             // Wait for 3 seconds before calculating computer's move... ... ...
             await new Promise((resolve) => setTimeout(resolve, 1800));
-            //Take the COMPUTER'S TURN turn --------------------------------------------------------------------
-
-            computerPlayer.calcAttackSq();
+            //Take the COMPUTER'S TURN ----------------------------------------------------------------------------------------------------------
+            if (possTargets.length > 0) {
+                computerPlayer.calcAttackSq(possTargets);
+            } else {
+                computerPlayer.calcAttackSq();
+            }
 
             console.log(
                 "next is a log of the result from running computerPlayer.calcAttackSq() to get the computer's move..."
@@ -682,6 +689,37 @@ async function gameLoop() {
                     "Next is the computerPlayer's attack square that hit the player's board - immediately before an X is placed on the players board"
                 );
                 console.log(computerPlayer.attackSq);
+                console.log(attackedElem);
+                lastHit.push(computerPlayer.attackSq);
+                console.log(lastHit);
+                //TODO: figure out the possible active neighbour squares based on contents of lastHit array and push to possTargets array
+                if (lastHit.length === 1) {
+                    let x = lastHit[0][0];
+                    let y = lastHit[0][1];
+                    console.log(x);
+                    console.log(y);
+
+                    if (x - 1 < 11 && y < 11 && x - 1 > 0 && y > 0) {
+                        possTargets.push([x - 1, y]);
+                    }
+
+                    if (x < 11 && y + 1 < 11 && x > 0 && y + 1 > 0) {
+                        possTargets.push([x, y + 1]);
+                    }
+
+                    if (x + 1 < 11 && y < 11 && x + 1 > 0 && y > 0) {
+                        possTargets.push([x + 1, y]);
+                    }
+
+                    if (x < 11 && y - 1 < 11 && x > 0 && y - 1 > 0) {
+                        possTargets.push([x, y - 1]);
+                    }
+
+                    console.log(possTargets);
+                } //TODO: else if lastHit.length === 2 || lastHit.length === 3
+                //work out try squares for when multiple hits are recorded in lastHit array
+                //will need to account for orientation
+
                 playSound("hit");
                 //update the player's gameboard board porperty with the coordinated of the computerPlayer's successful hit
                 playerGameboard.updateBoard([
@@ -723,7 +761,10 @@ async function gameLoop() {
                     shipType = shipToHit.stateType();
                     //alert(shipType);
                     playerGrid.drawSunkShip(shipToHit.coords);
-
+                    //Empty lastHit array...
+                    lastHit = [];
+                    possTargets = [];
+                    computerPlayer.targetPositions = null;
                     //identify neighbouring squares...
 
                     //let orderedShipCoords = shipToHit.coords.reverse();

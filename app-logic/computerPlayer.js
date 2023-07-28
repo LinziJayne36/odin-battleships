@@ -3,6 +3,7 @@ export default class ComputerPlayer {
         this._attackSq = null;
         this._selectedPositions = null;
         this.alreadyAttacked = [];
+        this.targetPositions = null;
     }
     get selectedPositions() {
         return this._selectedPositions;
@@ -202,41 +203,96 @@ export default class ComputerPlayer {
         this._selectedPositions = selectedPositions;
     }
 
-    calcAttackSq() {
-        let allCells = [];
-        for (let y = 1; y <= 10; y++) {
-            for (let x = 1; x <= 10; x++) {
-                allCells.push([y, x]);
-            }
-        }
-        let unusedCells = [];
-        let cellElem;
-        allCells.forEach((cell) => {
-            cellElem = document.getElementById(`${cell[0]},${cell[1]}`);
-            if (cellElem.innerText !== "X" && cellElem.innerText !== "/") {
-                unusedCells.push(cell);
-            }
-        });
+    calcAttackSq(targets) {
+        if (targets) {
+            //TODO: choose from these coords
+            console.log(targets);
+            let unusedCells = [];
+            let cellElem;
+            this.targetPositions = targets;
 
-        //TODO: Identify those cells which already have X or /  and exclude them from being added to available cells
-        const availableCells = unusedCells.filter((cell) => {
-            for (let attackedCell of this.alreadyAttacked) {
-                if (
-                    cell[0] === attackedCell[0] &&
-                    cell[1] === attackedCell[1]
-                ) {
-                    return false;
+            targets.forEach((cell) => {
+                cellElem = document.getElementById(`${cell[0]},${cell[1]}`);
+                if (cellElem.innerText !== "X" && cellElem.innerText !== "/") {
+                    unusedCells.push(cell);
+                }
+            });
+            console.log(unusedCells);
+            //Identify those cells which already have X or /  and exclude them from being added to available cells
+            const availableCells = unusedCells.filter((cell) => {
+                for (let attackedCell of this.alreadyAttacked) {
+                    if (cell === attackedCell && cell === attackedCell) {
+                        return false;
+                    }
+                }
+                return true;
+            });
+            console.log(availableCells);
+            if (availableCells.length === 0) {
+                // no available cells left, return null or throw an error
+                return "full"; //this should never happen once the computer chooses smartly
+            }
+            let tryNext = availableCells.length - 1; //index num of cell to try next
+            console.log(typeof tryNext);
+            let nextCell = availableCells[tryNext];
+            console.log(typeof nextCell);
+            this._attackSq = nextCell;
+            this.alreadyAttacked.push(nextCell);
+            //targets.pop();
+            console.log(nextCell);
+            console.log(this._attackSq);
+            console.log(this.targetPositions); //ERROR: Not showing all possible target positions...
+            // const randIndex = Math.floor(Math.random() * availableCells.length);
+            // const randCell = availableCells[randIndex];
+            // this._attackSq = randCell;
+            // this.alreadyAttacked.push(randCell);
+        }
+        if (!targets || this.targetPositions === null) {
+            //and if there was no arg supplied to this method, do this instead........................................................................
+            let allCells = [];
+            for (let y = 1; y <= 10; y++) {
+                for (let x = 1; x <= 10; x++) {
+                    allCells.push([y, x]);
                 }
             }
-            return true;
-        });
-        if (availableCells.length === 0) {
-            // no available cells left, return null or throw an error
-            return "full"; //this should never happen once the computer chooses smartly
+            let unusedCells = [];
+            let cellElem;
+            console.log(allCells);
+            allCells.forEach((cell) => {
+                cellElem = document.getElementById(`${cell[0]},${cell[1]}`);
+                if (cellElem.innerText !== "X" && cellElem.innerText !== "/") {
+                    unusedCells.push(cell);
+                }
+            });
+
+            //Identify those cells which already have X or /  and exclude them from being added to available cells
+            const availableCells = unusedCells.filter((cell) => {
+                console.log(cell);
+                for (let attackedCell of this.alreadyAttacked) {
+                    if (cell === attackedCell && cell === attackedCell) {
+                        return false;
+                    }
+                }
+
+                /*for (let attackedCell of this.alreadyAttacked) {
+                    if (
+                        cell[0] === attackedCell[0] &&
+                        cell[1] === attackedCell[1]
+                    ) {
+                        return false;
+                    }
+                } */
+
+                return true;
+            });
+            if (availableCells.length === 0) {
+                // no available cells left, return null or throw an error
+                return "full"; //this should never happen once the computer chooses smartly
+            }
+            const randIndex = Math.floor(Math.random() * availableCells.length);
+            const randCell = availableCells[randIndex];
+            this._attackSq = randCell;
+            this.alreadyAttacked.push(randCell);
         }
-        const randIndex = Math.floor(Math.random() * availableCells.length);
-        const randCell = availableCells[randIndex];
-        this._attackSq = randCell;
-        this.alreadyAttacked.push(randCell);
     }
 }
