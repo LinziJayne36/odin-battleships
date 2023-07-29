@@ -692,13 +692,16 @@ async function gameLoop() {
                 console.log(attackedElem);
                 lastHit.push(computerPlayer.attackSq);
                 console.log(lastHit);
-                //TODO: figure out the possible active neighbour squares based on contents of lastHit array and push to possTargets array
+                //figure out the possible active neighbour squares based on contents of lastHit array and push to possTargets array
                 if (lastHit.length === 1) {
+                    // When a single hit is recorded in lastHit array
                     let x = lastHit[0][0];
                     let y = lastHit[0][1];
                     console.log(x);
                     console.log(y);
-
+                    possTargets = [];
+                    //working out the potential target squares neighbouring the hit cell -
+                    //only pushing them to possTargets if they are within bounds of board
                     if (x - 1 < 11 && y < 11 && x - 1 > 0 && y > 0) {
                         possTargets.push([x - 1, y]);
                     }
@@ -716,10 +719,155 @@ async function gameLoop() {
                     }
 
                     console.log(possTargets);
-                } //TODO: else if lastHit.length === 2 || lastHit.length === 3
-                //work out try squares for when multiple hits are recorded in lastHit array
-                //will need to account for orientation
+                } else if (lastHit.length === 2) {
+                    // When 2 hits are recorded in lastHit array
 
+                    // setting x and y variables for the first cell in lastHit array...
+                    let xCell1 = lastHit[0][0];
+                    let yCell1 = lastHit[0][1];
+
+                    // setting x and y variables for the second cell in lastHit array...
+                    let xCell2 = lastHit[1][0];
+                    let yCell2 = lastHit[1][1];
+
+                    console.log(xCell1);
+                    console.log(yCell1);
+                    console.log(xCell2);
+                    console.log(yCell2);
+
+                    // determine orientation of the ship taking repeated hits and record in orientation variable
+                    let orientation;
+                    if (xCell1 === xCell2) {
+                        orientation = "horizontal";
+                    } else if (yCell1 === yCell2) {
+                        orientation = "vertical";
+                    }
+
+                    if (orientation === "horizontal") {
+                        //TODO: Write code for working out try squares when multiple hits are recorded in lastHit array and we know the ship
+                        // to which they belong lies horizontally
+                        // then push to possTargets array
+                        possTargets = [];
+                        if (
+                            xCell1 + 1 < 11 &&
+                            yCell1 + 1 < 11 &&
+                            xCell1 + 1 > 0 &&
+                            yCell1 + 1 > 0 &&
+                            xCell2 + 1 < 11 &&
+                            yCell2 + 1 < 11 &&
+                            xCell2 + 1 > 0 &&
+                            yCell2 + 1 > 0
+                        ) {
+                            possTargets.push([xCell1, yCell1 - 1]);
+                            //possTargets.push([xCell2, yCell2 + 1]);
+                        }
+                        if (
+                            xCell1 + 1 < 11 &&
+                            yCell1 + 1 < 11 &&
+                            xCell1 + 1 > 0 &&
+                            yCell1 + 1 > 0 &&
+                            xCell2 + 1 < 11 &&
+                            yCell2 + 1 < 11 &&
+                            xCell2 + 1 > 0 &&
+                            yCell2 + 1 > 0
+                        ) {
+                            //possTargets.push([xCell1, yCell1 - 1]);
+                            possTargets.push([xCell2, yCell2 + 1]);
+                        }
+                    } else if (orientation === "vertical") {
+                        //TODO: Write code for working out try squares when multiple hits are recorded in lastHit array and we know the ship
+                        // to which they belong vertically
+                        // then push to possTargets array
+                        possTargets = [];
+                        if (
+                            xCell1 + 1 < 11 &&
+                            yCell1 + 1 < 11 &&
+                            xCell1 + 1 > 0 &&
+                            yCell1 + 1 > 0 &&
+                            xCell2 + 1 < 11 &&
+                            yCell2 + 1 < 11 &&
+                            xCell2 + 1 > 0 &&
+                            yCell2 + 1 > 0
+                        ) {
+                            possTargets.push([xCell1 - 1, yCell1]);
+                            //possTargets.push([xCell2 + 1, yCell2]);
+                        }
+                        if (
+                            xCell1 + 1 < 11 &&
+                            yCell1 + 1 < 11 &&
+                            xCell1 + 1 > 0 &&
+                            yCell1 + 1 > 0 &&
+                            xCell2 + 1 < 11 &&
+                            yCell2 + 1 < 11 &&
+                            xCell2 + 1 > 0 &&
+                            yCell2 + 1 > 0
+                        ) {
+                            //possTargets.push([xCell1 - 1, yCell1]);
+                            possTargets.push([xCell2 + 1, yCell2]);
+                        }
+                    }
+                } else if (lastHit.length === 3) {
+                    // When 3 hits are recorded in lastHit array
+                    let xCell1 = lastHit[0][0];
+                    let yCell1 = lastHit[0][1];
+                    let xCell2 = lastHit[1][0];
+                    let yCell2 = lastHit[1][1];
+                    let xCell3 = lastHit[2][0];
+                    let yCell3 = lastHit[2][1];
+                    console.log(xCell1);
+                    console.log(yCell1);
+                    console.log(xCell2);
+                    console.log(yCell2);
+                    console.log(xCell3);
+                    console.log(yCell3);
+                    let orientation;
+                    //We will still only need to compare two consecutive cells from lastHit array to determine orientation
+                    if (xCell1 === xCell2) {
+                        orientation = "horizontal";
+                    } else if (yCell1 === yCell2) {
+                        orientation = "vertical";
+                    }
+                    if (orientation === "horizontal") {
+                        if (
+                            xCell1 < 11 &&
+                            yCell1 < 11 &&
+                            xCell1 > 0 &&
+                            yCell1 > 0 &&
+                            xCell2 < 11 &&
+                            yCell2 < 11 &&
+                            xCell2 > 0 &&
+                            yCell2 > 0 &&
+                            xCell3 < 11 &&
+                            yCell3 < 11 &&
+                            xCell3 > 0 &&
+                            yCell3 > 0
+                        ) {
+                            possTargets = [];
+                            possTargets.push([xCell1, yCell1 - 1]);
+                            possTargets.push([xCell3, yCell3 + 1]);
+                        }
+                    } else if (orientation === "vertical") {
+                        if (
+                            xCell1 < 11 &&
+                            yCell1 < 11 &&
+                            xCell1 > 0 &&
+                            yCell1 > 0 &&
+                            xCell2 < 11 &&
+                            yCell2 < 11 &&
+                            xCell2 > 0 &&
+                            yCell2 > 0 &&
+                            xCell3 < 11 &&
+                            yCell3 < 11 &&
+                            xCell3 > 0 &&
+                            yCell3 > 0
+                        ) {
+                            possTargets = [];
+                            possTargets.push([xCell1 - 1, yCell1]);
+                            possTargets.push([xCell3 + 1, yCell3]);
+                        }
+                    }
+                }
+                console.log(possTargets);
                 playSound("hit");
                 //update the player's gameboard board porperty with the coordinated of the computerPlayer's successful hit
                 playerGameboard.updateBoard([

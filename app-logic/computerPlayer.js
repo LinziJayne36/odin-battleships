@@ -206,6 +206,7 @@ export default class ComputerPlayer {
     calcAttackSq(targets) {
         if (targets) {
             //TODO: choose from these coords
+
             console.log(targets);
             let unusedCells = [];
             let cellElem;
@@ -242,12 +243,11 @@ export default class ComputerPlayer {
             console.log(nextCell);
             console.log(this._attackSq);
             console.log(this.targetPositions); //ERROR: Not showing all possible target positions...
-            // const randIndex = Math.floor(Math.random() * availableCells.length);
-            // const randCell = availableCells[randIndex];
-            // this._attackSq = randCell;
-            // this.alreadyAttacked.push(randCell);
+            //targets = [];
+            this.targetPositions = null;
         }
-        if (!targets || this.targetPositions === null) {
+        if (!targets) {
+            // removed this: || this.targetPositions === null)
             //and if there was no arg supplied to this method, do this instead........................................................................
             let allCells = [];
             for (let y = 1; y <= 10; y++) {
