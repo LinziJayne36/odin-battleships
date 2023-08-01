@@ -107,4 +107,6 @@ export const getRandomShipPlacements = () => {
     }
 
     player._selectedPositions = selectedPositions;
+    const removeBtn = document.getElementById("removeBtn");
+    //removeBtn.removeEventListener("click", handleRandomBtnClick);
 };

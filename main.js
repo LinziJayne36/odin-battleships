@@ -201,9 +201,10 @@ async function gameLoop() {
                 console.log(playerGameboard.board);
                 randomPlacementSelected = true;
                 console.log(randomPlacementSelected);
+                randomBtnDisplay("remove");
                 //TODO: promise timeout for ship positions to be displayed a while... ...
                 await new Promise((resolve) => setTimeout(resolve, 1700));
-                randomBtnDisplay("remove");
+
                 orientationBtnDisplay("remove");
                 const appWrapper = document.getElementById("app");
                 const placementGrid = document.querySelector(
@@ -692,11 +693,31 @@ async function gameLoop() {
                 console.log(attackedElem);
                 lastHit.push(computerPlayer.attackSq);
                 console.log(lastHit);
+                const sortedHits = (hitsArr) => {
+                    const comparator = (a, b) => {
+                        // If the y-coordinates are different, sort by y-coordinate
+                        if (a[1] !== b[1]) {
+                            return a[1] - b[1];
+                        }
+
+                        // If the y-coordinates are the same, sort by x-coordinate
+                        return a[0] - b[0];
+                    };
+
+                    // Create a copy of the hitsArr and sort the new array using the comparator function
+                    const sortedArr = [...hitsArr].sort(comparator);
+
+                    return sortedArr;
+                };
+                let lastHits = sortedHits(lastHit);
+                console.log(lastHit);
+                console.log(lastHits);
+
                 //figure out the possible active neighbour squares based on contents of lastHit array and push to possTargets array
-                if (lastHit.length === 1) {
+                if (lastHits.length === 1) {
                     // When a single hit is recorded in lastHit array
-                    let x = lastHit[0][0];
-                    let y = lastHit[0][1];
+                    let x = lastHits[0][0];
+                    let y = lastHits[0][1];
                     console.log(x);
                     console.log(y);
                     possTargets = [];
@@ -719,21 +740,22 @@ async function gameLoop() {
                     }
 
                     console.log(possTargets);
-                } else if (lastHit.length === 2) {
+                } else if (lastHits.length === 2) {
                     // When 2 hits are recorded in lastHit array
 
                     // setting x and y variables for the first cell in lastHit array...
-                    let xCell1 = lastHit[0][0];
-                    let yCell1 = lastHit[0][1];
+                    let xCell1 = lastHits[0][0];
+                    let yCell1 = lastHits[0][1];
 
                     // setting x and y variables for the second cell in lastHit array...
-                    let xCell2 = lastHit[1][0];
-                    let yCell2 = lastHit[1][1];
+                    let xCell2 = lastHits[1][0];
+                    let yCell2 = lastHits[1][1];
 
                     console.log(xCell1);
                     console.log(yCell1);
                     console.log(xCell2);
                     console.log(yCell2);
+                    console.log(lastHits);
 
                     // determine orientation of the ship taking repeated hits and record in orientation variable
                     let orientation;
@@ -749,27 +771,27 @@ async function gameLoop() {
                         // then push to possTargets array
                         possTargets = [];
                         if (
-                            xCell1 + 1 < 11 &&
-                            yCell1 + 1 < 11 &&
-                            xCell1 + 1 > 0 &&
-                            yCell1 + 1 > 0 &&
-                            xCell2 + 1 < 11 &&
-                            yCell2 + 1 < 11 &&
-                            xCell2 + 1 > 0 &&
-                            yCell2 + 1 > 0
+                            xCell1 < 11 &&
+                            yCell1 < 11 &&
+                            xCell1 > 0 &&
+                            yCell1 > 1 &&
+                            xCell2 < 11 &&
+                            yCell2 < 11 &&
+                            xCell2 > 0 &&
+                            yCell2 > 0
                         ) {
                             possTargets.push([xCell1, yCell1 - 1]);
                             //possTargets.push([xCell2, yCell2 + 1]);
                         }
                         if (
-                            xCell1 + 1 < 11 &&
-                            yCell1 + 1 < 11 &&
-                            xCell1 + 1 > 0 &&
-                            yCell1 + 1 > 0 &&
-                            xCell2 + 1 < 11 &&
-                            yCell2 + 1 < 11 &&
-                            xCell2 + 1 > 0 &&
-                            yCell2 + 1 > 0
+                            xCell1 < 11 &&
+                            yCell1 < 11 &&
+                            xCell1 > 0 &&
+                            yCell1 > 0 &&
+                            xCell2 < 11 &&
+                            yCell2 < 10 &&
+                            xCell2 > 0 &&
+                            yCell2 > 0
                         ) {
                             //possTargets.push([xCell1, yCell1 - 1]);
                             possTargets.push([xCell2, yCell2 + 1]);
@@ -780,40 +802,40 @@ async function gameLoop() {
                         // then push to possTargets array
                         possTargets = [];
                         if (
-                            xCell1 + 1 < 11 &&
-                            yCell1 + 1 < 11 &&
-                            xCell1 + 1 > 0 &&
-                            yCell1 + 1 > 0 &&
-                            xCell2 + 1 < 11 &&
-                            yCell2 + 1 < 11 &&
-                            xCell2 + 1 > 0 &&
-                            yCell2 + 1 > 0
+                            xCell1 < 11 &&
+                            yCell1 < 11 &&
+                            xCell1 > 1 &&
+                            yCell1 > 0 &&
+                            xCell2 < 11 &&
+                            yCell2 < 11 &&
+                            xCell2 > 0 &&
+                            yCell2 > 0
                         ) {
                             possTargets.push([xCell1 - 1, yCell1]);
                             //possTargets.push([xCell2 + 1, yCell2]);
                         }
                         if (
-                            xCell1 + 1 < 11 &&
-                            yCell1 + 1 < 11 &&
-                            xCell1 + 1 > 0 &&
-                            yCell1 + 1 > 0 &&
-                            xCell2 + 1 < 11 &&
-                            yCell2 + 1 < 11 &&
-                            xCell2 + 1 > 0 &&
-                            yCell2 + 1 > 0
+                            xCell1 < 11 &&
+                            yCell1 < 11 &&
+                            xCell1 > 0 &&
+                            yCell1 > 0 &&
+                            xCell2 < 10 &&
+                            yCell2 < 11 &&
+                            xCell2 > 0 &&
+                            yCell2 > 0
                         ) {
                             //possTargets.push([xCell1 - 1, yCell1]);
                             possTargets.push([xCell2 + 1, yCell2]);
                         }
                     }
-                } else if (lastHit.length === 3) {
+                } else if (lastHits.length === 3) {
                     // When 3 hits are recorded in lastHit array
-                    let xCell1 = lastHit[0][0];
-                    let yCell1 = lastHit[0][1];
-                    let xCell2 = lastHit[1][0];
-                    let yCell2 = lastHit[1][1];
-                    let xCell3 = lastHit[2][0];
-                    let yCell3 = lastHit[2][1];
+                    let xCell1 = lastHits[0][0];
+                    let yCell1 = lastHits[0][1];
+                    let xCell2 = lastHits[1][0];
+                    let yCell2 = lastHits[1][1];
+                    let xCell3 = lastHits[2][0];
+                    let yCell3 = lastHits[2][1];
                     console.log(xCell1);
                     console.log(yCell1);
                     console.log(xCell2);
@@ -832,13 +854,13 @@ async function gameLoop() {
                             xCell1 < 11 &&
                             yCell1 < 11 &&
                             xCell1 > 0 &&
-                            yCell1 > 0 &&
+                            yCell1 > 1 &&
                             xCell2 < 11 &&
                             yCell2 < 11 &&
                             xCell2 > 0 &&
                             yCell2 > 0 &&
                             xCell3 < 11 &&
-                            yCell3 < 11 &&
+                            yCell3 < 10 &&
                             xCell3 > 0 &&
                             yCell3 > 0
                         ) {
@@ -850,13 +872,13 @@ async function gameLoop() {
                         if (
                             xCell1 < 11 &&
                             yCell1 < 11 &&
-                            xCell1 > 0 &&
+                            xCell1 > 1 &&
                             yCell1 > 0 &&
                             xCell2 < 11 &&
                             yCell2 < 11 &&
                             xCell2 > 0 &&
                             yCell2 > 0 &&
-                            xCell3 < 11 &&
+                            xCell3 < 10 &&
                             yCell3 < 11 &&
                             xCell3 > 0 &&
                             yCell3 > 0
@@ -911,6 +933,7 @@ async function gameLoop() {
                     playerGrid.drawSunkShip(shipToHit.coords);
                     //Empty lastHit array...
                     lastHit = [];
+                    lastHits = [];
                     possTargets = [];
                     computerPlayer.targetPositions = null;
                     //identify neighbouring squares...
