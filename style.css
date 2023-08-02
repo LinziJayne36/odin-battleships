@@ -33,7 +33,8 @@ body {
 }
 
 #randomBtn,
-#orientationBtn {
+#orientationBtn,
+#restartButton {
     margin: 0 auto 1em auto;
     background-image: radial-gradient(#ffb800, #ff8f0c);
     border-color: #ff8f0c;
@@ -46,6 +47,15 @@ body {
 
 #orientationBtn {
     margin-bottom: 2em;
+}
+
+#restartButton {
+    margin-top: 1em;
+}
+
+.gameOverMsg {
+    margin-top: 1em;
+    font-size: calc(0.75rem + 1vw);
 }
 
 .computerGrid,
