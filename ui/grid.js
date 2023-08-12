@@ -181,7 +181,7 @@ export default class Grid {
                 });
             });
         });
-        //Show positions of the 4 destroyers
+        //Show positions of the 4 destroyerships
         let destroyerPlacesArr = [];
         let eachDestroyerCoord = [];
 
