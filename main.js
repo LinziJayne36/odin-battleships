@@ -20,7 +20,7 @@ import { userMsg } from "./ui/userMsg";
 import { gameOverMsg } from "./ui/gameOver";
 import { sunkMsg } from "./ui/sunk";
 import { restartBtnDisplay } from "./ui/restart";
-import { playSound } from "./ui/uiSounds/playSound";
+import { playSound } from "./ui/playSound";
 
 //import { handlingGridClicks } from "./dom-interactions/domInteraction";
 import Ship from "./app-logic/ship";

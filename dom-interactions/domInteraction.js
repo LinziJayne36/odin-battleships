@@ -1,4 +1,4 @@
-import { playSound } from "../ui/uiSounds/playSound";
+import { playSound } from "../ui/playSound";
 
 export const getPlayerAttackInput = (cellClass) => {
     //ie. 'playerSquares' or 'computerSquares'
