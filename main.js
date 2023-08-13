@@ -1,5 +1,5 @@
 import "normalize.css";
-//import "./style.css";
+import "./style.css";
 import Player from "./app-logic/player";
 import ComputerPlayer from "./app-logic/computerPlayer";
 import Gameboard from "./app-logic/gameboard";
