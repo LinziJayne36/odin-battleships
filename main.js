@@ -860,12 +860,28 @@ async function gameLoop() {
                             xCell2 > 0 &&
                             yCell2 > 0 &&
                             xCell3 < 11 &&
-                            yCell3 < 10 &&
+                            yCell3 < 10 && //fails test here ycell3 is 10
                             xCell3 > 0 &&
                             yCell3 > 0
                         ) {
                             possTargets = [];
                             possTargets.push([xCell1, yCell1 - 1]);
+                            possTargets.push([xCell3, yCell3 + 1]);
+                        } else if (
+                            xCell1 === 10 &&
+                            yCell1 < 11 &&
+                            xCell1 > 0 &&
+                            yCell1 >= 1 &&
+                            xCell2 === 10 &&
+                            yCell2 < 11 &&
+                            xCell2 > 0 &&
+                            yCell2 > 0 &&
+                            xCell3 === 10 &&
+                            yCell3 < 10 &&
+                            xCell3 > 0 &&
+                            yCell3 > 0
+                        ) {
+                            possTargets = [];
                             possTargets.push([xCell3, yCell3 + 1]);
                         }
                     } else if (orientation === "vertical") {
@@ -886,6 +902,22 @@ async function gameLoop() {
                             possTargets = [];
                             possTargets.push([xCell1 - 1, yCell1]);
                             possTargets.push([xCell3 + 1, yCell3]);
+                        } else if (
+                            xCell1 < 11 &&
+                            yCell1 < 11 &&
+                            xCell1 > 1 &&
+                            yCell1 > 0 &&
+                            xCell2 < 11 &&
+                            yCell2 < 11 &&
+                            xCell2 > 0 &&
+                            yCell2 > 0 &&
+                            xCell3 === 10 &&
+                            yCell3 < 11 &&
+                            xCell3 > 0 &&
+                            yCell3 > 0
+                        ) {
+                            possTargets = [];
+                            possTargets.push([xCell1 - 1, yCell1]);
                         }
                     }
                 }
